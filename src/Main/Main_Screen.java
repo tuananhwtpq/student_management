@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 public class Main_Screen extends JFrame {
 
@@ -49,6 +50,9 @@ public class Main_Screen extends JFrame {
 		textField = new JTextField();
 		contentPane.add(textField);
 		textField.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		contentPane.add(lblNewLabel);
 	}
 
 }
