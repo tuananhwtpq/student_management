@@ -4,6 +4,6 @@
 /**
  * 
  */
-module BTL_TTCSN_Nhom2 {
+module student_management {
 	requires java.desktop;
 }
