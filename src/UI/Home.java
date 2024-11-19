@@ -45,7 +45,10 @@ public class Home extends JFrame {
 	
 	public Home() {
 		
+
 		//Add logout
+
+
 		
 		//Set size of window
 		setResizable(false);
@@ -97,6 +100,8 @@ public class Home extends JFrame {
         topBar.add(lblNewLabel_1);
         
         mainContent = new JPanel(new CardLayout());
+        
+        //Add new Commit here
         
         
         //ADD ManageAllStudent to mainContent
