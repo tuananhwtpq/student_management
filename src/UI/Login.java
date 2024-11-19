@@ -98,7 +98,7 @@ public class Login extends JFrame {
 		logo.setIcon(new ImageIcon(Login.class.getResource("/Imgs/leaf.png")));
 		logo.setBounds(217, 0, 64, 64);
 		header.add(logo);
-//		logo.setIcon(new ImageIcon(Login.class.getResource("/Imgs/leaf.png")));
+		logo.setIcon(new ImageIcon(Login.class.getResource("/Imgs/leaf.png")));
 		
 		JPanel passWord = new JPanel();
 		passWord.setBackground(new Color(85, 173, 155));
@@ -185,7 +185,7 @@ public class Login extends JFrame {
 		iconUserName.setBounds(0, 23, 32, 32);
 		userName.add(iconUserName);
 		iconUserName.setIconTextGap(0);
-//		iconUserName.setIcon(new ImageIcon(Login.class.getResource("/Imgs/user.png")));
+		iconUserName.setIcon(new ImageIcon(Login.class.getResource("/Imgs/user.png")));
 		
 		JButton btnLogin = new JButton("Đăng nhập");
 		btnLogin.setIconTextGap(10);
@@ -218,14 +218,15 @@ public class Login extends JFrame {
 		}else {
 			//if(accountManager.validateLogin(userName, passWord)) {
 				JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+				new Home().setVisible(true);
 			//	new Home().setVisible(true);
 				dispose();
 			//}else if (uam.validateLogin(userName, passWord)) {
-				JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+				//JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
 			//	new UserHome().setVisible(true);
-				dispose();
+				//dispose();
 		//	}else {
-				JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng");
+				//JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng");
 			}
 		}
 	}
