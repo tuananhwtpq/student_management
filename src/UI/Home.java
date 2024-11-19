@@ -45,6 +45,8 @@ public class Home extends JFrame {
 	
 	public Home() {
 		
+		//Add logout
+		
 		//Set size of window
 		setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
