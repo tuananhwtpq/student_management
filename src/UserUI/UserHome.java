@@ -39,7 +39,7 @@ public class UserHome extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Home frame = new Home();
+                    UserHome frame = new UserHome();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -105,16 +105,17 @@ public class UserHome extends JFrame {
         
         //ADD ManageAllStudent to mainContent
         
-        ManageAllStudent mas = new ManageAllStudent();
-        ManageSubject manageSubject = new ManageSubject();
+
         DasbBoardScreen dasbBoardScreen = new DasbBoardScreen(); 
-        ManageClassroom manageClassroom = new ManageClassroom();
+        ScoreWatcher scoreWatcher = new ScoreWatcher();
+        SubjectWatcher subjectWatcher = new SubjectWatcher();
+        
+        
+
         
        	mainContent.add(dasbBoardScreen, "dashBoardScreen");
-        mainContent.add(mas, "mas");
-        mainContent.add(manageSubject, "manageSubject");
-        mainContent.add(manageClassroom, "manageClassroom");
-
+       	mainContent.add(scoreWatcher, "scoreWatcher");
+       	mainContent.add(subjectWatcher, "subjectWatcher");
         
         
         contentPanel.add(sideBar, BorderLayout.WEST);
@@ -154,7 +155,7 @@ public class UserHome extends JFrame {
         
         //Second line
         
-        JButton manageStudentButton = new JButton("Quản lý sinh viên");
+        JButton manageStudentButton = new JButton("Xem điểm môn học\r\n");
         manageStudentButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         //manageStudentButton.setIcon(new ImageIcon(Home.class.getResource()));
         manageStudentButton.setForeground(new Color(241, 248, 232));
@@ -165,10 +166,9 @@ public class UserHome extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
-				ManageAllStudent manageAllStudent = new ManageAllStudent();
-				mainContent.add(manageAllStudent, "mas");
 				CardLayout c1 = (CardLayout) mainContent.getLayout();
-				c1.show(mainContent, "mas");
+				c1.show(mainContent, "scoreWatcher" );
+
 				
 			}
 		});
@@ -181,7 +181,7 @@ public class UserHome extends JFrame {
         
         //Third line
         
-        JButton btnThird = new JButton("Quản lý môn học");
+        JButton btnThird = new JButton("Xem môn học");
         btnThird.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         //btnSecondButton.setIcon(new ImageIcon(Home.class.getResource()));
         btnThird.setForeground(new Color(241, 248, 232));
@@ -191,11 +191,9 @@ public class UserHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ManageSubject manageSubject = new ManageSubject();
-				mainContent.add(manageSubject, "manageStudent");
-			
+				
 				CardLayout c1 = (CardLayout) mainContent.getLayout();
-				c1.show(mainContent, "manageStudent");
+				c1.show(mainContent, "subjectWatcher");
 				
 			}
 		});
@@ -207,7 +205,7 @@ public class UserHome extends JFrame {
         
         //ForthLine
         
-        JButton btnFourthButton  = new JButton("Quản lý lớp học");
+        JButton btnFourthButton  = new JButton("Xem lịch học\r\n");
         btnFourthButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         //btnFourthButton.setIcon(new ImageIcon(Home.class.getResource()));
         btnFourthButton.setForeground(new Color(241, 248, 232));
@@ -217,11 +215,7 @@ public class UserHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				ManageClassroom manageClassroom = new ManageClassroom();
-				mainContent.add(manageClassroom, "manageClassroom");
-				
-				CardLayout c1 = (CardLayout) mainContent.getLayout();
-				c1.show(mainContent, getName());
+
 				
 			}
 		});
@@ -233,11 +227,19 @@ public class UserHome extends JFrame {
         
         //Fifth line
         
-        JButton btnFifButton  = new JButton("Something1");
+        JButton btnFifButton  = new JButton("Xem học phí");
         btnFifButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         //btnFifthButton.setIcon(new ImageIcon(Home.class.getResource()));
         btnFifButton.setForeground(new Color(241, 248, 232));
         //add action listener
+        btnFifButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
         
         btnFifButton.setFont(new Font("Segoe UI", Font.BOLD, 26));
         btnFifButton.setBackground(new Color(85, 173, 155));
@@ -246,11 +248,20 @@ public class UserHome extends JFrame {
         
         //Sixth line
         
-        JButton btnSixbuButton  = new JButton("Something1");
+        JButton btnSixbuButton  = new JButton("Cập nhật thông tin\r\n");
         btnSixbuButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         //btnSixthButton.setIcon(new ImageIcon(Home.class.getResource()));
         btnSixbuButton.setForeground(new Color(241, 248, 232));
         //add action listener
+        
+        btnSixbuButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
         
         btnSixbuButton.setFont(new Font("Segoe UI", Font.BOLD, 26));
         btnSixbuButton.setBackground(new Color(85, 173, 155));
@@ -270,12 +281,6 @@ public class UserHome extends JFrame {
         btnSeventhButton.setBounds(10, 341, 278, 45);
         top.add(btnSeventhButton);
         
-        
-        
-        
-        
-        
-       
         
         //Bottom
         JPanel  bottom = new JPanel();
