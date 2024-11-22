@@ -222,7 +222,7 @@ public class Home extends JFrame {
 				mainContent.add(manageClassroom, "manageClassroom");
 				
 				CardLayout c1 = (CardLayout) mainContent.getLayout();
-				c1.show(mainContent, getName());
+				c1.show(mainContent, "manageClassroom");
 				
 			}
 		});
@@ -234,7 +234,7 @@ public class Home extends JFrame {
         
         //Fifth line
         
-        JButton btnFifButton  = new JButton("Something1");
+        JButton btnFifButton  = new JButton("Thống kê");
         btnFifButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         //btnFifthButton.setIcon(new ImageIcon(Home.class.getResource()));
         btnFifButton.setForeground(new Color(241, 248, 232));
@@ -244,39 +244,7 @@ public class Home extends JFrame {
         btnFifButton.setBackground(new Color(85, 173, 155));
         btnFifButton.setBounds(10, 231, 278, 45);
         top.add(btnFifButton);
-        
-        //Sixth line
-        
-        JButton btnSixbuButton  = new JButton("Something1");
-        btnSixbuButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        //btnSixthButton.setIcon(new ImageIcon(Home.class.getResource()));
-        btnSixbuButton.setForeground(new Color(241, 248, 232));
-        //add action listener
-        
-        btnSixbuButton.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        btnSixbuButton.setBackground(new Color(85, 173, 155));
-        btnSixbuButton.setBounds(10, 286, 278, 45);
-        top.add(btnSixbuButton);
-        
-        //Seventh Line
-        
-        JButton btnSeventhButton  = new JButton("Something1");
-        btnSeventhButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        //btnSeventhButton.setIcon(new ImageIcon(Home.class.getResource()));
-        btnSeventhButton.setForeground(new Color(241, 248, 232));
-        //add action listener
-        
-        btnSeventhButton.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        btnSeventhButton.setBackground(new Color(85, 173, 155));
-        btnSeventhButton.setBounds(10, 341, 278, 45);
-        top.add(btnSeventhButton);
-        
-        
-        
-        
-        
-        
-       
+             
         
         //Bottom
         JPanel  bottom = new JPanel();

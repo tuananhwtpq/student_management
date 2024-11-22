@@ -132,7 +132,7 @@ public class ManageSubject extends JPanel {
         searchOptions = new JComboBox();
         searchOptions.setForeground(new Color(0, 0, 0));
         searchOptions.setFont(new Font("Tahoma", Font.BOLD, 18));
-        searchOptions.setModel(new DefaultComboBoxModel(new String[] {"Tên Sách", "Tác giả", "Thể loại"}));
+        searchOptions.setModel(new DefaultComboBoxModel(new String[] {"Mã môn học", "Tên môn học", ""}));
         searchOptions.setBackground(new Color(85, 173, 155));
         GridBagConstraints gbc_searchOptions = new GridBagConstraints();
         gbc_searchOptions.fill = GridBagConstraints.BOTH;
@@ -236,7 +236,7 @@ public class ManageSubject extends JPanel {
         table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         table.setModel(new DefaultTableModel(
             new Object[][] {},
-            new String[] {"ID", "Tên sách", "Tên tác giả", "Thể loại", "Giá tiền", "Số lượng"}
+            new String[] {"ID", "Tên môn học", "Số tín chỉ", "Mô tả"}
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {

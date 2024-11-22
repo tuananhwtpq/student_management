@@ -1,16 +1,19 @@
-package UI;
+package UserUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -27,31 +30,20 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
-public class ManageAllStudent extends JPanel {
-	
+import UI.ManageAllStudent;
+
+public class SubjectWatcher extends JPanel {
+
 	private JTextField txtSearch;
 	private JComboBox searchOptions;
 	private JTable table;
-
-	public ManageAllStudent() {
+	
+	public SubjectWatcher() {
 		
         setBounds(100, 100, 1530, 1017);
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
         
-     // Tạo header panel
-        JPanel header = new JPanel();
-        header.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(85, 173, 155)));
-        header.setBackground(new Color(241, 248, 232));
-        header.setPreferredSize(new Dimension(1810, 100));
-        add(header, BorderLayout.NORTH);
-        header.setLayout(new BorderLayout(0, 0));
-
-        JLabel lblHeader = new JLabel("Danh sách sinh viên");
-        lblHeader.setBorder(new EmptyBorder(0, 20, 0, 0));
-        lblHeader.setAlignmentX(Component.CENTER_ALIGNMENT);
-        lblHeader.setFont(new Font("Segoe UI", Font.BOLD, 54));
-        header.add(lblHeader);
         
         JPanel content = new JPanel();
         content.setBackground(new Color(241, 248, 232));
@@ -132,7 +124,7 @@ public class ManageAllStudent extends JPanel {
         searchOptions = new JComboBox();
         searchOptions.setForeground(new Color(0, 0, 0));
         searchOptions.setFont(new Font("Tahoma", Font.BOLD, 18));
-        searchOptions.setModel(new DefaultComboBoxModel(new String[] {"ID", "Họ tên", "Lớp", "Ngành"}));
+        searchOptions.setModel(new DefaultComboBoxModel(new String[] {"Mã môn học", "Tên môn học", ""}));
         searchOptions.setBackground(new Color(85, 173, 155));
         GridBagConstraints gbc_searchOptions = new GridBagConstraints();
         gbc_searchOptions.fill = GridBagConstraints.BOTH;
@@ -173,52 +165,6 @@ public class ManageAllStudent extends JPanel {
         gbl_header_right.rowWeights = new double[]{0.0, Double.MIN_VALUE};
         header_right.setLayout(gbl_header_right);
         
-        //BTN ADD
-        
-        JButton btnAdd = new JButton("");
-        btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnAdd.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/add.png")));
-        //Add listener
-        
-        btnAdd.setBackground(new Color(85, 173, 155));
-        btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        GridBagConstraints gbc_btnAdd = new GridBagConstraints();
-        gbc_btnAdd.fill = GridBagConstraints.BOTH;
-        gbc_btnAdd.insets = new Insets(0, 0, 0, 20);
-        gbc_btnAdd.gridx = 0;
-        gbc_btnAdd.gridy = 0;
-        header_right.add(btnAdd, gbc_btnAdd);
-        
-        //BTN EDIT
-        
-        JButton btnEdit = new JButton("");
-        btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnEdit.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/editing.png")));
-        //Add Listener
-        
-        btnEdit.setBackground(new Color(85, 173, 155));
-        btnEdit.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        GridBagConstraints gbc_btnEdit = new GridBagConstraints();
-        gbc_btnEdit.fill = GridBagConstraints.BOTH;
-        gbc_btnEdit.insets = new Insets(0, 0, 0, 20);
-        gbc_btnEdit.gridx = 1;
-        gbc_btnEdit.gridy = 0;
-        header_right.add(btnEdit, gbc_btnEdit);
-        
-        //BTN delete
-        
-        JButton btnDel = new JButton("");
-        btnDel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnDel.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/trash-bin.png")));
-        //Add listener
-        
-        btnDel.setBackground(new Color(85, 173, 155));
-        btnDel.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        GridBagConstraints gbc_btnDel = new GridBagConstraints();
-        gbc_btnDel.fill = GridBagConstraints.BOTH;
-        gbc_btnDel.gridx = 2;
-        gbc_btnDel.gridy = 0;
-        header_right.add(btnDel, gbc_btnDel);
         
         JScrollPane main = new JScrollPane();
         main.setBackground(new Color(216, 239, 211));
@@ -235,12 +181,43 @@ public class ManageAllStudent extends JPanel {
         table.setSelectionBackground(new Color(149, 240, 179));
         table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         table.setModel(new DefaultTableModel(
-        	new Object[][] {
-        	},
-        	new String[] {
-        		"ID", "H\u1ECD t\u00EAn", "Ng\u00E0y sinh", "L\u1EDBp", "Ng\u00E0nh", "\u0110\u1ECBa ch\u1EC9", "Email", "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i"
+            new Object[][] {},
+            new String[] {"STT", "Mã môn học", "Tên môn học", "Số tín chỉ", "Mô tả"}
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+        
+        table.addMouseListener( new MouseAdapter() {
+        	
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		if(e.getClickCount() == 2) {
+        			int selectedRow = table.getSelectedRow();
+        			if(selectedRow != -1) {
+        				String subjectName = table.getValueAt(selectedRow, 2).toString();
+        				
+        				EventQueue.invokeLater(() ->{
+        					new SubjectTable(subjectName).setVisible(true);
+        				});
+        			}
+        		}
+        		
+        		
+        		super.mouseClicked(e);
         	}
-        ));
+        	
+		});
+        
+        //Thử nghiệm
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(new Object[] {1, "IT0098", "Lập trình Java",1, "Học kỳ 1"});
+        model.addRow(new Object[] {2,"IT7823","Cấu trúc dữ liệu",2, "Học kỳ 2"});
+        model.addRow(new Object[] {3,"iT88263","Hệ điều hành",4, "Học kỳ 3"});
+        
         main.setViewportView(table);
         
 	}

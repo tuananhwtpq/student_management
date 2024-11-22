@@ -47,7 +47,7 @@ public class ManageClassroom extends JPanel {
         add(header, BorderLayout.NORTH);
         header.setLayout(new BorderLayout(0, 0));
 
-        JLabel lblHeader = new JLabel("Danh sách lớp học");
+        JLabel lblHeader = new JLabel("Danh sách lớp học\r\n");
         lblHeader.setBorder(new EmptyBorder(0, 20, 0, 0));
         lblHeader.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblHeader.setFont(new Font("Segoe UI", Font.BOLD, 54));
@@ -132,7 +132,7 @@ public class ManageClassroom extends JPanel {
         searchOptions = new JComboBox();
         searchOptions.setForeground(new Color(0, 0, 0));
         searchOptions.setFont(new Font("Tahoma", Font.BOLD, 18));
-        searchOptions.setModel(new DefaultComboBoxModel(new String[] {"Tên Sách", "Tác giả", "Thể loại"}));
+        searchOptions.setModel(new DefaultComboBoxModel(new String[] {"Mã lớp", "Tên lớp", "Tên môn học", "Giảng viên phụ trách"}));
         searchOptions.setBackground(new Color(85, 173, 155));
         GridBagConstraints gbc_searchOptions = new GridBagConstraints();
         gbc_searchOptions.fill = GridBagConstraints.BOTH;
@@ -236,7 +236,7 @@ public class ManageClassroom extends JPanel {
         table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         table.setModel(new DefaultTableModel(
             new Object[][] {},
-            new String[] {"ID", "Tên sách", "Tên tác giả", "Thể loại", "Giá tiền", "Số lượng"}
+            new String[] {"ID", "Tên lớp", "Giảng viên phụ trách", "Sĩ số tối đa", "Thời gian bắt đầu", "Thời gian kết thúc"}
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
