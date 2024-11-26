@@ -109,6 +109,7 @@ public class UserHome extends JFrame {
         DasbBoardScreen dasbBoardScreen = new DasbBoardScreen(); 
         ScoreWatcher scoreWatcher = new ScoreWatcher();
         SubjectWatcher subjectWatcher = new SubjectWatcher();
+        SchoolFeeWatcher schoolFeeWatcher = new SchoolFeeWatcher();
         
         
 
@@ -116,6 +117,7 @@ public class UserHome extends JFrame {
        	mainContent.add(dasbBoardScreen, "dashBoardScreen");
        	mainContent.add(scoreWatcher, "scoreWatcher");
        	mainContent.add(subjectWatcher, "subjectWatcher");
+       	mainContent.add(schoolFeeWatcher, "schoolFeeWatcher");
         
         
         contentPanel.add(sideBar, BorderLayout.WEST);
@@ -237,6 +239,8 @@ public class UserHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				CardLayout c1 = (CardLayout) mainContent.getLayout();
+				c1.show(mainContent, "schoolFeeWatcher");
 				
 			}
 		});
@@ -267,19 +271,6 @@ public class UserHome extends JFrame {
         btnSixbuButton.setBackground(new Color(85, 173, 155));
         btnSixbuButton.setBounds(10, 286, 278, 45);
         top.add(btnSixbuButton);
-        
-        //Seventh Line
-        
-        JButton btnSeventhButton  = new JButton("Something1");
-        btnSeventhButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        //btnSeventhButton.setIcon(new ImageIcon(Home.class.getResource()));
-        btnSeventhButton.setForeground(new Color(241, 248, 232));
-        //add action listener
-        
-        btnSeventhButton.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        btnSeventhButton.setBackground(new Color(85, 173, 155));
-        btnSeventhButton.setBounds(10, 341, 278, 45);
-        top.add(btnSeventhButton);
         
         
         //Bottom

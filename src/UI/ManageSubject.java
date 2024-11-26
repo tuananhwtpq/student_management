@@ -243,6 +243,16 @@ public class ManageSubject extends JPanel {
                 return false;
             }
         });
+        
+        //Thử nghiệm
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(new Object[]{"SV001", "Cấu trúc dữ liệu", "3", "tốt"});
+        model.addRow(new Object[]{"SV002", "Cấu trúc dữ liệu 1", "3", "tốt"});
+        model.addRow(new Object[]{"SV003", "Cấu trúc dữ liệu 2", "3", "tốt"});
+        model.addRow(new Object[]{"SV004", "Cấu trúc dữ liệu 3", "3", "tốt"});
+        model.addRow(new Object[]{"SV005", "Cấu trúc dữ liệu 4", "3", "tốt"});
+        
+        
         main.setViewportView(table);
         
 	}
