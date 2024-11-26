@@ -240,7 +240,24 @@ public class ManageAllStudent extends JPanel {
         	new String[] {
         		"ID", "H\u1ECD t\u00EAn", "Ng\u00E0y sinh", "L\u1EDBp", "Ng\u00E0nh", "\u0110\u1ECBa ch\u1EC9", "Email", "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i"
         	}
-        ));
+        	)
+        	
+        	{
+        	    @Override
+        	    public boolean isCellEditable(int row, int column) {
+        	        return false; 
+        	    }
+        	}
+        );
+        
+        // Thử nghiệm
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(new Object[]{"SV001", "Nguyễn Văn A", "2001-05-15", "KTPM01", "Công nghệ thông tin", "Hà Nội", "nguyenvana@gmail.com", "0123456789"});
+        model.addRow(new Object[]{"SV002", "Trần Thị B", "2002-03-10", "KTPM02", "Kế toán", "Đà Nẵng", "tranthib@gmail.com", "0987654321"});
+        model.addRow(new Object[]{"SV003", "Lê Văn C", "2000-07-22", "KTPM03", "Quản trị kinh doanh", "Hồ Chí Minh", "levanc@gmail.com", "0912345678"});
+        model.addRow(new Object[]{"SV004", "Phạm Thị D", "2001-09-05", "KTPM04", "Ngôn ngữ Anh", "Cần Thơ", "phamthid@gmail.com", "0945678123"});
+        model.addRow(new Object[]{"SV005", "Hoàng Văn E", "1999-12-15", "KTPM05", "Khoa học dữ liệu", "Hải Phòng", "hoangvane@gmail.com", "0965432178"});
+        
         main.setViewportView(table);
         
 	}
