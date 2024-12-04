@@ -18,9 +18,15 @@ public class SubjectTable extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
 
+
+    public SubjectTable(String a, String b, String c, String d) {
+
+        setTitle("Thông tin chi tiết môn học: " + b);
+
     public SubjectTable(String subjectName) {
 
-        setTitle("Thông tin chi tiết môn học: " + subjectName);
+//         setTitle("Thông tin chi tiết môn học: " + subjectName);
+
         setSize(600, 400);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -48,7 +54,10 @@ public class SubjectTable extends JFrame {
         gbc_lblMaMonHoc.gridy = 0;
         contentPane.add(lblMaMonHoc, gbc_lblMaMonHoc);
 
-        JTextField txtMaMonHoc = new JTextField("IT001");
+        JTextField txtMaMonHoc = new JTextField(a);
+
+//         JTextField txtMaMonHoc = new JTextField("IT001");
+
         txtMaMonHoc.setBorder(null);
         txtMaMonHoc.setFocusable(false);
         txtMaMonHoc.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -71,7 +80,9 @@ public class SubjectTable extends JFrame {
         gbc_lblTenMonHoc.gridy = 1;
         contentPane.add(lblTenMonHoc, gbc_lblTenMonHoc);
 
-        JTextField txtTenMonHoc = new JTextField("Lập trình Java");
+        JTextField txtTenMonHoc = new JTextField(b);
+
+//         JTextField txtTenMonHoc = new JTextField("Lập trình Java");
         txtTenMonHoc.setBorder(null);
         txtTenMonHoc.setFocusable(false);
         txtTenMonHoc.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -94,7 +105,11 @@ public class SubjectTable extends JFrame {
         gbc_lblSoTinChi.gridy = 2;
         contentPane.add(lblSoTinChi, gbc_lblSoTinChi);
 
-        JTextField txtSoTinChi = new JTextField("3");
+
+        JTextField txtSoTinChi = new JTextField(c);
+
+//         JTextField txtSoTinChi = new JTextField("3");
+
         txtSoTinChi.setBorder(null);
         txtSoTinChi.setFocusable(false);
         txtSoTinChi.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -117,7 +132,10 @@ public class SubjectTable extends JFrame {
         gbc_lblMoTaChiTiet.gridy = 3;
         contentPane.add(lblMoTaChiTiet, gbc_lblMoTaChiTiet);
 
-        JTextArea txtMoTaChiTiet = new JTextArea("Môn học giới thiệu về lập trình hướng đối tượng với ngôn ngữ Java.");
+        JTextArea txtMoTaChiTiet = new JTextArea(d);
+
+//         JTextArea txtMoTaChiTiet = new JTextArea("Môn học giới thiệu về lập trình hướng đối tượng với ngôn ngữ Java.");
+
         txtMoTaChiTiet.setFocusable(false);
         txtMoTaChiTiet.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         txtMoTaChiTiet.setLineWrap(true);
@@ -134,3 +152,4 @@ public class SubjectTable extends JFrame {
     }
 
 }
+

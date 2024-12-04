@@ -1,5 +1,10 @@
 package UserUI;
 
+
+import Data.Subject;
+import dataManaging.SubjectManaging;
+
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,6 +17,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import java.util.ArrayList;
+
+
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -191,11 +200,52 @@ public class SchoolFeeWatcher extends JPanel {
         	
 		});
         
+
+        main.setViewportView(table);
+        ViewTable();
+    }
+	SubjectManaging sm = new SubjectManaging();
+        ArrayList<Subject> dsO = new ArrayList();
+	public void ViewTable(){
+            this.dsO = sm.selectAll();
+            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+            model.setNumRows(0);
+            int n = 1;
+            for(Subject o:dsO){
+                model.addRow(new Object[] {n, o.getMaMon(), o.getTenMon(), o.getHocPhi()});
+                n++;
+            }
+        }
+        public void ViewTablecon(ArrayList<Subject> dss){
+            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+            model.setNumRows(0);
+            int n = 1;
+            for(Subject s:dss){
+                model.addRow(new Object[] {n, s.getMaMon(), s.getTenMon(), s.getHocPhi()});
+            }
+        }
+        public String gettxtsearch(){
+            return this.txtSearch.getText().trim();
+        };
+	public void handleSearch() {
+            ArrayList<Subject> dss = new ArrayList();
+            if(searchOptions.getSelectedItem().equals("Mã môn học")){
+                 dss = sm.selectByCondition("Mã môn học", this.gettxtsearch());
+            }else if(searchOptions.getSelectedItem().equals("Tên môn học")){
+                dss = sm.selectByCondition("Tên môn học", this.gettxtsearch());
+                //System.out.println("Số lượng kết quả tìm được theo tên môn học: " + dss.size());
+            }
+            ViewTablecon(dss);
+	}
+
+
+}
+
         //Thử nghiệm
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addRow(new Object[] {1, "CS101", "Lập trình Java", "1.800.000đ"});
-        model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
-        model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
+//         DefaultTableModel model = (DefaultTableModel) table.getModel();
+//         model.addRow(new Object[] {1, "CS101", "Lập trình Java", "1.800.000đ"});
+//         model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
+//         model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
         
         main.setViewportView(table);
 		
@@ -211,3 +261,4 @@ public class SchoolFeeWatcher extends JPanel {
 
 
 }
+
