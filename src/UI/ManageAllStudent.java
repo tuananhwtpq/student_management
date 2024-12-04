@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.TreeMap;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -181,6 +182,15 @@ public class ManageAllStudent extends JPanel {
         btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnAdd.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/add.png")));
         //Add listener
+        btnAdd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				AddStudent addStudent = new AddStudent();
+				addStudent.setVisible(true);
+			}
+		});
         
         btnAdd.setBackground(new Color(85, 173, 155));
         btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 18));

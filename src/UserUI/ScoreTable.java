@@ -36,7 +36,7 @@ public class ScoreTable extends JFrame {
 		setTitle("Thông tin điểm môn học: " + subjectName);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 		
 	
 		
@@ -61,7 +61,6 @@ public class ScoreTable extends JFrame {
 		content.setBackground(new Color(241, 248, 232));
 		
 		GridBagConstraints gbc_content = new GridBagConstraints();
-		gbc_content.insets = new Insets(10, 10, 10, 10);
 		gbc_content.fill = GridBagConstraints.BOTH;
 		gbc_content.gridx = 0; 
 		gbc_content.gridy = 0;
@@ -213,7 +212,7 @@ public class ScoreTable extends JFrame {
 		txtDanhGia.setBorder(null);
 		txtDanhGia.setBackground(new Color(241, 248, 232));
 		GridBagConstraints gbc_txtDanhGia = new GridBagConstraints();
-		gbc_txtDanhGia.insets = new Insets(0, 0, 5, 5);
+		gbc_txtDanhGia.insets = new Insets(10, 10, 10, 10);
 		gbc_txtDanhGia.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtDanhGia.gridx = 1;
 		gbc_txtDanhGia.gridy = 5;
