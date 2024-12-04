@@ -239,7 +239,7 @@ public class SchoolFeeWatcher extends JPanel {
 	}
 
 
-}
+
 
         //Thử nghiệm
 //         DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -247,7 +247,7 @@ public class SchoolFeeWatcher extends JPanel {
 //         model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
 //         model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
         
-        main.setViewportView(table);
+//        main.setViewportView(table);
 		
 		
 		
@@ -255,10 +255,8 @@ public class SchoolFeeWatcher extends JPanel {
 		
 	}
 	
-	public void handleSearch() {
-		
-	}
 
 
-}
+
+
 

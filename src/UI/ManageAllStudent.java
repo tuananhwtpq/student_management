@@ -265,24 +265,17 @@ public class ManageAllStudent extends JPanel {
         table.setSelectionBackground(new Color(149, 240, 179));
         table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         table.setModel(new DefaultTableModel(
-        	new Object[][] {
-        	},
-        	new String[] {
-        		"ID", "H\u1ECD t\u00EAn", "Ng\u00E0y sinh", "L\u1EDBp", "Ng\u00E0nh", "\u0110\u1ECBa ch\u1EC9", "Email", "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i"
-        	}
-
-        ));
-
-        	)
-        	
-        	{
+        	    new Object[][] {},
+        	    new String[] {
+        	        "ID", "Họ tên", "Ngày sinh", "Lớp", "Ngành", "Địa chỉ", "Email", "Số điện thoại"
+        	    }
+        	) {
         	    @Override
         	    public boolean isCellEditable(int row, int column) {
         	        return false; 
         	    }
-        	}
-        );
-        
+        	});
+
         // Thử nghiệm
 //         DefaultTableModel model = (DefaultTableModel) table.getModel();
 //         model.addRow(new Object[]{"SV001", "Nguyễn Văn A", "2001-05-15", "KTPM01", "Công nghệ thông tin", "Hà Nội", "nguyenvana@gmail.com", "0123456789"});
