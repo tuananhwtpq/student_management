@@ -1,7 +1,10 @@
 package UserUI;
 
+
 import Data.Subject;
 import dataManaging.SubjectManaging;
+
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,7 +17,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.util.ArrayList;
+
+
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -194,6 +200,7 @@ public class SchoolFeeWatcher extends JPanel {
         	
 		});
         
+
         main.setViewportView(table);
         ViewTable();
     }
@@ -233,3 +240,25 @@ public class SchoolFeeWatcher extends JPanel {
 
 
 }
+
+        //Thử nghiệm
+//         DefaultTableModel model = (DefaultTableModel) table.getModel();
+//         model.addRow(new Object[] {1, "CS101", "Lập trình Java", "1.800.000đ"});
+//         model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
+//         model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
+        
+        main.setViewportView(table);
+		
+		
+		
+		
+		
+	}
+	
+	public void handleSearch() {
+		
+	}
+
+
+}
+

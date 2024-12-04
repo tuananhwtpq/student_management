@@ -11,6 +11,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -231,6 +233,27 @@ public class ManageSubject extends JPanel {
         table = new JTable();
         //Add listener
         
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { 
+                    int row = table.getSelectedRow(); 
+                    
+                    String studentId = table.getValueAt(row, 0).toString();
+                    String fullName = table.getValueAt(row, 1).toString();
+                    String birthDate = table.getValueAt(row, 2).toString();
+                    String className = table.getValueAt(row, 3).toString();
+//                    String major = table.getValueAt(row, 4).toString();
+//                    String address = table.getValueAt(row, 5).toString();
+//                    String email = table.getValueAt(row, 6).toString();
+//                    String phoneNumber = table.getValueAt(row, 7).toString();
+//                    
+                    SubjectView subjectView = new SubjectView(fullName);
+                    subjectView.setVisible(true); // Hiển thị StudentView
+                }
+            }
+        });
+        
         table.setRowHeight(30);
         table.setSelectionBackground(new Color(149, 240, 179));
         table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -243,6 +266,16 @@ public class ManageSubject extends JPanel {
                 return false;
             }
         });
+        
+        //Thử nghiệm
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(new Object[]{"SV001", "Cấu trúc dữ liệu", "3", "tốt"});
+        model.addRow(new Object[]{"SV002", "Cấu trúc dữ liệu 1", "3", "tốt"});
+        model.addRow(new Object[]{"SV003", "Cấu trúc dữ liệu 2", "3", "tốt"});
+        model.addRow(new Object[]{"SV004", "Cấu trúc dữ liệu 3", "3", "tốt"});
+        model.addRow(new Object[]{"SV005", "Cấu trúc dữ liệu 4", "3", "tốt"});
+        
+        
         main.setViewportView(table);
         
 	}
