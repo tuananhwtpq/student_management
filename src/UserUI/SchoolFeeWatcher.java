@@ -1,61 +1,44 @@
-package UI;
+package UserUI;
 
-import Data.Student;
-import dataManaging.StudentManaging;
+import Data.Subject;
+import dataManaging.SubjectManaging;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
-public class ManageAllStudent extends JPanel {
+public class SchoolFeeWatcher extends JPanel {
 	
 	private JTextField txtSearch;
 	private JComboBox searchOptions;
 	private JTable table;
-
-	public ManageAllStudent() {
+	
+	public SchoolFeeWatcher() {
 		
         setBounds(100, 100, 1530, 1017);
         setLayout(new BorderLayout());
         setBackground(Color.WHITE);
         
-     // Tạo header panel
-        JPanel header = new JPanel();
-        header.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(85, 173, 155)));
-        header.setBackground(new Color(241, 248, 232));
-        header.setPreferredSize(new Dimension(1810, 100));
-        add(header, BorderLayout.NORTH);
-        header.setLayout(new BorderLayout(0, 0));
-
-        JLabel lblHeader = new JLabel("Danh sách sinh viên");
-        lblHeader.setBorder(new EmptyBorder(0, 20, 0, 0));
-        lblHeader.setAlignmentX(Component.CENTER_ALIGNMENT);
-        lblHeader.setFont(new Font("Segoe UI", Font.BOLD, 54));
-        header.add(lblHeader);
         
         JPanel content = new JPanel();
         content.setBackground(new Color(241, 248, 232));
@@ -136,7 +119,7 @@ public class ManageAllStudent extends JPanel {
         searchOptions = new JComboBox();
         searchOptions.setForeground(new Color(0, 0, 0));
         searchOptions.setFont(new Font("Tahoma", Font.BOLD, 18));
-        searchOptions.setModel(new DefaultComboBoxModel(new String[] {"ID", "Họ tên", "Lớp", "Ngành"}));
+        searchOptions.setModel(new DefaultComboBoxModel(new String[] {"Mã môn học", "Tên môn học"}));
         searchOptions.setBackground(new Color(85, 173, 155));
         GridBagConstraints gbc_searchOptions = new GridBagConstraints();
         gbc_searchOptions.fill = GridBagConstraints.BOTH;
@@ -149,8 +132,7 @@ public class ManageAllStudent extends JPanel {
         btnSearch.setForeground(new Color(0, 0, 0));
         btnSearch.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                    System.out.println("Nút tìm kiếm đã được nhấn");
-                    handleSearch();
+        		handleSearch();
         	}
         });
         btnSearch.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -161,69 +143,6 @@ public class ManageAllStudent extends JPanel {
         gbc_btnSearch.gridx = 2;
         gbc_btnSearch.gridy = 0;
         header_left.add(btnSearch, gbc_btnSearch);
-        
-        JPanel header_right = new JPanel();
-        header_right.setBackground(new Color(241, 248, 232));
-        GridBagConstraints gbc_header_right = new GridBagConstraints();
-        gbc_header_right.insets = new Insets(10, 10, 10, 10);
-        gbc_header_right.anchor = GridBagConstraints.EAST;
-        gbc_header_right.fill = GridBagConstraints.VERTICAL;
-        gbc_header_right.gridx = 1;
-        gbc_header_right.gridy = 0;
-        content_header.add(header_right, gbc_header_right);
-        GridBagLayout gbl_header_right = new GridBagLayout();
-        gbl_header_right.columnWidths = new int[]{114, 114, 114, 0};
-        gbl_header_right.rowHeights = new int[]{60, 0};
-        gbl_header_right.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_header_right.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-        header_right.setLayout(gbl_header_right);
-        
-        //BTN ADD
-        
-        JButton btnAdd = new JButton("");
-        btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnAdd.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/add.png")));
-        //Add listener
-        
-        btnAdd.setBackground(new Color(85, 173, 155));
-        btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        GridBagConstraints gbc_btnAdd = new GridBagConstraints();
-        gbc_btnAdd.fill = GridBagConstraints.BOTH;
-        gbc_btnAdd.insets = new Insets(0, 0, 0, 20);
-        gbc_btnAdd.gridx = 0;
-        gbc_btnAdd.gridy = 0;
-        header_right.add(btnAdd, gbc_btnAdd);
-        
-        //BTN EDIT
-        
-        JButton btnEdit = new JButton("");
-        btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnEdit.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/editing.png")));
-        //Add Listener
-        
-        btnEdit.setBackground(new Color(85, 173, 155));
-        btnEdit.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        GridBagConstraints gbc_btnEdit = new GridBagConstraints();
-        gbc_btnEdit.fill = GridBagConstraints.BOTH;
-        gbc_btnEdit.insets = new Insets(0, 0, 0, 20);
-        gbc_btnEdit.gridx = 1;
-        gbc_btnEdit.gridy = 0;
-        header_right.add(btnEdit, gbc_btnEdit);
-        
-        //BTN delete
-        
-        JButton btnDel = new JButton("");
-        btnDel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnDel.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/trash-bin.png")));
-        //Add listener
-        
-        btnDel.setBackground(new Color(85, 173, 155));
-        btnDel.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        GridBagConstraints gbc_btnDel = new GridBagConstraints();
-        gbc_btnDel.fill = GridBagConstraints.BOTH;
-        gbc_btnDel.gridx = 2;
-        gbc_btnDel.gridy = 0;
-        header_right.add(btnDel, gbc_btnDel);
         
         JScrollPane main = new JScrollPane();
         main.setBackground(new Color(216, 239, 211));
@@ -240,52 +159,77 @@ public class ManageAllStudent extends JPanel {
         table.setSelectionBackground(new Color(149, 240, 179));
         table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         table.setModel(new DefaultTableModel(
-        	new Object[][] {
-        	},
-        	new String[] {
-        		"ID", "H\u1ECD t\u00EAn", "Ng\u00E0y sinh", "L\u1EDBp", "Ng\u00E0nh", "\u0110\u1ECBa ch\u1EC9", "Email", "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i"
+        	    new Object[][] {
+
+        	    },
+        	    new String[] {
+        	        "STT", "Mã môn học", "Tên môn học", "Học phí"
+        	    }
+        	) {
+        	    @Override
+        	    public boolean isCellEditable(int row, int column) {
+        	        return false; 
+        	    }
+        	});
+        
+        table.addMouseListener( new MouseAdapter() {
+        	
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		if(e.getClickCount() == 2) {
+        			int selectedRow = table.getSelectedRow();
+        			if(selectedRow != -1) {
+        				String subjectName = table.getValueAt(selectedRow, 2).toString();
+        				
+        				EventQueue.invokeLater(() ->{
+        					
+        				});
+        			}
+        		}
+        		
+        		
+        		super.mouseClicked(e);
         	}
-        ));
+        	
+		});
         
         main.setViewportView(table);
         ViewTable();
-	}
+    }
+	SubjectManaging sm = new SubjectManaging();
+        ArrayList<Subject> dsO = new ArrayList();
+	public void ViewTable(){
+            this.dsO = sm.selectAll();
+            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+            model.setNumRows(0);
+            int n = 1;
+            for(Subject o:dsO){
+                model.addRow(new Object[] {n, o.getMaMon(), o.getTenMon(), o.getHocPhi()});
+                n++;
+            }
+        }
+        public void ViewTablecon(ArrayList<Subject> dss){
+            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+            model.setNumRows(0);
+            int n = 1;
+            for(Subject s:dss){
+                model.addRow(new Object[] {n, s.getMaMon(), s.getTenMon(), s.getHocPhi()});
+            }
+        }
         public String gettxtsearch(){
             return this.txtSearch.getText().trim();
         };
-        ArrayList<Student> dsS = new ArrayList();
-        StudentManaging sm = new StudentManaging();
-	public void ViewTable(){
-            this.dsS = sm.selectAll();
-            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
-            model.setNumRows(0);
-            for(Student s:dsS){
-                model.addRow(new Object[] {s.getMaSV(),s.getHoTen(),s.getNgaySinh(),s.getLop(),s.getNganh(),s.getDiaChi(),s.getEmail(),s.getPhone()});
-            }
-        }
-        public void ViewTablecon(ArrayList<Student> dss){
-            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
-            model.setNumRows(0);
-            for(Student s:dss){
-                model.addRow(new Object[] {s.getMaSV(),s.getHoTen(),s.getNgaySinh(),s.getLop(),s.getNganh(),s.getDiaChi(),s.getEmail(),s.getPhone()});
-            }
-        }
-	private void handleSearch() {
-            ArrayList<Student> dss = new ArrayList();
-            if(searchOptions.getSelectedItem().equals("ID")){
-                 dss = sm.selectByCondition("ID", this.gettxtsearch());
-                 System.out.println("Số lượng kết quả tìm được cho ID: " + dss.size());
-            }else if(searchOptions.getSelectedItem().equals("Họ tên")){
-                dss = sm.selectByCondition("Họ tên", this.gettxtsearch());
-                System.out.println("Số lượng kết quả tìm được theo họ tên: " + dss.size());
-            }else if(searchOptions.getSelectedItem().equals("Lớp")){
-                dss = sm.selectByCondition("Lớp", this.gettxtsearch());
-                System.out.println("Số lượng kết quả tìm được theo lớp: " + dss.size());
-            }else if(searchOptions.getSelectedItem().equals("Ngành")){
-                dss = sm.selectByCondition("Ngành", this.gettxtsearch());
-                System.out.println("Số lượng kết quả tìm được theo ngành: " + dss.size());
+	public void handleSearch() {
+            ArrayList<Subject> dss = new ArrayList();
+            if(searchOptions.getSelectedItem().equals("Mã môn học")){
+                 dss = sm.selectByCondition("Mã môn học", this.gettxtsearch());
+            }else if(searchOptions.getSelectedItem().equals("Tên môn học")){
+                dss = sm.selectByCondition("Tên môn học", this.gettxtsearch());
+                //System.out.println("Số lượng kết quả tìm được theo tên môn học: " + dss.size());
             }
             ViewTablecon(dss);
 	}
-	
+
+
 }

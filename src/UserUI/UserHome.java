@@ -109,6 +109,8 @@ public class UserHome extends JFrame {
         DasbBoardScreen dasbBoardScreen = new DasbBoardScreen(); 
         ScoreWatcher scoreWatcher = new ScoreWatcher();
         SubjectWatcher subjectWatcher = new SubjectWatcher();
+        SchoolFeeWatcher schoolFeeWatcher = new SchoolFeeWatcher();
+        ChangeInformation changeInformation = new ChangeInformation();
         
         
 
@@ -116,6 +118,8 @@ public class UserHome extends JFrame {
        	mainContent.add(dasbBoardScreen, "dashBoardScreen");
        	mainContent.add(scoreWatcher, "scoreWatcher");
        	mainContent.add(subjectWatcher, "subjectWatcher");
+       	mainContent.add(schoolFeeWatcher, "schoolFeeWatcher");
+       	mainContent.add(changeInformation, "changeInformation");
         
         
         contentPanel.add(sideBar, BorderLayout.WEST);
@@ -197,7 +201,7 @@ public class UserHome extends JFrame {
 				
 			}
 		});
-        
+        //Features Loggin
         btnThird.setFont(new Font("Segoe UI", Font.BOLD, 26));
         btnThird.setBackground(new Color(85, 173, 155));
         btnThird.setBounds(10, 121, 278, 45);
@@ -225,6 +229,26 @@ public class UserHome extends JFrame {
         btnFourthButton.setBounds(10, 176, 278, 45);
         top.add(btnFourthButton);
         
+        JButton btnDangKyMonHoc  = new JButton("Đăng ký môn học\r\n");
+        btnDangKyMonHoc.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        //btnFourthButton.setIcon(new ImageIcon(Home.class.getResource()));
+        btnDangKyMonHoc.setForeground(new Color(241, 248, 232));
+        //add action listener
+        btnDangKyMonHoc.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+				
+			}
+		});
+        
+        btnDangKyMonHoc.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        btnDangKyMonHoc.setBackground(new Color(85, 173, 155));
+        btnDangKyMonHoc.setBounds(10, 231, 278, 45);
+        top.add(btnDangKyMonHoc);
+        
         //Fifth line
         
         JButton btnFifButton  = new JButton("Xem học phí");
@@ -237,13 +261,15 @@ public class UserHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				CardLayout c1 = (CardLayout) mainContent.getLayout();
+				c1.show(mainContent, "schoolFeeWatcher");
 				
 			}
 		});
         
         btnFifButton.setFont(new Font("Segoe UI", Font.BOLD, 26));
         btnFifButton.setBackground(new Color(85, 173, 155));
-        btnFifButton.setBounds(10, 231, 278, 45);
+        btnFifButton.setBounds(10, 286, 278, 45);
         top.add(btnFifButton);
         
         //Sixth line
@@ -259,27 +285,17 @@ public class UserHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				CardLayout c1CardLayout = (CardLayout) mainContent.getLayout();
+				c1CardLayout.show(mainContent, "changeInformation");
+				
 				
 			}
 		});
         
         btnSixbuButton.setFont(new Font("Segoe UI", Font.BOLD, 26));
         btnSixbuButton.setBackground(new Color(85, 173, 155));
-        btnSixbuButton.setBounds(10, 286, 278, 45);
+        btnSixbuButton.setBounds(10, 341, 278, 45);
         top.add(btnSixbuButton);
-        
-        //Seventh Line
-        
-        JButton btnSeventhButton  = new JButton("Something1");
-        btnSeventhButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        //btnSeventhButton.setIcon(new ImageIcon(Home.class.getResource()));
-        btnSeventhButton.setForeground(new Color(241, 248, 232));
-        //add action listener
-        
-        btnSeventhButton.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        btnSeventhButton.setBackground(new Color(85, 173, 155));
-        btnSeventhButton.setBounds(10, 341, 278, 45);
-        top.add(btnSeventhButton);
         
         
         //Bottom

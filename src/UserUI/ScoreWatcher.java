@@ -1,5 +1,8 @@
 package UserUI;
 
+import Data.Score;
+import UI.Login;
+import dataManaging.ScoreManaging;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -29,7 +33,8 @@ public class ScoreWatcher extends JPanel {
 	private JTextField txtSearch;
 	private JComboBox searchOptions;
 	private JTable table;
-	
+	ScoreManaging sm = new ScoreManaging();
+        ArrayList<Score> dsS = sm.selectAll();
 	public ScoreWatcher() {
 		
         setBounds(100, 100, 1530, 1017);
@@ -177,10 +182,10 @@ public class ScoreWatcher extends JPanel {
         		if(e.getClickCount() == 2) {
         			int selectedRow = table.getSelectedRow();
         			if(selectedRow != -1) {
-        				String subjectName = table.getValueAt(selectedRow, 2).toString();
-        				
+        				String subjectID = table.getValueAt(selectedRow, 1).toString();
+                                        Score score = sm.getScore(subjectID);
         				EventQueue.invokeLater(() ->{
-        					new ScoreTable(subjectName).setVisible(true);
+        					new ScoreTable(score).setVisible(true);
         				});
         			}
         		}
@@ -191,22 +196,42 @@ public class ScoreWatcher extends JPanel {
         	
 		});
         
-        //Thử nghiệm
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addRow(new Object[] {1, "CS101", "Lập trình Java", "Học kỳ 1"});
-        model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "Học kỳ 2"});
-        model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "Học kỳ 3"});
-        
         main.setViewportView(table);
-		
-		
-		
-		
-		
+	ViewTable();
 	}
 	
+        public void ViewTable(){
+            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+            model.setNumRows(0);
+            int n = 1;
+            Login lg = new Login();
+            for(Score s:dsS){
+                if(lg.getID().equals(s.getMaSV())){
+                    model.addRow(new Object[] {n, s.getMaLHP(), s.getTenLHP(), s.getHocKy()});
+                    n++;
+                }
+            }
+        }
+        public void ViewTablecon(ArrayList<Score> dss){
+            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+            model.setNumRows(0);
+            int n = 1;
+            for(Score s:dss){
+                model.addRow(new Object[] {n, s.getMaLHP(), s.getTenLHP(), s.getHocKy()});
+            }
+        }
+        public String gettxtsearch(){
+            return this.txtSearch.getText().trim();
+        };
 	public void handleSearch() {
-		
+            ArrayList<Score> dss = new ArrayList();
+            if(searchOptions.getSelectedItem().equals("Mã môn học")){
+                 dss = sm.selectByCondition("Mã môn học", this.gettxtsearch());
+            }else if(searchOptions.getSelectedItem().equals("Tên môn học")){
+                dss = sm.selectByCondition("Tên môn học", this.gettxtsearch());
+                //System.out.println("Số lượng kết quả tìm được theo tên môn học: " + dss.size());
+            }
+            ViewTablecon(dss);
 	}
 
 }

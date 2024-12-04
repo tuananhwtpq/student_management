@@ -1,5 +1,8 @@
 package UI;
 
+import Data.GiangVien;
+import Data.Student;
+import Data.TaiKhoan;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
 import UI.Login;
+import UserUI.UserHome;
+import dataManaging.TaiKhoanManaging;
 //import UserUI.UserHome;
 //import Manager.AccountManager;
 //import Manager.UserAccountManager;
@@ -29,6 +34,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JPasswordField;
 
 public class Login extends JFrame {
@@ -38,7 +46,19 @@ public class Login extends JFrame {
 	private JTextField txtUserName;
 	private JTextField txtPassWord;
 	private JTextField txtEmpty;
-	
+	private static Map<String, Student> sinhVienMap = new HashMap<>(); // Lưu trữ sinh viên
+        private static Map<String, GiangVien> giangVienMap = new HashMap<>(); // Lưu trữ giảng viên
+        private static Object userDangNhap = null;  // Lưu thông tin người dùng đang đăng nhập (SinhVien hoặc GiangVien)
+        private static String MaSV = null;
+
+    public static String getMaSV() {
+        return MaSV;
+    }
+
+    public static void setMaSV(String MaSV) {
+        Login.MaSV = MaSV;
+    }
+
 //	private AccountManager accountManager;
 //	private UserAccountManager uam;
 //	private JPasswordField passwordField;
@@ -58,10 +78,7 @@ public class Login extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
+        
 	public Login() {
 		
 		//AccountManager
@@ -208,26 +225,42 @@ public class Login extends JFrame {
 		txtEmpty.setColumns(10);
 	}
 	
+        TaiKhoanManaging tkm = new TaiKhoanManaging();
+        ArrayList<TaiKhoan> ds = new ArrayList();
 	//Xử lí đăng nhập
 	private void handleLogin() {
-		String userName = txtUserName.getText();
-		String passWord = txtPassWord.getText();
-		
-		if(userName.trim().isEmpty() || passWord.trim().isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin!");
-		}else {
-			//if(accountManager.validateLogin(userName, passWord)) {
-				JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-				new Home().setVisible(true);
-			//	new Home().setVisible(true);
-				dispose();
-			//}else if (uam.validateLogin(userName, passWord)) {
-				//JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-			//	new UserHome().setVisible(true);
-				//dispose();
-		//	}else {
-				//JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng");
-			}
-		}
+            this.ds = tkm.selectAll();
+            String tk = txtUserName.getText();
+            String mk = txtPassWord.getText();
+            boolean loginSuccessful = false;
+            for(TaiKhoan x:ds){
+                if(x.getTk().equalsIgnoreCase(tk) && x.getMk().equals(mk)){
+                    if(x.getRole() == 3){
+                        userDangNhap = x;
+                        JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+                        new Home().setVisible(true);
+                        dispose();
+                        loginSuccessful = true;
+                        
+                        break;
+                    }else if(x.getRole() == 4){
+                        userDangNhap = x;
+                        MaSV = x.getTk();
+                        JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
+                        new UserHome().setVisible(true);
+                        dispose();
+                        loginSuccessful = true;
+                        break;
+                    }
+                }
+            }
+            if(!loginSuccessful){
+                JOptionPane.showMessageDialog(this,"Dang nhap that bai");
+            }
 	}
+        //hàm lấy ID của đối tượng SV đang đăng nhập.
+        public String getID(){
+            return MaSV;
+        }
+    }
 
