@@ -111,6 +111,8 @@ public class UserHome extends JFrame {
         SubjectWatcher subjectWatcher = new SubjectWatcher();
         SchoolFeeWatcher schoolFeeWatcher = new SchoolFeeWatcher();
         ChangeInformation changeInformation = new ChangeInformation();
+        ViewSchedule viewSchedule = new ViewSchedule();
+        Registration registration = new Registration();
         
         
 
@@ -120,6 +122,8 @@ public class UserHome extends JFrame {
        	mainContent.add(subjectWatcher, "subjectWatcher");
        	mainContent.add(schoolFeeWatcher, "schoolFeeWatcher");
        	mainContent.add(changeInformation, "changeInformation");
+       	mainContent.add(viewSchedule, "viewSchedule");
+       	mainContent.add(registration, "registration");
         
         
         contentPanel.add(sideBar, BorderLayout.WEST);
@@ -219,6 +223,8 @@ public class UserHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				CardLayout c1 = (CardLayout) mainContent.getLayout();
+				c1.show(mainContent, "viewSchedule");
 
 				
 			}
@@ -239,6 +245,8 @@ public class UserHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				CardLayout c1CardLayout = (CardLayout) mainContent.getLayout();
+				c1CardLayout.show(mainContent, "registration");
 
 				
 			}
