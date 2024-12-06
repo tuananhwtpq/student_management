@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -181,6 +182,15 @@ public class ManageSubject extends JPanel {
         btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnAdd.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/add.png")));
         //Add listener
+        btnAdd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				AddSubject addSubject = new AddSubject();
+				addSubject.setVisible(true);
+			}
+		});
         
         btnAdd.setBackground(new Color(85, 173, 155));
         btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -197,6 +207,28 @@ public class ManageSubject extends JPanel {
         btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnEdit.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/editing.png")));
         //Add Listener
+        btnEdit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int selectedRow = table.getSelectedRow(); 
+		        if (selectedRow == -1) {
+		        	JOptionPane.showMessageDialog(null, "Vui lòng chọn một môn học để chỉnh sửa!");
+		        	return;
+		        }
+		        //Lấy dữ liệu từ dòng đc chọn
+		        String id = table.getValueAt(selectedRow, 0) != null ? table.getValueAt(selectedRow, 0).toString() : "";
+		        String tenMonHoc = table.getValueAt(selectedRow, 1) != null ? table.getValueAt(selectedRow, 1).toString() : "";
+		        String soTC = table.getValueAt(selectedRow, 2) != null ? table.getValueAt(selectedRow, 2).toString() : "";
+		        String moTa = table.getValueAt(selectedRow, 3) != null ? table.getValueAt(selectedRow, 3).toString() : "";
+		        
+		        EditSubject editSubject = new EditSubject(id, tenMonHoc, soTC, moTa);
+		        editSubject.setVisible(true);
+		        
+		        
+			}
+		});
         
         btnEdit.setBackground(new Color(85, 173, 155));
         btnEdit.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -213,6 +245,28 @@ public class ManageSubject extends JPanel {
         btnDel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnDel.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/trash-bin.png")));
         //Add listener
+        
+        btnDel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				int selectedRow = table.getSelectedRow();
+		        if (selectedRow >= 0) {
+		            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+		            if (confirm == JOptionPane.YES_OPTION) {
+
+		            	//Thêm chức năng xóa
+
+		                handleDelete();
+		                JOptionPane.showMessageDialog(null, "Xóa thành công!");
+		            }
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Vui lòng chọn một dòng để xóa!");
+		        }
+			}
+		});
         
         btnDel.setBackground(new Color(85, 173, 155));
         btnDel.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -239,16 +293,16 @@ public class ManageSubject extends JPanel {
                 if (e.getClickCount() == 2) { 
                     int row = table.getSelectedRow(); 
                     
-                    String studentId = table.getValueAt(row, 0).toString();
-                    String fullName = table.getValueAt(row, 1).toString();
-                    String birthDate = table.getValueAt(row, 2).toString();
-                    String className = table.getValueAt(row, 3).toString();
+                    String maMH = table.getValueAt(row, 0).toString();
+                    String tenMH = table.getValueAt(row, 1).toString();
+                    String ngayBatDau = table.getValueAt(row, 2).toString();
+                    String moTa = table.getValueAt(row, 3).toString();
 //                    String major = table.getValueAt(row, 4).toString();
 //                    String address = table.getValueAt(row, 5).toString();
 //                    String email = table.getValueAt(row, 6).toString();
 //                    String phoneNumber = table.getValueAt(row, 7).toString();
 //                    
-                    SubjectView subjectView = new SubjectView(fullName);
+                    SubjectView subjectView = new SubjectView(maMH, tenMH, ngayBatDau, moTa);
                     subjectView.setVisible(true); // Hiển thị StudentView
                 }
             }
@@ -281,6 +335,10 @@ public class ManageSubject extends JPanel {
 	}
 	
 	private void handleSearch() {
+		
+	}
+	
+	private void handleDelete() {
 		
 	}
 

@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -181,6 +182,15 @@ public class ManageClassroom extends JPanel {
         btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnAdd.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/add.png")));
         //Add listener
+        btnAdd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				AddClassroom addClassroom = new AddClassroom();
+				addClassroom.setVisible(true);
+			}
+		});
         
         btnAdd.setBackground(new Color(85, 173, 155));
         btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -197,6 +207,30 @@ public class ManageClassroom extends JPanel {
         btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnEdit.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/editing.png")));
         //Add Listener
+        btnEdit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int selectedRow = table.getSelectedRow(); // Lấy dòng đang chọn
+		        if (selectedRow == -1) { // Nếu không có dòng nào được chọn
+		        	JOptionPane.showMessageDialog(null, "Vui lòng chọn một sinh viên để chỉnh sửa!");
+		        	return;
+		        }
+		        
+		        // Lấy dữ liệu từ dòng đang chọn
+		        String classID = table.getValueAt(selectedRow, 0) != null ? table.getValueAt(selectedRow, 0).toString() : "";
+		        String className = table.getValueAt(selectedRow, 1) != null ? table.getValueAt(selectedRow, 1).toString() : "";
+		        String teacher = table.getValueAt(selectedRow, 2) != null ? table.getValueAt(selectedRow, 2).toString() : "";
+		        String siSo = table.getValueAt(selectedRow, 3) != null ? table.getValueAt(selectedRow, 3).toString() : "";
+		        String dateBegin = table.getValueAt(selectedRow, 4) != null ? table.getValueAt(selectedRow, 4).toString() : "";
+		        String dateEnd = table.getValueAt(selectedRow, 5) != null ? table.getValueAt(selectedRow, 5).toString() : "";
+		        
+		        // Khởi tạo giao diện EditClassroom và truyền dữ liệu
+		        EditClassroom editClassroom = new EditClassroom(classID, className, teacher, siSo, dateBegin, dateEnd);
+		        editClassroom.setVisible(true);
+			}
+		});
         
         btnEdit.setBackground(new Color(85, 173, 155));
         btnEdit.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -213,6 +247,27 @@ public class ManageClassroom extends JPanel {
         btnDel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnDel.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/trash-bin.png")));
         //Add listener
+        btnDel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				int selectedRow = table.getSelectedRow();
+		        if (selectedRow >= 0) {
+		            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+		            if (confirm == JOptionPane.YES_OPTION) {
+
+		            	//Thêm chức năng xóa
+
+		                handleDelete();
+		                JOptionPane.showMessageDialog(null, "Xóa thành công!");
+		            }
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Vui lòng chọn một dòng để xóa!");
+		        }
+			}
+		});
         
         btnDel.setBackground(new Color(85, 173, 155));
         btnDel.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -238,17 +293,18 @@ public class ManageClassroom extends JPanel {
                 if (e.getClickCount() == 2) { 
                     int row = table.getSelectedRow(); 
                     
-                    String studentId = table.getValueAt(row, 0).toString();
-                    String fullName = table.getValueAt(row, 1).toString();
-                    String birthDate = table.getValueAt(row, 2).toString();
-                    String className = table.getValueAt(row, 3).toString();
-                    String major = table.getValueAt(row, 4).toString();
-                    String address = table.getValueAt(row, 5).toString();
+                    String classroomID = table.getValueAt(row, 0).toString();
+                    String className = table.getValueAt(row, 1).toString();
+                    String teacher = table.getValueAt(row, 2).toString();
+                    String siSo = table.getValueAt(row, 3).toString();
+                    String ngayBatDau = table.getValueAt(row, 4).toString();
+                    String ngayKetThuc = table.getValueAt(row, 5).toString();
 //                    String email = table.getValueAt(row, 6).toString();
 //                    String phoneNumber = table.getValueAt(row, 7).toString();
                     
-                    ClassroomView classroomView = new ClassroomView(fullName);
-                    classroomView.setVisible(true); // Hiển thị StudentView
+                    
+                    ClassroomView classroomView = new ClassroomView(classroomID, className, teacher, siSo, ngayBatDau, ngayKetThuc);
+                    classroomView.setVisible(true);
                 }
             }
         });
@@ -280,4 +336,7 @@ public class ManageClassroom extends JPanel {
 		
 	}
 
+	private void handleDelete() {
+		
+	}
 }

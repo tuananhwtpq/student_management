@@ -32,11 +32,9 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JLabel;
 
 public class SchoolFeeWatcher extends JPanel {
-	
-	private JTextField txtSearch;
-	private JComboBox searchOptions;
 	private JTable table;
 	
 	public SchoolFeeWatcher() {
@@ -59,96 +57,40 @@ public class SchoolFeeWatcher extends JPanel {
         JPanel content_header = new JPanel();
         content_header.setPreferredSize(new Dimension(10, 80));
         content_header.setBackground(new Color(241, 248, 232));
+        content_header.setLayout(null);
         GridBagConstraints gbc_content_header = new GridBagConstraints();
         gbc_content_header.insets = new Insets(0, 0, 5, 0);
         gbc_content_header.fill = GridBagConstraints.BOTH;
         gbc_content_header.gridx = 0;
         gbc_content_header.gridy = 0;
         content.add(content_header, gbc_content_header);
-        GridBagLayout gbl_content_header = new GridBagLayout();
-        gbl_content_header.columnWidths = new int[]{763, 0, 0};
-        gbl_content_header.rowHeights = new int[]{0, 0};
-        gbl_content_header.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-        gbl_content_header.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-        content_header.setLayout(gbl_content_header);
         
         JPanel header_left = new JPanel();
+        header_left.setBounds(0, 0, 1054, 80);
         header_left.setBackground(new Color(241, 248, 232));
-        GridBagConstraints gbc_header_left = new GridBagConstraints();
-        gbc_header_left.insets = new Insets(0, 0, 0, 5);
-        gbc_header_left.fill = GridBagConstraints.BOTH;
-        gbc_header_left.gridx = 0;
-        gbc_header_left.gridy = 0;
-        content_header.add(header_left, gbc_header_left);
-        GridBagLayout gbl_header_left = new GridBagLayout();
-        gbl_header_left.columnWidths = new int[]{350, 124, 124, 0};
-        gbl_header_left.rowHeights = new int[]{60, 0};
-        gbl_header_left.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_header_left.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-        header_left.setLayout(gbl_header_left);
+        header_left.setLayout(null);
+        content_header.add(header_left);
         
-        txtSearch = new JTextField();
-        txtSearch.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        txtSearch.setBackground(new Color(255, 255, 255));
-        GridBagConstraints gbc_txtSearch = new GridBagConstraints();
-        gbc_txtSearch.fill = GridBagConstraints.BOTH;
-        gbc_txtSearch.insets = new Insets(10, 10, 10, 10);
-        gbc_txtSearch.gridx = 0;
-        gbc_txtSearch.gridy = 0;
-        header_left.add(txtSearch, gbc_txtSearch);
-        txtSearch.setColumns(10);
+        JButton btnThanhToan = new JButton("Thanh Toán");
+        btnThanhToan.setBounds(432, 9, 158, 60);
+        btnThanhToan.setForeground(new Color(0, 0, 0));
+        btnThanhToan.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btnThanhToan.setBackground(new Color(85, 173, 155));
+        header_left.add(btnThanhToan);
         
-        txtSearch.getDocument().addDocumentListener(new DocumentListener() {
-			
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				handleSearch();
-				
-			}
-			
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				handleSearch();
-				
-			}
-			
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				handleSearch();
-				
-			}
-		});
+        JLabel lblNewLabel = new JLabel("Số tiền còn nợ:");
+        lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblNewLabel.setBounds(43, 10, 137, 60);
+        header_left.add(lblNewLabel);
         
-        searchOptions = new JComboBox();
-        searchOptions.setForeground(new Color(0, 0, 0));
-        searchOptions.setFont(new Font("Tahoma", Font.BOLD, 18));
-        searchOptions.setModel(new DefaultComboBoxModel(new String[] {"Mã môn học", "Tên môn học"}));
-        searchOptions.setBackground(new Color(85, 173, 155));
-        GridBagConstraints gbc_searchOptions = new GridBagConstraints();
-        gbc_searchOptions.fill = GridBagConstraints.BOTH;
-        gbc_searchOptions.insets = new Insets(10, 10, 10, 10);
-        gbc_searchOptions.gridx = 1;
-        gbc_searchOptions.gridy = 0;
-        header_left.add(searchOptions, gbc_searchOptions);
-        
-        JButton btnSearch = new JButton("Tìm kiếm");
-        btnSearch.setForeground(new Color(0, 0, 0));
-        btnSearch.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		handleSearch();
-        	}
-        });
-        btnSearch.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        btnSearch.setBackground(new Color(85, 173, 155));
-        GridBagConstraints gbc_btnSearch = new GridBagConstraints();
-        gbc_btnSearch.insets = new Insets(10, 10, 10, 10);
-        gbc_btnSearch.fill = GridBagConstraints.BOTH;
-        gbc_btnSearch.gridx = 2;
-        gbc_btnSearch.gridy = 0;
-        header_left.add(btnSearch, gbc_btnSearch);
+        txtTongTien = new JTextField();
+        txtTongTien.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        txtTongTien.setText("tiền nợ ở đây nhé");
+        txtTongTien.setBounds(202, 10, 233, 60);
+        header_left.add(txtTongTien);
+        txtTongTien.setBorder(null);  
+        txtTongTien.setBackground(new Color(241, 248, 232));
+        txtTongTien.setColumns(10);
         
         JScrollPane main = new JScrollPane();
         main.setBackground(new Color(216, 239, 211));
@@ -169,7 +111,7 @@ public class SchoolFeeWatcher extends JPanel {
 
         	    },
         	    new String[] {
-        	        "STT", "Mã môn học", "Tên môn học", "Học phí"
+        	        "STT", "Mã môn học", "Tên môn học", "Số tiền cần thanh toán"
         	    }
         	) {
         	    @Override
@@ -200,12 +142,21 @@ public class SchoolFeeWatcher extends JPanel {
         	
 		});
         
+//        //Thử nghiệm
+//        DefaultTableModel model = (DefaultTableModel) table.getModel();
+//        model.addRow(new Object[] {1, "CS101", "Lập trình Java", "1.800.000đ"});
+//        model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
+//        model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
+//     
+//       main.setViewportView(table);
+//        
 
         main.setViewportView(table);
         ViewTable();
     }
 	SubjectManaging sm = new SubjectManaging();
         ArrayList<Subject> dsO = new ArrayList();
+        private JTextField txtTongTien;
 	public void ViewTable(){
             this.dsO = sm.selectAll();
             DefaultTableModel model = (DefaultTableModel) this.table.getModel();
@@ -224,35 +175,19 @@ public class SchoolFeeWatcher extends JPanel {
                 model.addRow(new Object[] {n, s.getMaMon(), s.getTenMon(), s.getHocPhi()});
             }
         }
-        public String gettxtsearch(){
-            return this.txtSearch.getText().trim();
-        };
-	public void handleSearch() {
-            ArrayList<Subject> dss = new ArrayList();
-            if(searchOptions.getSelectedItem().equals("Mã môn học")){
-                 dss = sm.selectByCondition("Mã môn học", this.gettxtsearch());
-            }else if(searchOptions.getSelectedItem().equals("Tên môn học")){
-                dss = sm.selectByCondition("Tên môn học", this.gettxtsearch());
-                //System.out.println("Số lượng kết quả tìm được theo tên môn học: " + dss.size());
-            }
-            ViewTablecon(dss);
-	}
-
-
-
-
-        //Thử nghiệm
-//         DefaultTableModel model = (DefaultTableModel) table.getModel();
-//         model.addRow(new Object[] {1, "CS101", "Lập trình Java", "1.800.000đ"});
-//         model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
-//         model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
-        
-//        main.setViewportView(table);
-		
-		
-		
-		
-		
+//        public String gettxtsearch(){
+//            return this.txtSearch.getText().trim();
+//        };
+//	public void handleSearch() {
+//            ArrayList<Subject> dss = new ArrayList();
+//            if(searchOptions.getSelectedItem().equals("Mã môn học")){
+//                 dss = sm.selectByCondition("Mã môn học", this.gettxtsearch());
+//            }else if(searchOptions.getSelectedItem().equals("Tên môn học")){
+//                dss = sm.selectByCondition("Tên môn học", this.gettxtsearch());
+//                //System.out.println("Số lượng kết quả tìm được theo tên môn học: " + dss.size());
+//            }
+//            ViewTablecon(dss);
+//	}
 	}
 	
 
