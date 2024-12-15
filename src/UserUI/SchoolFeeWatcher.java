@@ -171,6 +171,10 @@ public class SchoolFeeWatcher extends JPanel {
         	}
         	
 		});
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 0bfac4e509f837e2f77042a0ad56c0a6e2c95709
 
         main.setViewportView(table);
         ViewTable();
@@ -197,4 +201,32 @@ public class SchoolFeeWatcher extends JPanel {
             }
         }
 	}
+<<<<<<< HEAD
 	
+=======
+
+
+}
+
+        //Thử nghiệm
+//         DefaultTableModel model = (DefaultTableModel) table.getModel();
+//         model.addRow(new Object[] {1, "CS101", "Lập trình Java", "1.800.000đ"});
+//         model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
+//         model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
+        
+        main.setViewportView(table);
+		
+		
+		
+		
+		
+	}
+	
+	public void handleSearch() {
+		
+	}
+
+
+}
+
+>>>>>>> 0bfac4e509f837e2f77042a0ad56c0a6e2c95709

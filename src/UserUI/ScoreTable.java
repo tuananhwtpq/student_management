@@ -34,7 +34,11 @@ public class ScoreTable extends JFrame {
 	
 	public ScoreTable(Score s) {
 		
+
 		setTitle("Thông tin điểm môn học: " + s.getTenLHP());
+
+// 		setTitle("Thông tin điểm môn học: " + subjectName);
+
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -90,7 +94,11 @@ public class ScoreTable extends JFrame {
 		txtDiemTX1.setEditable(false);
 		txtDiemTX1.setBackground(new Color(241, 248, 232));
 		txtDiemTX1.setBorder(null);
+
 		txtDiemTX1.setText(Float.toString(s.getTx1()));
+
+// 		txtDiemTX1.setText("Xin chào");
+
 		txtDiemTX1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		GridBagConstraints gbc_txtDiemTX1 = new GridBagConstraints();
 		gbc_txtDiemTX1.anchor = GridBagConstraints.WEST;
@@ -207,7 +215,11 @@ public class ScoreTable extends JFrame {
 		
 		txtDanhGia = new JTextField();
 		txtDanhGia.setFocusable(false);
+
 		txtDanhGia.setText(s.getDanhGia());
+
+// 		txtDanhGia.setText("Xin chào");
+
 		txtDanhGia.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		txtDanhGia.setEditable(false);
 		txtDanhGia.setColumns(10);
@@ -222,4 +234,6 @@ public class ScoreTable extends JFrame {
 
 	}
 	
+
 }
+
