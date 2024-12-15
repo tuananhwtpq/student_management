@@ -273,24 +273,15 @@ public class ManageAllStudent extends JPanel {
 
         ));
 
-        	)
+        //(
         	
-        	{
-        	    @Override
-        	    public boolean isCellEditable(int row, int column) {
-        	        return false; 
-        	    }
-        	}
-        );
-        
-        // Thử nghiệm
-//         DefaultTableModel model = (DefaultTableModel) table.getModel();
-//         model.addRow(new Object[]{"SV001", "Nguyễn Văn A", "2001-05-15", "KTPM01", "Công nghệ thông tin", "Hà Nội", "nguyenvana@gmail.com", "0123456789"});
-//         model.addRow(new Object[]{"SV002", "Trần Thị B", "2002-03-10", "KTPM02", "Kế toán", "Đà Nẵng", "tranthib@gmail.com", "0987654321"});
-//         model.addRow(new Object[]{"SV003", "Lê Văn C", "2000-07-22", "KTPM03", "Quản trị kinh doanh", "Hồ Chí Minh", "levanc@gmail.com", "0912345678"});
-//         model.addRow(new Object[]{"SV004", "Phạm Thị D", "2001-09-05", "KTPM04", "Ngôn ngữ Anh", "Cần Thơ", "phamthid@gmail.com", "0945678123"});
-//         model.addRow(new Object[]{"SV005", "Hoàng Văn E", "1999-12-15", "KTPM05", "Khoa học dữ liệu", "Hải Phòng", "hoangvane@gmail.com", "0965432178"});
-        
+        //	{
+        //	    @Override
+        //	    public boolean isCellEditable(int row, int column) {
+        //	        return false; 
+        //	    }
+        //	}
+        //);
         main.setViewportView(table);
 
         

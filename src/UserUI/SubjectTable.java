@@ -23,9 +23,7 @@ public class SubjectTable extends JFrame {
 
         setTitle("Thông tin chi tiết môn học: " + b);
 
-    public SubjectTable(String subjectName) {
-
-//         setTitle("Thông tin chi tiết môn học: " + subjectName);
+    
 
         setSize(600, 400);
         setResizable(false);
