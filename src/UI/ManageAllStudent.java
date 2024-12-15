@@ -127,7 +127,7 @@ public class ManageAllStudent extends JPanel {
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
+				
 				handleSearch();
 				
 			}

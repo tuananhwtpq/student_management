@@ -24,8 +24,42 @@ public class StudentManaging implements Interface<Student>{
     }
 
     @Override
-    public int update(String t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int update(String t, String a, String b, String c) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Connection con = JDBCUtil.getConnection();
+            Statement st = con.createStatement();
+            // Lấy mã phiếu mới (giả sử là tăng dần từ REQUEST001)
+            String getMaxMaPhieuSQL = "SELECT MAX(CAST(SUBSTRING(MaPhieu, 8, 3) AS INT)) FROM UpdatingInfo_Request";
+            ResultSet rs = st.executeQuery(getMaxMaPhieuSQL);
+
+            String newMaPhieu = "REQUEST001";  // Mã phiếu mặc định
+            if (rs.next()) {
+                int maxMaPhieu = rs.getInt(1);
+                newMaPhieu = String.format("REQUEST%03d", maxMaPhieu + 1); // Tăng số mã phiếu lên 1
+            }
+            String sql = "INSERT INTO UpdatingInfo_Request (MaPhieu, MaSV, OldEmail, OldPhoneNumber, OldAddress, NewEmail, NewPhoneNumber, NewAddress)\n" +
+                        "SELECT \n" +
+                        "    '"+newMaPhieu+"',\n" +
+                        "    '"+t+"', \n" +
+                        "    sv.Email AS oldemail, \n" +
+                        "    sv.SoDienThoai AS oldphone, \n" +
+                        "    sv.DiaChi AS oldaddress, \n" +
+                        "    '"+a+"',\n" +
+                        "    '"+b+"',\n" +
+                        "    N'"+c+"'\n" +
+                        "FROM \n" +
+                        "    SinhVien sv\n" +
+                        "WHERE \n" +
+                        "    sv.masv = '"+t+"';";
+            // Thực thi câu lệnh SQL
+            int rowsAffected = st.executeUpdate(sql);
+            JDBCUtil.closeConnection(con);
+            return rowsAffected;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override

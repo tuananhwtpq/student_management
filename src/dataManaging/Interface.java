@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public interface Interface<T> {
     public int insert(T t);
     
-    public int update(String t);
+    public int update(String t, String a, String b, String c);
     
     public int delete(String t);
     

@@ -17,7 +17,7 @@ public class Student {
     private String DiaChi;
     private String Email;
     private String Phone;
-
+    private double sodu;
     public Student() {
     }
 
@@ -32,6 +32,26 @@ public class Student {
         this.Phone = Phone;
     }
 
+    public Student(String MaSV, String HoTen, String NgaySinh, String Lop, String Nganh, String DiaChi, String Email, String Phone, double sodu) {
+        this.MaSV = MaSV;
+        this.HoTen = HoTen;
+        this.NgaySinh = NgaySinh;
+        this.Lop = Lop;
+        this.Nganh = Nganh;
+        this.DiaChi = DiaChi;
+        this.Email = Email;
+        this.Phone = Phone;
+        this.sodu = sodu;
+    }
+
+    public double getSodu() {
+        return sodu;
+    }
+
+    public void setSodu(double sodu) {
+        this.sodu = sodu;
+    }
+    
     public String getMaSV() {
         return MaSV;
     }
