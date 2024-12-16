@@ -1,5 +1,6 @@
 package UserUI;
 
+import Data.TaiKhoan;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -86,7 +87,7 @@ public class UserHome extends JFrame {
         contentPanel.add(topBar, BorderLayout.NORTH);
         topBar.setLayout(null);
         
-        JLabel lblNewLabel = new JLabel("Đại học Công Nghiệp Hà Nội");
+        JLabel lblNewLabel = new JLabel("Đại học Công nghiệp Hà Nội");
         lblNewLabel.setLocation(new Point(50, 0));
         lblNewLabel.setPreferredSize(new Dimension(180, 13));
         lblNewLabel.setBounds(10, 0, 437, 48);
@@ -94,10 +95,11 @@ public class UserHome extends JFrame {
         lblNewLabel.setMaximumSize(new Dimension(180, 13));
         lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 26));
         topBar.add(lblNewLabel);
-        
-        JLabel lblNewLabel_1 = new JLabel("Xin chào,...");
+        Login login = new Login();
+        TaiKhoan tk = new TaiKhoan();
+        JLabel lblNewLabel_1 = new JLabel("Xin chào, "+tk.getTenSV());
         lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 26));
-        lblNewLabel_1.setBounds(1281, 2, 252, 48);
+        lblNewLabel_1.setBounds(1100, 2, 350, 48);
         topBar.add(lblNewLabel_1);
         
         mainContent = new JPanel(new CardLayout());
@@ -113,7 +115,10 @@ public class UserHome extends JFrame {
         ChangeInformation changeInformation = new ChangeInformation();
         ViewSchedule viewSchedule = new ViewSchedule();
         Registration registration = new Registration();
+
+
         
+
         
 
         
@@ -122,8 +127,12 @@ public class UserHome extends JFrame {
        	mainContent.add(subjectWatcher, "subjectWatcher");
        	mainContent.add(schoolFeeWatcher, "schoolFeeWatcher");
        	mainContent.add(changeInformation, "changeInformation");
-       	mainContent.add(viewSchedule, "viewSchedule");
+
+        mainContent.add(viewSchedule, "viewSchedule");
        	mainContent.add(registration, "registration");
+
+//        	mainContent.add(viewSchedule, "viewSchedule");
+//        	mainContent.add(registration, "registration");
         
         
         contentPanel.add(sideBar, BorderLayout.WEST);
@@ -222,9 +231,14 @@ public class UserHome extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
+                            CardLayout c1 = (CardLayout) mainContent.getLayout();
+                            c1.show(mainContent, "viewSchedule");
+
 				// TODO Auto-generated method stub
-				CardLayout c1 = (CardLayout) mainContent.getLayout();
-				c1.show(mainContent, "viewSchedule");
+// 				CardLayout c1 = (CardLayout) mainContent.getLayout();
+// 				c1.show(mainContent, "viewSchedule");
+
 
 				
 			}
@@ -244,9 +258,14 @@ public class UserHome extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+
 				CardLayout c1CardLayout = (CardLayout) mainContent.getLayout();
 				c1CardLayout.show(mainContent, "registration");
+
+				// TODO Auto-generated method stub
+// 				CardLayout c1CardLayout = (CardLayout) mainContent.getLayout();
+// 				c1CardLayout.show(mainContent, "registration");
+
 
 				
 			}

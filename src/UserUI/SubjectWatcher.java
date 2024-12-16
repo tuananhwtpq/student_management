@@ -30,10 +30,12 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
-import UI.ManageAllStudent;
+import dataManaging.SubjectManaging;
+import Data.Subject;
+import java.util.ArrayList;
 
 public class SubjectWatcher extends JPanel {
-
+        
 	private JTextField txtSearch;
 	private JComboBox searchOptions;
 	private JTable table;
@@ -181,7 +183,7 @@ public class SubjectWatcher extends JPanel {
         table.setSelectionBackground(new Color(149, 240, 179));
         table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         table.setModel(new DefaultTableModel(
-            new Object[][] {},
+            new Subject[][] {},
             new String[] {"STT", "Mã môn học", "Tên môn học", "Số tín chỉ", "Mô tả"}
         ) {
             @Override
@@ -191,39 +193,61 @@ public class SubjectWatcher extends JPanel {
         });
         
         table.addMouseListener( new MouseAdapter() {
-        	
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		// TODO Auto-generated method stub
-        		if(e.getClickCount() == 2) {
-        			int selectedRow = table.getSelectedRow();
-        			if(selectedRow != -1) {
-        				String subjectName = table.getValueAt(selectedRow, 2).toString();
-        				
-        				EventQueue.invokeLater(() ->{
-        					new SubjectTable(subjectName).setVisible(true);
-        				});
-        			}
-        		}
-        		
-        		
-        		super.mouseClicked(e);
-        	}
-        	
-		});
-        
-        //Thử nghiệm
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addRow(new Object[] {1, "IT0098", "Lập trình Java",1, "Học kỳ 1"});
-        model.addRow(new Object[] {2,"IT7823","Cấu trúc dữ liệu",2, "Học kỳ 2"});
-        model.addRow(new Object[] {3,"iT88263","Hệ điều hành",4, "Học kỳ 3"});
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2) {
+                    int selectedRow = table.getSelectedRow();
+                    if(selectedRow != -1) {
+                        //Tao cac bien de luu thong tin mon hoc
+                        String subjectID = table.getValueAt(selectedRow, 1).toString();
+                        String subjectName = table.getValueAt(selectedRow, 2).toString();
+                        String subjectTC = table.getValueAt(selectedRow, 3).toString();
+                        String subjectMT = table.getValueAt(selectedRow,4).toString();
+                        //Xem thong tin mon hoc day du
+                        EventQueue.invokeLater(() ->{
+                            new SubjectTable(subjectID, subjectName, subjectTC, subjectMT).setVisible(true);
+                        });
+                    }
+                }
+                super.mouseClicked(e);
+            }
+        });
         
         main.setViewportView(table);
-        
+        ViewTable();
 	}
-	
+        SubjectManaging sm = new SubjectManaging();
+        ArrayList<Subject> dsO = new ArrayList();
+	public void ViewTable(){
+            this.dsO = sm.selectAll();
+            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+            model.setNumRows(0);
+            int n = 1;
+            for(Subject o:dsO){
+                model.addRow(new Object[] {n, o.getMaMon(), o.getTenMon(), o.getStc(), o.getMoTa()});
+                n++;
+            }
+        }
+        public void ViewTablecon(ArrayList<Subject> dss){
+            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+            model.setNumRows(0);
+            int n = 1;
+            for(Subject s:dss){
+                model.addRow(new Object[] {n, s.getMaMon(), s.getTenMon(), s.getStc(), s.getMoTa()});
+            }
+        }
+        public String gettxtsearch(){
+            return this.txtSearch.getText().trim();
+        };
 	private void handleSearch() {
-		
+		ArrayList<Subject> dss = new ArrayList();
+            if(searchOptions.getSelectedItem().equals("Mã môn học")){
+                 dss = sm.selectByCondition("Mã môn học", this.gettxtsearch());
+            }else if(searchOptions.getSelectedItem().equals("Tên môn học")){
+                dss = sm.selectByCondition("Tên môn học", this.gettxtsearch());
+                //System.out.println("Số lượng kết quả tìm được theo tên môn học: " + dss.size());
+            }
+            ViewTablecon(dss);
 	}
 	
 }

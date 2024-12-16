@@ -1,5 +1,6 @@
 package UserUI;
 
+import Data.Score;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,9 +32,13 @@ public class ScoreTable extends JFrame {
 	private JTextField txtDanhGia;
 	private JTextField txtDiemTX1;
 	
-	public ScoreTable(String subjectName) {
+	public ScoreTable(Score s) {
 		
-		setTitle("Thông tin điểm môn học: " + subjectName);
+
+		setTitle("Thông tin điểm môn học: " + s.getTenLHP());
+
+// 		setTitle("Thông tin điểm môn học: " + subjectName);
+
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -88,7 +93,11 @@ public class ScoreTable extends JFrame {
 		txtDiemTX1.setEditable(false);
 		txtDiemTX1.setBackground(new Color(241, 248, 232));
 		txtDiemTX1.setBorder(null);
-		txtDiemTX1.setText("Xin chào");
+
+		txtDiemTX1.setText(Float.toString(s.getTx1()));
+
+// 		txtDiemTX1.setText("Xin chào");
+
 		txtDiemTX1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		GridBagConstraints gbc_txtDiemTX1 = new GridBagConstraints();
 		gbc_txtDiemTX1.anchor = GridBagConstraints.WEST;
@@ -110,7 +119,7 @@ public class ScoreTable extends JFrame {
 		txtDiemTX2 = new JTextField();
 		txtDiemTX2.setFocusable(false);
 		txtDiemTX2.setBackground(new Color(241, 248, 232));
-		txtDiemTX2.setText("Xin chào");
+		txtDiemTX2.setText(Float.toString(s.getTx2()));
 		txtDiemTX2.setBorder(null);
 		txtDiemTX2.setEditable(false);
 		txtDiemTX2.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -134,7 +143,7 @@ public class ScoreTable extends JFrame {
 		txtDiemGiuaKy = new JTextField();
 		txtDiemGiuaKy.setFocusable(false);
 		txtDiemGiuaKy.setBackground(new Color(241, 248, 232));
-		txtDiemGiuaKy.setText("Xin chào");
+		txtDiemGiuaKy.setText(Float.toString(s.getGk()));
 		txtDiemGiuaKy.setBorder(null);
 		txtDiemGiuaKy.setEditable(false);
 		txtDiemGiuaKy.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -158,7 +167,7 @@ public class ScoreTable extends JFrame {
 		txtCuoiKy = new JTextField();
 		txtCuoiKy.setFocusable(false);
 		txtCuoiKy.setBackground(new Color(241, 248, 232));
-		txtCuoiKy.setText("Xin chào");
+		txtCuoiKy.setText(Float.toString(s.getCk()));
 		txtCuoiKy.setBorder(null);
 		txtCuoiKy.setEditable(false);
 		txtCuoiKy.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -182,7 +191,7 @@ public class ScoreTable extends JFrame {
 		txtTongKet = new JTextField();
 		txtTongKet.setFocusable(false);
 		txtTongKet.setBackground(new Color(241, 248, 232));
-		txtTongKet.setText("Xin chào");
+		txtTongKet.setText(Float.toString(s.getTongKet()));
 		txtTongKet.setBorder(null);
 		txtTongKet.setEditable(false);
 		txtTongKet.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -205,7 +214,11 @@ public class ScoreTable extends JFrame {
 		
 		txtDanhGia = new JTextField();
 		txtDanhGia.setFocusable(false);
-		txtDanhGia.setText("Xin chào");
+
+		txtDanhGia.setText(s.getDanhGia());
+
+// 		txtDanhGia.setText("Xin chào");
+
 		txtDanhGia.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		txtDanhGia.setEditable(false);
 		txtDanhGia.setColumns(10);
@@ -220,4 +233,6 @@ public class ScoreTable extends JFrame {
 
 	}
 	
+
 }
+
