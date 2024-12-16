@@ -215,6 +215,33 @@ public class ManageAllStudent extends JPanel {
         btnEdit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnEdit.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/editing.png")));
         //Add Listener
+        btnEdit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int selectedRow = table.getSelectedRow(); // Lấy dòng đang chọn
+		        if (selectedRow == -1) { // Nếu không có dòng nào được chọn
+		        	JOptionPane.showMessageDialog(null, "Vui lòng chọn một sinh viên để chỉnh sửa!");
+		        	return;
+		        }
+		        
+		        // Lấy dữ liệu từ dòng đang chọn
+		        String studentId = table.getValueAt(selectedRow, 0) != null ? table.getValueAt(selectedRow, 0).toString() : "";
+		        String fullName = table.getValueAt(selectedRow, 1) != null ? table.getValueAt(selectedRow, 1).toString() : "";
+		        String birthDate = table.getValueAt(selectedRow, 2) != null ? table.getValueAt(selectedRow, 2).toString() : "";
+		        String className = table.getValueAt(selectedRow, 3) != null ? table.getValueAt(selectedRow, 3).toString() : "";
+		        String major = table.getValueAt(selectedRow, 4) != null ? table.getValueAt(selectedRow, 4).toString() : "";
+		        String address = table.getValueAt(selectedRow, 5) != null ? table.getValueAt(selectedRow, 5).toString() : "";
+		        String email = table.getValueAt(selectedRow, 6) != null ? table.getValueAt(selectedRow, 6).toString() : "";
+		        String phoneNumber = table.getValueAt(selectedRow, 7) != null ? table.getValueAt(selectedRow, 7).toString() : "";
+
+		        
+		        // Khởi tạo giao diện EditStudent và truyền dữ liệu
+		        EditStudent editStudent = new EditStudent(studentId, fullName, birthDate, className, major, address, email, phoneNumber);
+		        editStudent.setVisible(true);
+			}
+		});
         
         btnEdit.setBackground(new Color(85, 173, 155));
         btnEdit.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -231,6 +258,28 @@ public class ManageAllStudent extends JPanel {
         btnDel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnDel.setIcon(new ImageIcon(ManageAllStudent.class.getResource("/Imgs/trash-bin.png")));
         //Add listener
+        btnDel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int selectedRow = table.getSelectedRow();
+		        if (selectedRow >= 0) {
+		            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+		            if (confirm == JOptionPane.YES_OPTION) {
+
+		            	//Thêm chức năng xóa
+
+		                handleDelete();
+		                JOptionPane.showMessageDialog(null, "Xóa thành công!");
+		            }
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Vui lòng chọn một dòng để xóa!");
+		        }
+				
+			}
+		});
+        
         
         btnDel.setBackground(new Color(85, 173, 155));
         btnDel.setFont(new Font("Segoe UI", Font.BOLD, 18));
@@ -275,6 +324,27 @@ public class ManageAllStudent extends JPanel {
         table.setSelectionBackground(new Color(149, 240, 179));
         table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         table.setModel(new DefaultTableModel(
+
+//         	    new Object[][] {},
+//         	    new String[] {
+//         	        "ID", "Họ tên", "Ngày sinh", "Lớp", "Ngành", "Địa chỉ", "Email", "Số điện thoại"
+//         	    }
+//         	) {
+//         	    @Override
+//         	    public boolean isCellEditable(int row, int column) {
+//         	        return false; 
+//         	    }
+//         	});
+
+//          //Thử nghiệm
+//          DefaultTableModel model = (DefaultTableModel) table.getModel();
+//          model.addRow(new Object[]{"SV001", "Nguyễn Văn A", "2001-05-15", "KTPM01", "Công nghệ thông tin", "Hà Nội", "nguyenvana@gmail.com", "0123456789"});
+//          model.addRow(new Object[]{"SV002", "Trần Thị B", "2002-03-10", "KTPM02", "Kế toán", "Đà Nẵng", "tranthib@gmail.com", "0987654321"});
+//          model.addRow(new Object[]{"SV003", "Lê Văn C", "2000-07-22", "KTPM03", "Quản trị kinh doanh", "Hồ Chí Minh", "levanc@gmail.com", "0912345678"});
+//          model.addRow(new Object[]{"SV004", "Phạm Thị D", "2001-09-05", "KTPM04", "Ngôn ngữ Anh", "Cần Thơ", "phamthid@gmail.com", "0945678123"});
+//          model.addRow(new Object[]{"SV005", "Hoàng Văn E", "1999-12-15", "KTPM05", "Khoa học dữ liệu", "Hải Phòng", "hoangvane@gmail.com", "0965432178"});
+        
+
         	new Object[][] {
         	},
         	new String[] {
@@ -296,13 +366,27 @@ public class ManageAllStudent extends JPanel {
 
         
         main.setViewportView(table);
+
+
+
         ViewTable();
+
 	}
         public String gettxtsearch(){
             return this.txtSearch.getText().trim();
         };
         ArrayList<Student> dsS = new ArrayList();
         StudentManaging sm = new StudentManaging();
+
+//	public void ViewTable(){
+//            this.dsS = sm.selectAll();
+//            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+//            model.setNumRows(0);
+//            for(Student s:dsS){
+//                model.addRow(new Object[] {s.getMaSV(),s.getHoTen(),s.getNgaySinh(),s.getLop(),s.getNganh(),s.getDiaChi(),s.getEmail(),s.getPhone()});
+//            }
+//        }
+
 	public void ViewTable(){
             this.dsS = sm.selectAll();
             DefaultTableModel model = (DefaultTableModel) this.table.getModel();
@@ -311,6 +395,7 @@ public class ManageAllStudent extends JPanel {
                 model.addRow(new Object[] {s.getMaSV(),s.getHoTen(),s.getNgaySinh(),s.getLop(),s.getNganh(),s.getDiaChi(),s.getEmail(),s.getPhone()});
             }
         }
+
         public void ViewTablecon(ArrayList<Student> dss){
             DefaultTableModel model = (DefaultTableModel) this.table.getModel();
             model.setNumRows(0);
@@ -334,6 +419,14 @@ public class ManageAllStudent extends JPanel {
                 System.out.println("Số lượng kết quả tìm được theo ngành: " + dss.size());
             }
             ViewTablecon(dss);
+
+// 	}
+	
+// 	public void handleDelete() {
+		
+
+
 	}
+	
 	
 }

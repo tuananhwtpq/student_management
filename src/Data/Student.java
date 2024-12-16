@@ -17,7 +17,11 @@ public class Student {
     private String DiaChi;
     private String Email;
     private String Phone;
+
+
+
     private double sodu;
+
     public Student() {
     }
 
@@ -31,6 +35,8 @@ public class Student {
         this.Email = Email;
         this.Phone = Phone;
     }
+
+
 
     public Student(String MaSV, String HoTen, String NgaySinh, String Lop, String Nganh, String DiaChi, String Email, String Phone, double sodu) {
         this.MaSV = MaSV;
@@ -52,6 +58,7 @@ public class Student {
         this.sodu = sodu;
     }
     
+
     public String getMaSV() {
         return MaSV;
     }

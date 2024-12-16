@@ -6,7 +6,9 @@ package dataManaging;
 
 import AccessDatabase.JDBCUtil;
 import Data.Subject;
+
 import UI.Login;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
  * @author admin
  */
 public class SubjectManaging {
+
     Login l = new Login();
     String masv = l.getID();
     public Subject selectSubjectbyID(String id){
@@ -41,6 +44,7 @@ public class SubjectManaging {
         }
         return o;
     }
+
     public ArrayList<Subject> selectAll(){
         ArrayList<Subject> ds = new ArrayList();
         try{
@@ -54,7 +58,11 @@ public class SubjectManaging {
                 String stc = rs.getString("SoTinChi");
                 String mota = rs.getString("MoTa");
                 String hk = rs.getString("HocKy");
+
+//                 String hp = rs.getString("HocPhi");
+
                 double hp = rs.getDouble("HocPhi");
+
                 String ngaybanhanh = rs.getString("NgayBanHanh");
                 Subject o = new Subject(ma, ten, stc, mota, hk, hp, ngaybanhanh);
                 ds.add(o);
@@ -83,7 +91,11 @@ public class SubjectManaging {
                     String stc = rs.getString("SoTinChi");
                     String mota = rs.getString("MoTa");
                     String hk = rs.getString("HocKy");
+
+//                     String hp = rs.getString("HocPhi");
+
                     double hp = rs.getDouble("HocPhi");
+
                     String ngaybanhanh = rs.getString("NgayBanHanh");
                     Subject o = new Subject(ma, ten, stc, mota, hk, hp, ngaybanhanh);
                     ds.add(o);
@@ -93,7 +105,11 @@ public class SubjectManaging {
                     String stc = rs.getString("SoTinChi");
                     String mota = rs.getString("MoTa");
                     String hk = rs.getString("HocKy");
+
+//                     String hp = rs.getString("HocPhi");
+
                     Double hp = rs.getDouble("HocPhi");
+
                     String ngaybanhanh = rs.getString("NgayBanHanh");
                     Subject o = new Subject(ma, ten, stc, mota, hk, hp, ngaybanhanh);
                     ds.add(o);
@@ -105,6 +121,7 @@ public class SubjectManaging {
         }
         return ds;
     }
+
     public ArrayList<Subject> selectSubjectforDKHP(){
         ArrayList<Subject> ds = new ArrayList();
         try{
@@ -192,4 +209,5 @@ public class SubjectManaging {
         }
         return 3;
     }
+
 }

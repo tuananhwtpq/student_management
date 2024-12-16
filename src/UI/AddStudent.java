@@ -70,7 +70,7 @@ public class AddStudent extends JFrame {
         
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(null);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -205,6 +205,7 @@ public class AddStudent extends JFrame {
 		GridBagConstraints gbc_txtEmail = new GridBagConstraints();
 		gbc_txtEmail.anchor = GridBagConstraints.WEST;
 		gbc_txtEmail.insets = new Insets(10, 10, 10, 10);
+		gbc_txtEmail.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtEmail.gridx = 3;
 		gbc_txtEmail.gridy = 5;
 		content.add(txtEmail, gbc_txtEmail);
@@ -243,11 +244,11 @@ public class AddStudent extends JFrame {
 		txtSoDienThoai.setColumns(10);
 		GridBagConstraints gbc_txtSoDienThoai = new GridBagConstraints();
 		gbc_txtSoDienThoai.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtSoDienThoai.insets = new Insets(10, 10, 10, 10);
 		gbc_txtSoDienThoai.gridx = 3;
 		gbc_txtSoDienThoai.gridy = 7;
 		content.add(txtSoDienThoai, gbc_txtSoDienThoai);
 		
-		txtDiaChi = new JTextField();
 
 		
 		JPanel footer = new JPanel();
@@ -294,6 +295,15 @@ public class AddStudent extends JFrame {
 	
 	//Các trường trong window refresh
 	public void refresh() {
+		
+		txtId.setText("");
+		txtHoTen.setText("");
+		txtDiaChi.setText("");
+		txtNganh.setText("");
+		txtNgaySinh.setText("");
+		txtLop.setText("");
+		txtSoDienThoai.setText("");
+		txtEmail.setText("");
 		
 	}
 

@@ -24,6 +24,10 @@ public class StudentManaging implements Interface<Student>{
     }
 
     @Override
+
+//     public int update(String t) {
+//         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
     public int update(String t, String a, String b, String c) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         try{

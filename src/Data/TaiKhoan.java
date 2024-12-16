@@ -4,12 +4,15 @@
  */
 package Data;
 
+
+
 import AccessDatabase.JDBCUtil;
 import UI.Login;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 
 /**
  *
@@ -19,7 +22,9 @@ public class TaiKhoan {
     private String tk;
     private String mk;
     private int role;
+
     Login l = new Login();
+
 
     public TaiKhoan() {
     }
@@ -53,6 +58,9 @@ public class TaiKhoan {
     public void setRole(int role) {
         this.role = role;
     }
+
+    
+
     public String getTenSV(){
         String tensv = null;
         String masv = l.getID();
@@ -70,4 +78,5 @@ public class TaiKhoan {
         }
         return tensv;
     }
+
 }

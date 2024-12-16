@@ -33,6 +33,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
+
 import javax.swing.JOptionPane;
 
 public class SchoolFeeWatcher extends JPanel {
@@ -72,8 +73,13 @@ public class SchoolFeeWatcher extends JPanel {
         header_left.setLayout(null);
         content_header.add(header_left);
         
+
+//         JButton btnThanhToan = new JButton("Thanh Toán");
+//         btnThanhToan.setBounds(432, 9, 158, 60);
+
         JButton btnThanhToan = new JButton("Thanh toán");
         btnThanhToan.setBounds(432, 9, 160, 60);
+
         btnThanhToan.setForeground(new Color(0, 0, 0));
         btnThanhToan.setFont(new Font("Segoe UI", Font.BOLD, 18));
         btnThanhToan.setBackground(new Color(85, 173, 155));
@@ -84,17 +90,23 @@ public class SchoolFeeWatcher extends JPanel {
         lblNewLabel.setBounds(43, 10, 137, 60);
         header_left.add(lblNewLabel);
         
+
+//         txtTongTien = new JTextField();
+//         txtTongTien.setFont(new Font("Tahoma", Font.PLAIN, 18));
+//         txtTongTien.setText("tiền nợ ở đây nhé");
+
         double tongtien = sm.selecttonghocphi(sm.selecthocphi());
         String tong = String.valueOf(tongtien);
         txtTongTien = new JTextField();
         txtTongTien.setFont(new Font("Tahoma", Font.PLAIN, 18));
         txtTongTien.setText(tong);
+
         txtTongTien.setBounds(202, 10, 233, 60);
         header_left.add(txtTongTien);
         txtTongTien.setBorder(null);  
         txtTongTien.setBackground(new Color(241, 248, 232));
         txtTongTien.setColumns(10);
-        
+
         
         JScrollPane main = new JScrollPane();
         main.setBackground(new Color(216, 239, 211));
@@ -172,14 +184,33 @@ public class SchoolFeeWatcher extends JPanel {
         	
 		});
 
+        
+//         //Thử nghiệm
+//         DefaultTableModel model = (DefaultTableModel) table.getModel();
+//         model.addRow(new Object[] {1, "CS101", "Lập trình Java", "1.800.000đ"});
+//         model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
+//         model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
+     
+//        main.setViewportView(table);
+        
+
+//         main.setViewportView(table);
+        //ViewTable();
+
+
         main.setViewportView(table);
         ViewTable();
+
     }
 	SubjectManaging sm = new SubjectManaging();
         ArrayList<Subject> dsO = new ArrayList();
         private JTextField txtTongTien;
 	public void ViewTable(){
+
+//             this.dsO = sm.selectAll();
+
             this.dsO = sm.selecthocphi();
+
             DefaultTableModel model = (DefaultTableModel) this.table.getModel();
             model.setNumRows(0);
             int n = 1;
@@ -197,6 +228,28 @@ public class SchoolFeeWatcher extends JPanel {
             }
         }
 
+//        public String gettxtsearch(){
+//            return this.txtSearch.getText().trim();
+//        };
+//	public void handleSearch() {
+//            ArrayList<Subject> dss = new ArrayList();
+//            if(searchOptions.getSelectedItem().equals("Mã môn học")){
+//                 dss = sm.selectByCondition("Mã môn học", this.gettxtsearch());
+//            }else if(searchOptions.getSelectedItem().equals("Tên môn học")){
+//                dss = sm.selectByCondition("Tên môn học", this.gettxtsearch());
+//                //System.out.println("Số lượng kết quả tìm được theo tên môn học: " + dss.size());
+//            }
+//            ViewTablecon(dss);
+//	}
+// 	}
+	
+
+
+
+
+
+
+
         //main.setViewportView(table);
 		
 }
@@ -204,5 +257,6 @@ public class SchoolFeeWatcher extends JPanel {
 	//public void handleSearch() {
 		
 	
+
 
 

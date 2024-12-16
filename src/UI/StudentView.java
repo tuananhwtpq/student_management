@@ -1,6 +1,8 @@
 package UI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -29,39 +31,45 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 
 
 public class StudentView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtMaSV;
-	private JTextField txtLop;
-	private JTextField txtHoTen;
+	private JTextField txtId;
 	private JTextField txtNganh;
-	private JTextField txtNgaySinh;
+	private JTextField txtHoTen;
 	private JTextField txtDiaChi;
+	private JTextField txtNgaySinh;
 	private JTextField txtEmail;
-	private JTextField txtPhone;
+	private String UIName;
+	private String CategoryTitle;
+	private JTextField txtLop;
+	private JTextField txtSoDienThoai;
 
 	
 	public StudentView(String studentId, String fullName, String birthDate, String className, String major, String address, String email, String phoneNumber) {		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		setTitle("Thông tin của sinh viên: " + fullName + " - ID: " + studentId);
+		
 		addWindowListener(new WindowAdapter() {
 		    @Override
 		    public void windowClosing(WindowEvent e) {
-		        setVisible(false); 
+		        setVisible(false); // Thay vì dispose(), ta sẽ chỉ ẩn cửa sổ
 		    }
 		});
-		
-		setTitle("Thông tin sinh viên: " + fullName);
-		setBounds(100, 100, 1000, 470);
+		setBounds(100, 100, 900, 400);
 		setResizable(false);
-
-        int width = getBounds().width; 
-        int height = getBounds().height;; 
+		
+		// Thiết lập kích thước của cửa sổ
+        int width = getBounds().width; // Chiều rộng
+        int height = getBounds().height;; // Chiều cao
         setSize(width, height);
         
+        // Lấy kích thước của màn hình
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int screenWidth = screenSize.width;
         int screenHeight = screenSize.height;
@@ -74,102 +82,67 @@ public class StudentView extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
+
 		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0}; // Chỉ có cột chứa nội dung
-		gbl_contentPane.rowHeights = new int[]{348, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE}; // Cột duy nhất chiếm toàn bộ không gian
-		gbl_contentPane.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		JPanel header = new JPanel();
+		header.setBackground(new Color(241, 248, 232));
+		header.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(85, 173, 155)));
+		contentPane.add(header, BorderLayout.NORTH);
+		
+		JLabel lblTitle = new JLabel("Thông tin sinh viên: " + fullName + " - ID: " + studentId );
+		lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 22));
+		header.add(lblTitle);
 		
 		JPanel content = new JPanel();
 		content.setBackground(new Color(241, 248, 232));
-		
-		GridBagConstraints gbc_content = new GridBagConstraints();
-		gbc_content.insets = new Insets(10, 10, 10, 10);
-		gbc_content.fill = GridBagConstraints.BOTH;
-		gbc_content.gridx = 0; // Đặt tại cột 0
-		gbc_content.gridy = 0;
-		contentPane.add(content, gbc_content);
-		
+		content.setBorder(new EmptyBorder(20, 0, 20, 0));
+		contentPane.add(content, BorderLayout.CENTER);
 		GridBagLayout gbl_content = new GridBagLayout();
-		gbl_content.columnWidths = new int[]{0, 171, 0, 228, 0};
-		gbl_content.rowHeights = new int[]{0, 0, 0, 41, 0, 0, 0};
-		gbl_content.columnWeights = new double[]{1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_content.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_content.columnWidths = new int[]{75, 260, 0, 345, 0};
+		gbl_content.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_content.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_content.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		content.setLayout(gbl_content);
 		
-		JLabel lblMaSV = new JLabel("Mã SV:");
-		lblMaSV.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		GridBagConstraints gbc_lblMaSV = new GridBagConstraints();
-		gbc_lblMaSV.anchor = GridBagConstraints.WEST;
-		gbc_lblMaSV.insets = new Insets(10, 10, 10, 10);
-		gbc_lblMaSV.gridx = 0;
-		gbc_lblMaSV.gridy = 0;
-		content.add(lblMaSV, gbc_lblMaSV);
+		JLabel lblId = new JLabel("ID");
+		lblId.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		GridBagConstraints gbc_lblId = new GridBagConstraints();
+		gbc_lblId.anchor = GridBagConstraints.WEST;
+		gbc_lblId.insets = new Insets(10, 10, 10, 10);
+		gbc_lblId.gridx = 0;
+		gbc_lblId.gridy = 1;
+		content.add(lblId, gbc_lblId);
 		
-		txtMaSV = new JTextField();
-		txtMaSV.setBackground(new Color(241, 248, 232));
-		txtMaSV.setBorder(null);
-		txtMaSV.setText("Xin chào");
-		txtMaSV.setEditable(false);
-		txtMaSV.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		GridBagConstraints gbc_txtMaSV = new GridBagConstraints();
-		gbc_txtMaSV.anchor = GridBagConstraints.WEST;
-		gbc_txtMaSV.insets = new Insets(10, 10, 10, 10);
-		gbc_txtMaSV.gridx = 1;
-		gbc_txtMaSV.gridy = 0;
-		content.add(txtMaSV, gbc_txtMaSV);
-		txtMaSV.setColumns(10);
+		txtId = new JTextField();
+		txtId.setEditable(false);
+		txtId.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		txtId.setColumns(10);
+		txtId.setBorder(null);
+		txtId.setBackground(new Color(241, 248, 232));
+		GridBagConstraints gbc_txtId = new GridBagConstraints();
+		gbc_txtId.anchor = GridBagConstraints.WEST;
+		gbc_txtId.insets = new Insets(10, 10, 10, 10);
+		gbc_txtId.gridx = 1;
+		gbc_txtId.gridy = 1;
+		content.add(txtId, gbc_txtId);
 		
-		JLabel lblLop = new JLabel("Lớp:");
-		lblLop.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		GridBagConstraints gbc_lblLop = new GridBagConstraints();
-		gbc_lblLop.anchor = GridBagConstraints.WEST;
-		gbc_lblLop.insets = new Insets(10, 10, 10, 10);
-		gbc_lblLop.gridx = 2;
-		gbc_lblLop.gridy = 0;
-		content.add(lblLop, gbc_lblLop);
+//		txtAuthor = new JTextField();
+//		txtAuthor.setBackground(new Color(241, 248, 232));
+//		txtAuthor.setText("Xin chào");
+//		txtAuthor.setBorder(null);
+//		txtAuthor.setEditable(false);
+//		txtAuthor.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+//		txtAuthor.setColumns(10);
+//		GridBagConstraints gbc_txtAuthor = new GridBagConstraints();
+//		gbc_txtAuthor.insets = new Insets(10, 10, 10, 10);
+//		gbc_txtAuthor.fill = GridBagConstraints.HORIZONTAL;
+//		gbc_txtAuthor.gridx = 1;
+//		gbc_txtAuthor.gridy = 1;
+//		content.add(txtAuthor, gbc_txtAuthor);
 		
-		txtLop = new JTextField();
-		txtLop.setBackground(new Color(241, 248, 232));
-		txtLop.setText("Xin chào");
-		txtLop.setBorder(null);
-		txtLop.setEditable(false);
-		txtLop.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		GridBagConstraints gbc_txtLop = new GridBagConstraints();
-		gbc_txtLop.insets = new Insets(10, 10, 10, 10);
-		gbc_txtLop.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtLop.gridx = 3;
-		gbc_txtLop.gridy = 0;
-		content.add(txtLop, gbc_txtLop);
-		txtLop.setColumns(10);
-		
-		JLabel lblHoTen = new JLabel("Họ Tên:");
-		lblHoTen.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		GridBagConstraints gbc_lblHoTen = new GridBagConstraints();
-		gbc_lblHoTen.anchor = GridBagConstraints.WEST;
-		gbc_lblHoTen.insets = new Insets(10, 10, 10, 10);
-		gbc_lblHoTen.gridx = 0;
-		gbc_lblHoTen.gridy = 1;
-		content.add(lblHoTen, gbc_lblHoTen);
-		
-		txtHoTen = new JTextField();
-		txtHoTen.setBackground(new Color(241, 248, 232));
-		txtHoTen.setText("Xin chào");
-		txtHoTen.setBorder(null);
-		txtHoTen.setEditable(false);
-		txtHoTen.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		txtHoTen.setColumns(10);
-		GridBagConstraints gbc_txtHoTen = new GridBagConstraints();
-		gbc_txtHoTen.insets = new Insets(10, 10, 10, 10);
-		gbc_txtHoTen.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtHoTen.gridx = 1;
-		gbc_txtHoTen.gridy = 1;
-		content.add(txtHoTen, gbc_txtHoTen);
-		
-		JLabel lblNganh = new JLabel("Ngành:");
+		JLabel lblNganh = new JLabel("Ngành");
 		lblNganh.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		GridBagConstraints gbc_lblNganh = new GridBagConstraints();
 		gbc_lblNganh.anchor = GridBagConstraints.WEST;
@@ -179,111 +152,167 @@ public class StudentView extends JFrame {
 		content.add(lblNganh, gbc_lblNganh);
 		
 		txtNganh = new JTextField();
-		txtNganh.setBackground(new Color(241, 248, 232));
-		txtNganh.setText("Xin chào");
-		txtNganh.setBorder(null);
 		txtNganh.setEditable(false);
+		txtNganh.setBorder(null);
+		txtNganh.setBackground(new Color(241, 248, 232));
 		txtNganh.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		txtNganh.setColumns(10);
 		GridBagConstraints gbc_txtNganh = new GridBagConstraints();
 		gbc_txtNganh.insets = new Insets(10, 10, 10, 10);
 		gbc_txtNganh.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtNganh.gridx = 3;
 		gbc_txtNganh.gridy = 1;
 		content.add(txtNganh, gbc_txtNganh);
+		txtNganh.setColumns(10);
 		
-		JLabel lblNgaySinh = new JLabel("Ngày Sinh:");
-		lblNgaySinh.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		GridBagConstraints gbc_lblNgaySinh = new GridBagConstraints();
-		gbc_lblNgaySinh.anchor = GridBagConstraints.WEST;
-		gbc_lblNgaySinh.insets = new Insets(10, 10, 10, 10);
-		gbc_lblNgaySinh.gridx = 0;
-		gbc_lblNgaySinh.gridy = 2;
-		content.add(lblNgaySinh, gbc_lblNgaySinh);
+		JLabel lblHoTen = new JLabel("Họ tên");
+		lblHoTen.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		GridBagConstraints gbc_lblHoTen = new GridBagConstraints();
+		gbc_lblHoTen.anchor = GridBagConstraints.WEST;
+		gbc_lblHoTen.insets = new Insets(10, 10, 10, 10);
+		gbc_lblHoTen.gridx = 0;
+		gbc_lblHoTen.gridy = 3;
+		content.add(lblHoTen, gbc_lblHoTen);
 		
-		txtNgaySinh = new JTextField();
-		txtNgaySinh.setBackground(new Color(241, 248, 232));
-		txtNgaySinh.setText("Xin chào");
-		txtNgaySinh.setBorder(null);
-		txtNgaySinh.setEditable(false);
-		txtNgaySinh.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		txtNgaySinh.setColumns(10);
-		GridBagConstraints gbc_txtNgaySinh = new GridBagConstraints();
-		gbc_txtNgaySinh.insets = new Insets(10, 10, 10, 10);
-		gbc_txtNgaySinh.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtNgaySinh.gridx = 1;
-		gbc_txtNgaySinh.gridy = 2;
-		content.add(txtNgaySinh, gbc_txtNgaySinh);
+		txtHoTen = new JTextField();
+		txtHoTen.setEditable(false);
+		txtHoTen.setBorder(null);
+		txtHoTen.setBackground(new Color(241, 248, 232));
+		txtHoTen.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		GridBagConstraints gbc_txtHoTen = new GridBagConstraints();
+		gbc_txtHoTen.insets = new Insets(10, 10, 10, 10);
+		gbc_txtHoTen.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtHoTen.gridx = 1;
+		gbc_txtHoTen.gridy = 3;
+		content.add(txtHoTen, gbc_txtHoTen);
+		txtHoTen.setColumns(10);
 		
-		JLabel lblDiaChi = new JLabel("Địa chỉ:");
+		JLabel lblDiaChi = new JLabel("Địa chỉ");
 		lblDiaChi.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		GridBagConstraints gbc_lblDiaChi = new GridBagConstraints();
 		gbc_lblDiaChi.anchor = GridBagConstraints.WEST;
 		gbc_lblDiaChi.insets = new Insets(10, 10, 10, 10);
 		gbc_lblDiaChi.gridx = 2;
-		gbc_lblDiaChi.gridy = 2;
+		gbc_lblDiaChi.gridy = 3;
 		content.add(lblDiaChi, gbc_lblDiaChi);
 		
 		txtDiaChi = new JTextField();
-		txtDiaChi.setBackground(new Color(241, 248, 232));
-		txtDiaChi.setText("Xin chào");
-		txtDiaChi.setBorder(null);
 		txtDiaChi.setEditable(false);
+		txtDiaChi.setBorder(null);
+		txtDiaChi.setBackground(new Color(241, 248, 232));
+		
 		txtDiaChi.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		txtDiaChi.setColumns(10);
 		GridBagConstraints gbc_txtDiaChi = new GridBagConstraints();
 		gbc_txtDiaChi.insets = new Insets(10, 10, 10, 10);
 		gbc_txtDiaChi.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtDiaChi.gridx = 3;
-		gbc_txtDiaChi.gridy = 2;
+		gbc_txtDiaChi.gridy = 3;
 		content.add(txtDiaChi, gbc_txtDiaChi);
+		txtDiaChi.setColumns(10);
+				
+		JLabel lblNgaySinh = new JLabel("Ngày Sinh");
+		lblNgaySinh.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		GridBagConstraints gbc_lblNgaySinh = new GridBagConstraints();
+		gbc_lblNgaySinh.anchor = GridBagConstraints.WEST;
+		gbc_lblNgaySinh.insets = new Insets(10, 10, 10, 10);
+		gbc_lblNgaySinh.gridx = 0;
+		gbc_lblNgaySinh.gridy = 5;
+		content.add(lblNgaySinh, gbc_lblNgaySinh);
 		
-		JLabel lblEmail = new JLabel("Email:");
+		txtNgaySinh = new JTextField();
+		txtNgaySinh.setEditable(false);
+		txtNgaySinh.setBorder(null);
+		txtNgaySinh.setBackground(new Color(241, 248, 232));
+		txtNgaySinh.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		GridBagConstraints gbc_txtNgaySinh = new GridBagConstraints();
+		gbc_txtNgaySinh.anchor = GridBagConstraints.WEST;
+		gbc_txtNgaySinh.insets = new Insets(10, 10, 10, 10);
+		gbc_txtNgaySinh.gridx = 1;
+		gbc_txtNgaySinh.gridy = 5;
+		content.add(txtNgaySinh, gbc_txtNgaySinh);
+		txtNgaySinh.setColumns(10);
+		
+		JLabel lblEmail = new JLabel("Email");
 		lblEmail.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		GridBagConstraints gbc_lblEmail = new GridBagConstraints();
-		gbc_lblEmail.anchor = GridBagConstraints.WEST;  // Căn trái
+		gbc_lblEmail.anchor = GridBagConstraints.WEST;
 		gbc_lblEmail.insets = new Insets(10, 10, 10, 10);
-		gbc_lblEmail.gridx = 0;
-		gbc_lblEmail.gridy = 3;
+		gbc_lblEmail.gridx = 2;
+		gbc_lblEmail.gridy = 5;
 		content.add(lblEmail, gbc_lblEmail);
 		
 		txtEmail = new JTextField();
-		txtEmail.setText("Xin chào");
-		txtEmail.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		txtEmail.setEditable(false);
-		txtEmail.setColumns(10);
 		txtEmail.setBorder(null);
 		txtEmail.setBackground(new Color(241, 248, 232));
+		txtEmail.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		GridBagConstraints gbc_txtEmail = new GridBagConstraints();
-		gbc_txtEmail.insets = new Insets(0, 0, 5, 5);
+		gbc_txtEmail.anchor = GridBagConstraints.WEST;
+		gbc_txtEmail.insets = new Insets(10, 10, 10, 10);
 		gbc_txtEmail.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtEmail.gridx = 1;
-		gbc_txtEmail.gridy = 3;
+		gbc_txtEmail.gridx = 3;
+		gbc_txtEmail.gridy = 5;
 		content.add(txtEmail, gbc_txtEmail);
+		txtEmail.setColumns(10);
 		
-		JLabel lblPhone = new JLabel("Số điện thoại:");  
-		lblPhone.setFont(new Font("Segoe UI", Font.BOLD, 18));
-		GridBagConstraints gbc_lblPhone = new GridBagConstraints();
-		gbc_lblPhone.anchor = GridBagConstraints.WEST;  
-		gbc_lblPhone.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPhone.gridx = 2;
-		gbc_lblPhone.gridy = 3;
-		content.add(lblPhone, gbc_lblPhone);
+		JLabel lblLop = new JLabel("Lớp");
+		lblLop.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		GridBagConstraints gbc_lblLop = new GridBagConstraints();
+		gbc_lblLop.anchor = GridBagConstraints.WEST;
+		gbc_lblLop.insets = new Insets(10, 10, 10, 10);
+		gbc_lblLop.gridx = 0;
+		gbc_lblLop.gridy = 7;
+		content.add(lblLop, gbc_lblLop);
 		
-		txtPhone = new JTextField();
-		txtPhone.setText("Xin chào");
-		txtPhone.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		txtPhone.setEditable(false);
-		txtPhone.setColumns(10);
-		txtPhone.setBorder(null);
-		txtPhone.setBackground(new Color(241, 248, 232));
-		GridBagConstraints gbc_txtPhone = new GridBagConstraints();
-		gbc_txtPhone.insets = new Insets(0, 0, 5, 0);
-		gbc_txtPhone.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtPhone.gridx = 3;
-		gbc_txtPhone.gridy = 3;
-		content.add(txtPhone, gbc_txtPhone);
-		setStudentDetails();
+		txtLop = new JTextField();
+		txtLop.setEditable(false);
+		txtLop.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		txtLop.setColumns(10);
+		txtLop.setBorder(null);
+		txtLop.setBackground(new Color(241, 248, 232));
+		GridBagConstraints gbc_txtLop = new GridBagConstraints();
+		gbc_txtLop.insets = new Insets(10, 10, 10, 10);
+		gbc_txtLop.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtLop.gridx = 1;
+		gbc_txtLop.gridy = 7;
+		content.add(txtLop, gbc_txtLop);
+		
+		JLabel lblSoDienThoai = new JLabel("Số điện thoại");
+		lblSoDienThoai.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		GridBagConstraints gbc_lblSoDienThoai = new GridBagConstraints();
+		gbc_lblSoDienThoai.anchor = GridBagConstraints.NORTHEAST;
+		gbc_lblSoDienThoai.insets = new Insets(10, 10, 10, 10);
+		gbc_lblSoDienThoai.gridx = 2;
+		gbc_lblSoDienThoai.gridy = 7;
+		content.add(lblSoDienThoai, gbc_lblSoDienThoai);
+		
+		txtSoDienThoai = new JTextField();
+		txtSoDienThoai.setEditable(false);
+		txtSoDienThoai.setBorder(null);
+		txtSoDienThoai.setBackground(new Color(241, 248, 232));
+		txtSoDienThoai.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		txtSoDienThoai.setColumns(10);
+		GridBagConstraints gbc_txtSoDienThoai = new GridBagConstraints();
+		gbc_txtSoDienThoai.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtSoDienThoai.gridx = 3;
+		gbc_txtSoDienThoai.insets = new Insets(10, 10, 10, 10);
+		gbc_txtSoDienThoai.gridy = 7;
+		content.add(txtSoDienThoai, gbc_txtSoDienThoai);
+		
+	    txtId.setText(studentId);
+	    txtHoTen.setText(fullName);
+	    txtNgaySinh.setText(birthDate);
+	    txtLop.setText(className);
+	    txtNganh.setText(major);
+	    txtDiaChi.setText(address);
+
+	    //txtDiaChi.setText(address);
+	    if (address != null && !address.isEmpty()) {
+	        txtDiaChi.setText(address);
+	    } else {
+	        txtDiaChi.setText("Chưa có địa chỉ");
+	    }
+	    txtEmail.setText(email);
+	    txtSoDienThoai.setText(phoneNumber);
 	}
 	
 	public void setStudentDetails() {

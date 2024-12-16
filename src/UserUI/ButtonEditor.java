@@ -1,7 +1,10 @@
 package UserUI;
 
+
+
 import Data.LopHocPhan;
 import dataManaging.LopHocPhanManaging;
+
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +12,17 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.AbstractCellEditor;
+
+// import javax.swing.table.TableCellEditor;
+
+// public class ButtonEditor extends AbstractCellEditor implements TableCellEditor {
+
+//     private JButton button;
+//     private String label;
+//     private int selectedRow;
+
+//     public ButtonEditor(JTable table) {
+
 import javax.swing.JCheckBox;
 import javax.swing.table.TableCellEditor;
 
@@ -21,11 +35,34 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
     
     public ButtonEditor(JTable table) {
         this.table = table;
+
         button = new JButton();
         button.setPreferredSize(new java.awt.Dimension(80, 20));
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+//                 fireEditingStopped();
+//                 if (selectedRow >= 0) {
+//                     int confirm = JOptionPane.showConfirmDialog(null, "Đăng ký môn học này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+//                     if (confirm == JOptionPane.YES_OPTION) {
+//                         JOptionPane.showMessageDialog(null, "Đăng thành công, vui lòng đợi kết quả!");
+//                     }
+//                 } else {
+//                     JOptionPane.showMessageDialog(null, "Vui lòng bấm gì đó!");
+//                 }
+//             }
+//         });
+
+//     }
+
+//     @Override
+//     public Component getTableCellEditorComponent(JTable table, Object value,
+//                                                  boolean isSelected, int row, int column) {
+//         label = (value == null) ? "" : value.toString();
+//         button.setText(label);
+//         selectedRow = row;
+
                 fireEditingStopped(); // Kết thúc chỉnh sửa sau khi nhấn nút
 
                 // Kiểm tra xem dòng được chọn có hợp lệ không
@@ -83,11 +120,19 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
         label = (value == null) ? "" : value.toString();
         button.setText(label);
         selectedRow = row; // Lưu chỉ số dòng khi nút được nhấn
+
         return button;
     }
 
     @Override
     public Object getCellEditorValue() {
+
+//         return label;
+//     }
+// }
+
+
         return label; // Trả về giá trị của nút (nếu cần thiết)
     }
 }
+

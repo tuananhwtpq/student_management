@@ -131,9 +131,13 @@ public class Registration extends JPanel {
 
         	    },
         	    new String[] {
+
+//         	        "STT", "Mã học phần", "Tên học phần", "TC lý thuyết", "TC thực hành", "TC BTL/TT", "TC Online", "Tổng số TC", "Học kì"
+
         	        "STT", "Mã học phần", "Tên học phần", "Số tín chỉ", "Học kỳ", "Học phí", "TG bắt đầu học"
 
 //         	        "STT", "Mã học phần", "Tên học phần", "TC lý thuyết", "TC thực hành", "TC BTL/TT", "TC Online", "Tổng số TC", "Học kì", "Đăng ký"
+
 
         	    }
         	) {
@@ -163,6 +167,11 @@ public class Registration extends JPanel {
         				
 //         				EventQueue.invokeLater(() ->{
    
+
+//         					RegistrationInfor registrationInfor = new RegistrationInfor(subjectName);
+//         					registrationInfor.setVisible(true);
+
+
 
         				});
         			}
