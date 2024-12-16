@@ -1,7 +1,9 @@
 package UserUI;
 
+
 import Data.dsDangKy;
 import dataManaging.LopHocPhanManaging;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,7 +16,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.util.ArrayList;
+
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -107,7 +111,11 @@ public class ViewSchedule extends JPanel {
 
         	    },
         	    new String[] {
+
         	        "STT", "Thứ", "Sáng", "Chiều", "Tối", "Môn"
+
+//         	        "STT", "Thứ", "Ngày", "Sáng", "Chiều", "Tối", "Ghi chú"
+
         	    }
         	) {
         	    @Override
@@ -161,6 +169,26 @@ public class ViewSchedule extends JPanel {
                 n+=1;
             }
         }
+
+        //Thử nghiệm
+//         DefaultTableModel model = (DefaultTableModel) table.getModel();
+//         model.addRow(new Object[] {1, "Thứ hai","4/12/2024", "Lập trình Java", ""});
+//         model.addRow(new Object[] {2, "Thứ ba","5/12/2024", "Lập trình Java", ""});
+//         model.addRow(new Object[] {3, "Thứ tư","6/12/2024", "Lập trình Java", ""});
+//         model.addRow(new Object[] {4, "Thứ năm","7/12/2024", "Lập trình Java", ""});
+//         model.addRow(new Object[] {5, "Thứ sáu","8/12/2024", "Lập trình Java", ""});
+//         model.addRow(new Object[] {6, "Thứ bảy","9/12/2024", "Lập trình Java", ""});
+//         model.addRow(new Object[] {7, "Chủ nhật","10/12/2024", "Lập trình Java", ""});
+//         model.addRow(new Object[] {8, "Thứ hai","11/12/2024", "Lập trình Java", ""});
+//         model.addRow(new Object[] {9, "Thứ ba","12/12/2024", "Lập trình Java", ""});
+        
+
+        
+//         main.setViewportView(table);
+		
+		
+		
+
 		
 		
 	}

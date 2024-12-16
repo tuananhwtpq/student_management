@@ -1,9 +1,11 @@
 package UserUI;
 
+
 import Data.LopHocPhan;
 import Data.Subject;
 import dataManaging.LopHocPhanManaging;
 import dataManaging.SubjectManaging;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,13 +16,17 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.util.ArrayList;
+
+
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 
 
 public class Registration extends JPanel {
@@ -46,6 +52,11 @@ public class Registration extends JPanel {
 	private JTable table;
         ArrayList<LopHocPhan> ds = new ArrayList();
         LopHocPhanManaging lhpm = new LopHocPhanManaging();
+
+// public class Registration extends JPanel {
+// 	private JTable table;
+
+
 	public Registration() {
 		setBounds(100, 100, 1530, 1017);
         setLayout(new BorderLayout());
@@ -121,6 +132,9 @@ public class Registration extends JPanel {
         	    },
         	    new String[] {
         	        "STT", "Mã học phần", "Tên học phần", "Số tín chỉ", "Học kỳ", "Học phí", "TG bắt đầu học"
+
+//         	        "STT", "Mã học phần", "Tên học phần", "TC lý thuyết", "TC thực hành", "TC BTL/TT", "TC Online", "Tổng số TC", "Học kì", "Đăng ký"
+
         	    }
         	) {
         	    @Override
@@ -137,12 +151,19 @@ public class Registration extends JPanel {
         		if(e.getClickCount() == 2) {
         			int selectedRow = table.getSelectedRow();
         			if(selectedRow != -1) {
+
         				String subjectid = table.getValueAt(selectedRow, 1).toString();
         				//LopHocPhan lhp = lhpm.sellectAll();
                                         mamon = table.getValueAt(selectedRow, 1).toString();
         				EventQueue.invokeLater(() ->{
                                             RegistrationInfor registrationInfor = new RegistrationInfor(subjectid);
                                             registrationInfor.setVisible(true);
+
+//         				String subjectName = table.getValueAt(selectedRow, 2).toString();
+        				
+//         				EventQueue.invokeLater(() ->{
+   
+
         				});
         			}
         		}
@@ -153,6 +174,7 @@ public class Registration extends JPanel {
         	
 		});
         
+
         main.setViewportView(table);
         ViewTable();
 	}
@@ -170,4 +192,27 @@ public class Registration extends JPanel {
         public String getsubjectID(){
             return mamon;
         }
+
+        //Thử nghiệm
+//         DefaultTableModel model = (DefaultTableModel) table.getModel();
+//         model.addRow(new Object[] {1, "IT6060", "Java", "3.0", "0.0", "0.0", "0.0", "3.0", "3", "Đăng ký"});
+//         model.addRow(new Object[] {2, "IT6060", "Java", "3.0", "0.0", "0.0", "0.0", "3.0", "3", ""});
+//         model.addRow(new Object[] {3, "IT6060", "Java", "3.0", "0.0", "0.0", "0.0", "3.0", "3", "Đăng ký"});
+//         model.addRow(new Object[] {4, "IT6060", "Java", "3.0", "0.0", "0.0", "0.0", "3.0", "3", ""});
+//         model.addRow(new Object[] {5, "IT6060", "Java", "3.0", "0.0", "0.0", "0.0", "3.0", "3", "Đăng ký"});
+//         model.addRow(new Object[] {6, "IT6060", "Java", "3.0", "0.0", "0.0", "0.0", "3.0", "3", ""});
+//         model.addRow(new Object[] {7, "IT6060", "Java", "3.0", "0.0", "0.0", "0.0", "3.0", "3", "Đăng ký"});
+        
+        
+
+        
+//         main.setViewportView(table);
+		
+		
+		
+		
+		
+// 	}
+	
+
 }
