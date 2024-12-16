@@ -152,6 +152,7 @@ public class SubjectTable extends JFrame {
     
 
 }
+}
 
 
 

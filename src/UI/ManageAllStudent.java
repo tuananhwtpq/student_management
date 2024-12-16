@@ -420,9 +420,9 @@ public class ManageAllStudent extends JPanel {
             }
             ViewTablecon(dss);
 
-// 	}
+	}
 	
-// 	public void handleDelete() {
+ 	public void handleDelete() {
 		
 
 
