@@ -37,6 +37,3 @@ public class ButtonRenderer extends JPanel implements TableCellRenderer {
         return this;
     }
 }
-
-
-

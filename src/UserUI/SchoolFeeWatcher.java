@@ -34,6 +34,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 
+import javax.swing.JOptionPane;
+
 public class SchoolFeeWatcher extends JPanel {
 	private JTable table;
 	
@@ -71,8 +73,13 @@ public class SchoolFeeWatcher extends JPanel {
         header_left.setLayout(null);
         content_header.add(header_left);
         
-        JButton btnThanhToan = new JButton("Thanh Toán");
-        btnThanhToan.setBounds(432, 9, 158, 60);
+
+//         JButton btnThanhToan = new JButton("Thanh Toán");
+//         btnThanhToan.setBounds(432, 9, 158, 60);
+
+        JButton btnThanhToan = new JButton("Thanh toán");
+        btnThanhToan.setBounds(432, 9, 160, 60);
+
         btnThanhToan.setForeground(new Color(0, 0, 0));
         btnThanhToan.setFont(new Font("Segoe UI", Font.BOLD, 18));
         btnThanhToan.setBackground(new Color(85, 173, 155));
@@ -83,14 +90,23 @@ public class SchoolFeeWatcher extends JPanel {
         lblNewLabel.setBounds(43, 10, 137, 60);
         header_left.add(lblNewLabel);
         
+
+//         txtTongTien = new JTextField();
+//         txtTongTien.setFont(new Font("Tahoma", Font.PLAIN, 18));
+//         txtTongTien.setText("tiền nợ ở đây nhé");
+
+        double tongtien = sm.selecttonghocphi(sm.selecthocphi());
+        String tong = String.valueOf(tongtien);
         txtTongTien = new JTextField();
         txtTongTien.setFont(new Font("Tahoma", Font.PLAIN, 18));
-        txtTongTien.setText("tiền nợ ở đây nhé");
+        txtTongTien.setText(tong);
+
         txtTongTien.setBounds(202, 10, 233, 60);
         header_left.add(txtTongTien);
         txtTongTien.setBorder(null);  
         txtTongTien.setBackground(new Color(241, 248, 232));
         txtTongTien.setColumns(10);
+
         
         JScrollPane main = new JScrollPane();
         main.setBackground(new Color(216, 239, 211));
@@ -119,7 +135,33 @@ public class SchoolFeeWatcher extends JPanel {
         	        return false; 
         	    }
         	});
-        
+        btnThanhToan.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+        	if(e.getClickCount() == 1) {
+                    int selectedRow = table.getSelectedRow();
+                    if(selectedRow != -1) {
+                        String hocphi = table.getValueAt(selectedRow, 3).toString();
+                        double hocphimon = Double.parseDouble(hocphi);
+        		int check = sm.thanhtoanhocphi(selectedRow);
+        		EventQueue.invokeLater(() ->{
+                            if(check == 1){
+                                JOptionPane.showMessageDialog(null, "Tài khoản không đủ tiền!");
+                            }else if(check == 2){
+                                double tongtien = sm.selecttonghocphi(sm.selecthocphi());
+                                String tong = String.valueOf(tongtien);
+                                txtTongTien.setText(tong);
+                                JOptionPane.showMessageDialog(null, "Bạn đã thanh toán thành công!");
+                                ViewTable();
+                            }else if(check == 3){
+                                JOptionPane.showMessageDialog(null, "Thanh toán thất bại!");
+                            }
+        		});
+                    }
+        	}
+        	super.mouseClicked(e);
+            }
+        });
         table.addMouseListener( new MouseAdapter() {
         	
         	@Override
@@ -141,24 +183,34 @@ public class SchoolFeeWatcher extends JPanel {
         	}
         	
 		});
+
         
-        //Thử nghiệm
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addRow(new Object[] {1, "CS101", "Lập trình Java", "1.800.000đ"});
-        model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
-        model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
+//         //Thử nghiệm
+//         DefaultTableModel model = (DefaultTableModel) table.getModel();
+//         model.addRow(new Object[] {1, "CS101", "Lập trình Java", "1.800.000đ"});
+//         model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
+//         model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
      
-       main.setViewportView(table);
+//        main.setViewportView(table);
         
 
-        main.setViewportView(table);
+//         main.setViewportView(table);
         //ViewTable();
+
+
+        main.setViewportView(table);
+        ViewTable();
+
     }
 	SubjectManaging sm = new SubjectManaging();
         ArrayList<Subject> dsO = new ArrayList();
         private JTextField txtTongTien;
 	public void ViewTable(){
-            this.dsO = sm.selectAll();
+
+//             this.dsO = sm.selectAll();
+
+            this.dsO = sm.selecthocphi();
+
             DefaultTableModel model = (DefaultTableModel) this.table.getModel();
             model.setNumRows(0);
             int n = 1;
@@ -175,6 +227,7 @@ public class SchoolFeeWatcher extends JPanel {
                 model.addRow(new Object[] {n, s.getMaMon(), s.getTenMon(), s.getHocPhi()});
             }
         }
+
 //        public String gettxtsearch(){
 //            return this.txtSearch.getText().trim();
 //        };
@@ -188,10 +241,22 @@ public class SchoolFeeWatcher extends JPanel {
 //            }
 //            ViewTablecon(dss);
 //	}
-	}
+// 	}
 	
 
 
+
+
+
+
+
+        //main.setViewportView(table);
+		
+}
+	
+	//public void handleSearch() {
+		
+	
 
 
 

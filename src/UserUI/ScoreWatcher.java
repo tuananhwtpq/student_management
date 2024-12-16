@@ -208,8 +208,13 @@ public class ScoreWatcher extends JPanel {
         	
 		});
         
+
      //   main.setViewportView(table);
 	//ViewTable();
+
+        main.setViewportView(table);
+	ViewTable();
+
 	}
 	
         public void ViewTable(){
