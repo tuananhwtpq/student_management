@@ -173,16 +173,16 @@ public class ScoreWatcher extends JPanel {
         	        return false; 
         	    }
         	});
-//        DefaultTableModel model = (DefaultTableModel) table.getModel();
-//        model.addRow(new Object[] {1, "IT6060", "Java","3"});
-//        model.addRow(new Object[] {2, "IT6060", "Idea","3"});
-//        model.addRow(new Object[] {3, "IT6060", "St1","3"});
-//        model.addRow(new Object[] {4, "IT6060", "ST2","3"});
-//        model.addRow(new Object[] {5, "IT6060", "ST3","3"});
-//        model.addRow(new Object[] {6, "IT6060", "ST4","3"});
-//        model.addRow(new Object[] {7, "IT6060", "ST5","3"});
-//        
-//        main.setViewportView(table);
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(new Object[] {1, "IT6060", "Java","3"});
+        model.addRow(new Object[] {2, "IT6060", "Idea","3"});
+        model.addRow(new Object[] {3, "IT6060", "St1","3"});
+        model.addRow(new Object[] {4, "IT6060", "ST2","3"});
+        model.addRow(new Object[] {5, "IT6060", "ST3","3"});
+        model.addRow(new Object[] {6, "IT6060", "ST4","3"});
+        model.addRow(new Object[] {7, "IT6060", "ST5","3"});
+        
+        main.setViewportView(table);
         
         
         
@@ -208,8 +208,8 @@ public class ScoreWatcher extends JPanel {
         	
 		});
         
-        main.setViewportView(table);
-	ViewTable();
+     //   main.setViewportView(table);
+	//ViewTable();
 	}
 	
         public void ViewTable(){

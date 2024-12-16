@@ -142,17 +142,17 @@ public class SchoolFeeWatcher extends JPanel {
         	
 		});
         
-//        //Thử nghiệm
-//        DefaultTableModel model = (DefaultTableModel) table.getModel();
-//        model.addRow(new Object[] {1, "CS101", "Lập trình Java", "1.800.000đ"});
-//        model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
-//        model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
-//     
-//       main.setViewportView(table);
-//        
+        //Thử nghiệm
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.addRow(new Object[] {1, "CS101", "Lập trình Java", "1.800.000đ"});
+        model.addRow(new Object[] {2, "CS102", "Cấu trúc dữ liệu", "3.600.000đ"});
+        model.addRow(new Object[] {3, "CS103", "Hệ điều hành", "2.500.000đ"});
+     
+       main.setViewportView(table);
+        
 
         main.setViewportView(table);
-        ViewTable();
+        //ViewTable();
     }
 	SubjectManaging sm = new SubjectManaging();
         ArrayList<Subject> dsO = new ArrayList();
