@@ -190,11 +190,19 @@ public class Registration extends JPanel {
         SubjectManaging sm = new SubjectManaging();
         ArrayList<Subject> dsS = new ArrayList();
 	public void ViewTable(){
+<<<<<<< HEAD
             this.dsS = sm.selectSubjectforDKHP(); 
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             int n =1;
             for(Subject s:dsS){
                 model.addRow(new Object[] {n, s.getMaMon(), s.getTenMon(), s.getStc(), s.getHocKy(), s.getHocPhi(), s.getNgayBanHanh()});
+=======
+            this.dsS = sm.selectSubjectforDKHP();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            int n =1;
+            for(Subject s:dsS){
+                model.addRow(new Object[] {n, s.getMaMon(), s.getTenMon(), s.getStc(), s.getHocKy(), s.getHocPhi(), s.getNgaybatDau()});
+>>>>>>> 33b4665e235ed7302b0e7746fbca271a8134dc35
                 n+=1;
             }
         }
@@ -202,8 +210,11 @@ public class Registration extends JPanel {
             return mamon;
         }
 
+<<<<<<< HEAD
 		
 
+=======
+>>>>>>> 33b4665e235ed7302b0e7746fbca271a8134dc35
         //Thử nghiệm
 //         DefaultTableModel model = (DefaultTableModel) table.getModel();
 //         model.addRow(new Object[] {1, "IT6060", "Java", "3.0", "0.0", "0.0", "0.0", "3.0", "3", "Đăng ký"});
@@ -226,4 +237,8 @@ public class Registration extends JPanel {
 // 	}
 	
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 33b4665e235ed7302b0e7746fbca271a8134dc35

@@ -1,6 +1,10 @@
 package UserUI;
 
+import UI.Login;
+import dataManaging.StudentManaging;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -134,5 +138,20 @@ public class ChangeInformation extends JPanel {
         gbc_btnLuuThongTin.anchor = GridBagConstraints.WEST;
         gbc_btnLuuThongTin.gridy = 4;
         content.add(btnLuuThongTin, gbc_btnLuuThongTin);
+        btnLuuThongTin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				handleUpdate();
+			}
+		});
+    }
+    StudentManaging sm = new StudentManaging();
+    Login lg = new Login();
+    private void handleUpdate() {
+        String a = this.textField.getText();
+        String b = this.textField_1.getText();
+        String c = this.textField_2.getText();
+        String id = lg.getID();
+        sm.update(id, a, b, c);
+        JOptionPane.showMessageDialog(this, "Gửi yêu cầu cập nhật thông tin thành công");
     }
 }
