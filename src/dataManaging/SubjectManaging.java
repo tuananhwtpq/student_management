@@ -4,13 +4,9 @@
  */
 package dataManaging;
 
-//import AccessDatabase.JDBCUtil;
+import AccessDatabase.JDBCUtil;
 import Data.Student;
 import Data.Subject;
-<<<<<<< HEAD
-=======
-
->>>>>>> 33b4665e235ed7302b0e7746fbca271a8134dc35
 import UI.Login;
 
 import java.sql.Connection;
@@ -179,28 +175,28 @@ public class SubjectManaging {
 
 //    Login l = new Login();
 //    String masv = l.getID();
-//    public Subject selectSubjectbyID(String id){
-//        Subject o = new Subject();
-//        try{
-//            Connection con = JDBCUtil.getConnection();
-//            Statement st = con.createStatement();
-//            String sql = "select * from Mon where MaMon = '"+id+"'";
-//            ResultSet rs = st.executeQuery(sql);
-//            while(rs.next()){
-//            o.setMaMon(rs.getString("MaMon"));
-//            o.setTenMon(rs.getString("TenMon"));
-//            o.setStc(rs.getString("SoTinChi"));
-//            o.setMoTa(rs.getString("MoTa"));
-//            o.setHocKy(rs.getString("HocKy"));
-//            o.setHocPhi(rs.getDouble("HocPhi"));
-//            o.setNgayBanHanh(rs.getString("NgayBanHanh"));
-//            }
-//            JDBCUtil.closeConnection(con);
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//        return o;
-//    }
+    public Subject selectSubjectbyID(String id){
+        Subject o = new Subject();
+        try{
+            Connection con = JDBCUtil.getConnection();
+            Statement st = con.createStatement();
+            String sql = "select * from Mon where MaMon = '"+id+"'";
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+            o.setMaMon(rs.getString("MaMon"));
+            o.setTenMon(rs.getString("TenMon"));
+            o.setStc(rs.getString("SoTinChi"));
+            o.setMoTa(rs.getString("MoTa"));
+            o.setHocKy(rs.getString("HocKy"));
+            o.setHocPhi(rs.getDouble("HocPhi"));
+            o.setNgayBanHanh(rs.getString("NgayBanHanh"));
+            }
+            JDBCUtil.closeConnection(con);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return o;
+    }
 //
 //    public ArrayList<Subject> selectAll(){
 //        ArrayList<Subject> ds = new ArrayList();

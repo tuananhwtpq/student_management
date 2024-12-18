@@ -24,6 +24,10 @@ public class Subject {
     private double HocPhi;
     private String NgayBanHanh;
     private String NgaybatDau;
+    
+    public Subject() {
+    	
+    }
 
 
 //    public Subject(String ma, String ten, String stc2, String hk, double hp, String ngaybd) {

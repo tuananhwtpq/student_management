@@ -201,8 +201,5 @@ public class LopHocPhanManaging {
         }
         return ds;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 33b4665e235ed7302b0e7746fbca271a8134dc35
+

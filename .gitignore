@@ -1,2 +1,4 @@
 /nbproject/private/
 /build/
+# Ignore các tệp .class (Java bytecode files)
+*.class
