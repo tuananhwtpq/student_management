@@ -41,7 +41,6 @@ public class StudentView extends JFrame {
 	private JTextField txtNganh;
 	private JTextField txtNgaySinh;
 	private JTextField txtDiaChi;
-	private JLabel lblImage;
 	private JTextField txtEmail;
 	private JTextField txtPhone;
 
@@ -78,45 +77,22 @@ public class StudentView extends JFrame {
 		
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{260, 0, 0};
+		gbl_contentPane.columnWidths = new int[]{0, 0}; // Chỉ có cột chứa nội dung
 		gbl_contentPane.rowHeights = new int[]{348, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE}; // Cột duy nhất chiếm toàn bộ không gian
 		gbl_contentPane.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JPanel imageWrap = new JPanel();
-		imageWrap.setPreferredSize(new Dimension(240, 400));
-		GridBagConstraints gbc_imageWrap = new GridBagConstraints();
-		gbc_imageWrap.insets = new Insets(10, 10, 10, 10);
-		gbc_imageWrap.fill = GridBagConstraints.BOTH;
-		gbc_imageWrap.gridx = 0;
-		gbc_imageWrap.gridy = 0;
-		contentPane.add(imageWrap, gbc_imageWrap);
-	    GridBagLayout gbl_imageWrap = new GridBagLayout();
-	    gbl_imageWrap.columnWidths = new int[]{240, 0};
-	    gbl_imageWrap.rowHeights = new int[]{400, 0};
-	    gbl_imageWrap.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-	    gbl_imageWrap.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-	    imageWrap.setLayout(gbl_imageWrap);
-		
-	    lblImage = new JLabel("Image");
-	    lblImage.setBorder(null);
-	    lblImage.setHorizontalAlignment(SwingConstants.CENTER);
-	    lblImage.setPreferredSize(new Dimension(260, 400));
-	    GridBagConstraints gbc_lblImage = new GridBagConstraints();
-	    gbc_lblImage.fill = GridBagConstraints.BOTH;
-	    gbc_lblImage.gridx = 0;
-	    gbc_lblImage.gridy = 0;
-	    imageWrap.add(lblImage, gbc_lblImage);
-		
 		JPanel content = new JPanel();
 		content.setBackground(new Color(241, 248, 232));
+		
 		GridBagConstraints gbc_content = new GridBagConstraints();
 		gbc_content.insets = new Insets(10, 10, 10, 10);
 		gbc_content.fill = GridBagConstraints.BOTH;
-		gbc_content.gridx = 1;
+		gbc_content.gridx = 0; // Đặt tại cột 0
 		gbc_content.gridy = 0;
 		contentPane.add(content, gbc_content);
+		
 		GridBagLayout gbl_content = new GridBagLayout();
 		gbl_content.columnWidths = new int[]{0, 171, 0, 228, 0};
 		gbl_content.rowHeights = new int[]{0, 0, 0, 41, 0, 0, 0};
