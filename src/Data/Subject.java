@@ -15,16 +15,35 @@ public class Subject {
     private String stc;
     private String MoTa;
     private String HocKy;
+
+
+//     private String HocPhi;
+//     private String NgayBanHanh;
+
+
     private double HocPhi;
     private String NgayBanHanh;
+    private String NgaybatDau;
 
-    public Subject(String ma, String ten, String stc2, String hk, double hp, String ngaybd) {
-    }
+
+//    public Subject(String ma, String ten, String stc2, String hk, double hp, String ngaybd) {
+//    }
     public Subject(String MaMon, String TenMon, double HocPhi) {
         this.MaMon = MaMon;
         this.TenMon = TenMon;
         this.HocPhi = HocPhi;
     }
+    
+
+
+
+//     public Subject(String MaMon, String TenMon, String stc, String MoTa, String HocKy, String HocPhi, String NgayBanHanh) {
+
+//    public Subject(String MaMon, String TenMon, double HocPhi) {
+//        this.MaMon = MaMon;
+//        this.TenMon = TenMon;
+//        this.HocPhi = HocPhi;
+//    }
     
 
     public Subject(String MaMon, String TenMon, String stc, String MoTa, String HocKy, double HocPhi, String NgayBanHanh) {
@@ -36,6 +55,19 @@ public class Subject {
         this.HocPhi = HocPhi;
         this.NgayBanHanh = NgayBanHanh;
     }
+
+
+
+    public Subject(String MaMon, String TenMon, String stc, String HocKy, double HocPhi, String NgaybatDau) {
+        this.MaMon = MaMon;
+        this.TenMon = TenMon;
+        this.stc = stc;
+        this.HocKy = HocKy;
+        this.HocPhi = HocPhi;
+        this.NgaybatDau = NgaybatDau;
+    }
+
+    
 
     public String getMaMon() {
         return MaMon;
@@ -77,11 +109,21 @@ public class Subject {
         this.HocKy = HocKy;
     }
 
+
+
+//     public String getHocPhi() {
+//         return HocPhi;
+//     }
+
+//     public void setHocPhi(String HocPhi) {
+
+
     public double getHocPhi() {
         return HocPhi;
     }
 
     public void setHocPhi(double HocPhi) {
+
         this.HocPhi = HocPhi;
     }
 
@@ -92,6 +134,17 @@ public class Subject {
     public void setNgayBanHanh(String NgayBanHanh) {
         this.NgayBanHanh = NgayBanHanh;
     }
+
+
+
+    public String getNgaybatDau() {
+        return NgaybatDau;
+    }
+
+    public void setNgaybatDau(String NgaybatDau) {
+        this.NgaybatDau = NgaybatDau;
+    }
+
 
     
 

@@ -140,7 +140,7 @@ public class ManageAllStudent extends JPanel {
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
+				
 				handleSearch();
 				
 			}
@@ -367,6 +367,7 @@ public class ManageAllStudent extends JPanel {
         table.setSelectionBackground(new Color(149, 240, 179));
         table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         table.setModel(new DefaultTableModel(
+
         	    new Object[][] {},
         	    new String[] {
         	        "ID", "Họ tên", "Ngày sinh", "Tên lớp", "Tên ngành", "Địa chỉ", "Email", "Số điện thoại"
@@ -380,17 +381,84 @@ public class ManageAllStudent extends JPanel {
 
       
        
+
+
+//         	    new Object[][] {},
+//         	    new String[] {
+//         	        "ID", "Họ tên", "Ngày sinh", "Lớp", "Ngành", "Địa chỉ", "Email", "Số điện thoại"
+//         	    }
+//         	) {
+//         	    @Override
+//         	    public boolean isCellEditable(int row, int column) {
+//         	        return false; 
+//         	    }
+//         	});
+
+//          //Thử nghiệm
+//          DefaultTableModel model = (DefaultTableModel) table.getModel();
+//          model.addRow(new Object[]{"SV001", "Nguyễn Văn A", "2001-05-15", "KTPM01", "Công nghệ thông tin", "Hà Nội", "nguyenvana@gmail.com", "0123456789"});
+//          model.addRow(new Object[]{"SV002", "Trần Thị B", "2002-03-10", "KTPM02", "Kế toán", "Đà Nẵng", "tranthib@gmail.com", "0987654321"});
+//          model.addRow(new Object[]{"SV003", "Lê Văn C", "2000-07-22", "KTPM03", "Quản trị kinh doanh", "Hồ Chí Minh", "levanc@gmail.com", "0912345678"});
+//          model.addRow(new Object[]{"SV004", "Phạm Thị D", "2001-09-05", "KTPM04", "Ngôn ngữ Anh", "Cần Thơ", "phamthid@gmail.com", "0945678123"});
+//          model.addRow(new Object[]{"SV005", "Hoàng Văn E", "1999-12-15", "KTPM05", "Khoa học dữ liệu", "Hải Phòng", "hoangvane@gmail.com", "0965432178"});
+        
+
+//        	new Object[][] {
+//        	},
+//        	new String[] {
+//        		"ID", "H\u1ECD t\u00EAn", "Ng\u00E0y sinh", "L\u1EDBp", "Ng\u00E0nh", "\u0110\u1ECBa ch\u1EC9", "Email", "S\u1ED1 \u0111i\u1EC7n tho\u1EA1i"
+//        	}
+//
+//        ));
+
+        //(
+        	
+        //	{
+        //	    @Override
+        //	    public boolean isCellEditable(int row, int column) {
+        //	        return false; 
+        //	    }
+        //	}
+        //);
+
         main.setViewportView(table);
 
         
         main.setViewportView(table);
+
         ViewTable();
+
+
+
+
+       
+
 	}
         public String gettxtsearch(){
             return this.txtSearch.getText().trim();
         };
         ArrayList<Student> dsS = new ArrayList();
         StudentManaging sm = new StudentManaging();
+
+
+//	public void ViewTable(){
+//            this.dsS = sm.selectAll();
+//            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+//            model.setNumRows(0);
+//            for(Student s:dsS){
+//                model.addRow(new Object[] {s.getMaSV(),s.getHoTen(),s.getNgaySinh(),s.getLop(),s.getNganh(),s.getDiaChi(),s.getEmail(),s.getPhone()});
+//            }
+//        }
+//
+//	public void ViewTable(){
+//            this.dsS = sm.selectAll();
+//            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+//            model.setNumRows(0);
+//            for(Student s:dsS){
+//                model.addRow(new Object[] {s.getMaSV(),s.getHoTen(),s.getNgaySinh(),s.getLop(),s.getNganh(),s.getDiaChi(),s.getEmail(),s.getPhone()});
+//            }
+//        }
+
 
         public void ViewTablecon(ArrayList<Student> dss){
             DefaultTableModel model = (DefaultTableModel) this.table.getModel();
@@ -400,6 +468,7 @@ public class ManageAllStudent extends JPanel {
             }
         }
 	private void handleSearch() {
+
 		 String searchText = gettxtsearch().toLowerCase(); // Chuyển toàn bộ ký tự nhập vào thành chữ thường
 
 		    // Kiểm tra xem ô tìm kiếm có trống không
@@ -449,6 +518,30 @@ public class ManageAllStudent extends JPanel {
 	            s.getPhone() 
 	        });
 	    }
+
+            ArrayList<Student> dss = new ArrayList();
+            if(searchOptions.getSelectedItem().equals("ID")){
+                 dss = sm.selectByCondition("ID", this.gettxtsearch());
+                 System.out.println("Số lượng kết quả tìm được cho ID: " + dss.size());
+            }else if(searchOptions.getSelectedItem().equals("Họ tên")){
+                dss = sm.selectByCondition("Họ tên", this.gettxtsearch());
+                System.out.println("Số lượng kết quả tìm được theo họ tên: " + dss.size());
+            }else if(searchOptions.getSelectedItem().equals("Lớp")){
+                dss = sm.selectByCondition("Lớp", this.gettxtsearch());
+                System.out.println("Số lượng kết quả tìm được theo lớp: " + dss.size());
+            }else if(searchOptions.getSelectedItem().equals("Ngành")){
+                dss = sm.selectByCondition("Ngành", this.gettxtsearch());
+                System.out.println("Số lượng kết quả tìm được theo ngành: " + dss.size());
+            }
+            ViewTablecon(dss);
+
+// 	}
+	
+// 	public void handleDelete() {
+		
+
+
+
 	}
 	
 }

@@ -190,11 +190,19 @@ public class Registration extends JPanel {
         SubjectManaging sm = new SubjectManaging();
         ArrayList<Subject> dsS = new ArrayList();
 	public void ViewTable(){
+
             this.dsS = sm.selectSubjectforDKHP(); 
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             int n =1;
             for(Subject s:dsS){
                 model.addRow(new Object[] {n, s.getMaMon(), s.getTenMon(), s.getStc(), s.getHocKy(), s.getHocPhi(), s.getNgayBanHanh()});
+
+//            this.dsS = sm.selectSubjectforDKHP();
+//            DefaultTableModel model = (DefaultTableModel) table.getModel();
+//            int n =1;
+//            for(Subject s:dsS){
+//                model.addRow(new Object[] {n, s.getMaMon(), s.getTenMon(), s.getStc(), s.getHocKy(), s.getHocPhi(), s.getNgaybatDau()});
+
                 n+=1;
             }
         }
@@ -202,7 +210,10 @@ public class Registration extends JPanel {
             return mamon;
         }
 
+
 		
+
+
 
         //Thử nghiệm
 //         DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -226,4 +237,7 @@ public class Registration extends JPanel {
 // 	}
 	
 
+
 }
+
+

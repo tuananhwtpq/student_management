@@ -83,7 +83,11 @@ public class LopHocPhanManaging {
             }
             Registration regis = new Registration();
             
+
             String sqlu = "insert into TaiLieuDangKi values('"+masv+"', '"+lhp.getMaLHP()+"', '"+"', N'"+lhp.getTiet()+"', "+hocphi+")";
+
+//            String sqlu = "insert into TaiLieuDangKi values('"+masv+"', '"+lhp.getMaLHP()+"', '"+regis.getsubjectID()+"', N'"+lhp.getTiet()+"', "+hocphi+")";
+
             String sqlu1 = "insert into TaiLieuThanhToanHocPhi values('"+masv+"', '"+lhp.getMaMon()+"', "+hocphi+")";
             if(a == 3){
                 st.executeUpdate(sqlu);
@@ -197,4 +201,8 @@ public class LopHocPhanManaging {
         }
         return ds;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 33b4665e235ed7302b0e7746fbca271a8134dc35

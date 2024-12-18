@@ -79,4 +79,6 @@ public class dsDangKy {
         return "dsDangKy{" + "masv=" + masv + ", maLHP=" + maLHP + ", thu=" + thu + ", hocPhi=" + hocPhi + '}';
     }
     
+
 }
+

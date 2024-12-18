@@ -121,4 +121,6 @@ public class LopHocPhan {
         return "LopHocPhan{" + "maLHP=" + maLHP + ", tenLHP=" + tenLHP + ", siSoToiDa=" + siSoToiDa + ", thoiGianBatDau=" + thoiGianBatDau + ", thoiGianKetThuc=" + thoiGianKetThuc + ", maMon=" + maMon + ", maGVPhuTrach=" + maGVPhuTrach + ", thu=" + thu + ", tiet=" + tiet + ", soLuongSinhVien=" + soLuongSinhVien + '}';
     }
     
+
 }
+
