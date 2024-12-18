@@ -1,4 +1,9 @@
-/nbproject/private/
-/build/
-# Ignore các tệp .class (Java bytecode files)
+# Ignore các thư mục riêng tư của NetBeans (các tệp cấu hình IDE)
+nbproject/private/
+
+# Ignore thư mục build (chứa các tệp biên dịch)
+build/
+
+# Ignore tất cả các tệp .class (Java bytecode files)
 *.class
+
