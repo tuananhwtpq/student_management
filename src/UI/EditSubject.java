@@ -13,17 +13,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+
+import AccessDatabase.JDBCUtil;
 
 public class EditSubject extends JFrame {
 	
@@ -205,7 +211,7 @@ public class EditSubject extends JFrame {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Gọi hàm xử lí đăng nhập
-				handleAdd();
+				handleEdit();
 			}
 		});
 		
@@ -230,9 +236,56 @@ public class EditSubject extends JFrame {
 	}
 	
 	//Xử lý add vào Database
-	public void handleAdd() {
-		
+	public void handleEdit() {
+	    // Lấy thông tin từ các trường nhập
+	    String maMH = txtId.getText();  // Mã môn học không thay đổi, vì là khóa chính
+	    String tenMonHoc = txtTenMonHoc.getText();
+	    String soTCStr = txtSoTC.getText();
+	    String moTa = txtMoTa.getText();
+
+	    // Kiểm tra tính hợp lệ của dữ liệu
+	    if (tenMonHoc.isEmpty() || soTCStr.isEmpty() || moTa.isEmpty()) {
+	        showError("Vui lòng điền đầy đủ thông tin môn học.");
+	        return;
+	    }
+
+	    // Kiểm tra số tín chỉ phải là số nguyên dương
+	    int soTC;
+	    try {
+	        soTC = Integer.parseInt(soTCStr);
+	        if (soTC <= 0) {
+	            showError("Số tín chỉ phải lớn hơn 0.");
+	            return;
+	        }
+	    } catch (NumberFormatException e) {
+	        showError("Số tín chỉ không hợp lệ.");
+	        return;
+	    }
+
+	    // Cập nhật thông tin môn học trong cơ sở dữ liệu
+	    String sql = "UPDATE Mon SET TenMon = ?, SoTinChi = ?, MoTa = ? WHERE MaMon = ?";
+	    try (Connection conn = JDBCUtil.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+	        
+	        stmt.setString(1, tenMonHoc);
+	        stmt.setInt(2, soTC);
+	        stmt.setString(3, moTa);
+	        stmt.setString(4, maMH);
+	        
+	        int rowsUpdated = stmt.executeUpdate();
+	        
+	        if (rowsUpdated > 0) {
+	            showSuccess("Cập nhật môn học thành công.");
+	        } else {
+	            showError("Không thể cập nhật thông tin môn học. Vui lòng thử lại.");
+	        }
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        showError("Lỗi kết nối cơ sở dữ liệu. Vui lòng thử lại.");
+	    }
 	}
+
 	
 	//Các trường trong window refresh
 	public void refresh() {
@@ -243,5 +296,15 @@ public class EditSubject extends JFrame {
 	
 		
 	}
+	// Hiển thị thông báo lỗi
+	private void showError(String message) {
+	    JOptionPane.showMessageDialog(this, message, "Lỗi", JOptionPane.ERROR_MESSAGE);
+	}
+
+	// Hiển thị thông báo thành công
+	private void showSuccess(String message) {
+	    JOptionPane.showMessageDialog(this, message, "Thành công", JOptionPane.INFORMATION_MESSAGE);
+	}
+
 }
 

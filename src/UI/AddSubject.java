@@ -13,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +26,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+
+import AccessDatabase.JDBCUtil;
+
 import javax.swing.JScrollPane;
 
 public class AddSubject  extends JFrame{
@@ -218,6 +224,48 @@ public class AddSubject  extends JFrame{
 	//Xử lý add vào Database
 	public void handleAdd() {
 		
+		    // Lấy dữ liệu từ các trường nhập liệu
+		    String id = txtId.getText().trim();
+		    String tenMonHoc = txtTenMonHoc.getText().trim();
+		    String soTinChi = txtSoTC.getText().trim();
+		    String moTa = txtMoTa.getText().trim();
+
+		    // Kiểm tra dữ liệu đầu vào
+		    if (id.isEmpty() || tenMonHoc.isEmpty() || soTinChi.isEmpty() || moTa.isEmpty()) {
+		        // Thông báo lỗi nếu có trường nào bị trống
+		        javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+		        return;
+		    }
+
+		    // Câu lệnh SQL để thêm môn học vào cơ sở dữ liệu
+			String sql = "INSERT INTO Mon (MaMon, TenMon, SoTinChi, MoTa) VALUES (?, ?, ?, ?)";
+
+			try (Connection conn = JDBCUtil.getConnection(); 
+			     PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+			    // Gán giá trị cho câu lệnh SQL
+			    preparedStatement.setString(1, id);
+			    preparedStatement.setString(2, tenMonHoc);
+			    preparedStatement.setString(3, soTinChi);
+			    preparedStatement.setString(4, moTa);
+
+			    // Thực thi câu lệnh SQL
+			    int rowsInserted = preparedStatement.executeUpdate();
+
+			    // Kiểm tra kết quả và hiển thị thông báo
+			    if (rowsInserted > 0) {
+			        javax.swing.JOptionPane.showMessageDialog(this, "Thêm môn học thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+			        refresh(); // Xóa dữ liệu sau khi thêm
+			    } else {
+			        javax.swing.JOptionPane.showMessageDialog(this, "Có lỗi khi thêm môn học!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+			    }
+
+			} catch (SQLException e) {
+			    e.printStackTrace();
+			    javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi thêm môn học: " + e.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+			}
+		
+
 	}
 	
 	//Các trường trong window refresh

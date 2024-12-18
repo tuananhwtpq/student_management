@@ -13,15 +13,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+
+import AccessDatabase.JDBCUtil;
 
 public class AddClassroom extends JFrame {
 	
@@ -252,19 +258,109 @@ public class AddClassroom extends JFrame {
 	
 	//Xử lý add vào Database
 	public void handleAdd() {
-		
+	    // Lấy thông tin từ giao diện người dùng, loại bỏ khoảng trắng dư thừa
+	    String maLHP = txtId.getText().trim();                // Mã lớp học phần
+	    String tenLHP = txtTenLop.getText().trim();           // Tên lớp học phần
+	    String giangVien = txtGiangVien.getText().trim();     // Giảng viên phụ trách
+	    String ngayBatDau = txtDateBegin.getText().trim();    // Ngày bắt đầu
+	    String ngayKetThuc = txtDateEnd.getText().trim();     // Ngày kết thúc
+	    String phongHoc = txtDiaChi.getText().trim();         // Phòng học
+
+	    // Debug: In giá trị ra console để kiểm tra dữ liệu thực tế
+	    System.out.println("maLHP: [" + maLHP + "]");
+	    System.out.println("tenLHP: [" + tenLHP + "]");
+	    System.out.println("giangVien: [" + giangVien + "]");
+	    System.out.println("ngayBatDau: [" + ngayBatDau + "]");
+	    System.out.println("ngayKetThuc: [" + ngayKetThuc + "]");
+	    System.out.println("phongHoc: [" + phongHoc + "]");
+
+	    // Kiểm tra dữ liệu đầu vào: loại bỏ khoảng trắng dư thừa và kiểm tra độ dài
+	    if (maLHP.isBlank() || tenLHP.isBlank() || giangVien.isBlank() || 
+	        ngayBatDau.isBlank() || ngayKetThuc.isBlank() || phongHoc.isBlank()) {
+	        JOptionPane.showMessageDialog(this, 
+	            "Vui lòng nhập đầy đủ thông tin lớp học phần (không để trống hoặc chứa toàn khoảng trắng).", 
+	            "Dữ liệu không hợp lệ", JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+
+	    // Kiểm tra định dạng ngày (ví dụ: yyyy-MM-dd)
+	    if (!isValidDate(ngayBatDau) || !isValidDate(ngayKetThuc)) {
+	        JOptionPane.showMessageDialog(this, 
+	            "Ngày bắt đầu hoặc ngày kết thúc không đúng định dạng (yyyy-MM-dd).", 
+	            "Lỗi định dạng", JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+
+	    // Câu lệnh SQL thêm LopHocPhan
+	    String sql = "INSERT INTO LopHocPhan (MaLHP, TenLHP, MaGVPhuTrach, NgayBatDau, NgayKetThuc, PhongHoc) " +
+	                 "VALUES (?, ?, ?, ?, ?, ?)";
+
+	    try (Connection conn = JDBCUtil.getConnection();
+	         PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+	        // Gán tham số cho câu lệnh SQL
+	        preparedStatement.setString(1, maLHP);
+	        preparedStatement.setString(2, tenLHP);
+	        preparedStatement.setString(3, giangVien);
+	        preparedStatement.setString(4, ngayBatDau);
+	        preparedStatement.setString(5, ngayKetThuc);
+	        preparedStatement.setString(6, phongHoc);
+
+	        // Thực thi câu lệnh SQL
+	        int rowsInserted = preparedStatement.executeUpdate();
+
+	        if (rowsInserted > 0) {
+	            JOptionPane.showMessageDialog(this, 
+	                "Thêm lớp học phần thành công!", 
+	                "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+	            refresh(); // Làm mới dữ liệu sau khi thêm thành công
+	        } else {
+	            JOptionPane.showMessageDialog(this, 
+	                "Thêm lớp học phần thất bại. Vui lòng thử lại!", 
+	                "Thất bại", JOptionPane.ERROR_MESSAGE);
+	        }
+	    } catch (SQLException ex) {
+	        // Kiểm tra lỗi khóa chính trùng
+	        if (ex.getErrorCode() == 1062) { // 1062 là mã lỗi trùng khóa chính trong MySQL
+	            JOptionPane.showMessageDialog(this, 
+	                "Mã lớp học phần đã tồn tại. Vui lòng nhập mã khác.", 
+	                "Lỗi trùng khóa", JOptionPane.ERROR_MESSAGE);
+	        } else {
+	            JOptionPane.showMessageDialog(this, 
+	                "Lỗi khi thêm lớp học phần: " + ex.getMessage(), 
+	                "Lỗi", JOptionPane.ERROR_MESSAGE);
+	        }
+	        ex.printStackTrace();
+	    }
 	}
+
+	// Hàm kiểm tra định dạng ngày (yyyy-MM-dd)
+	private boolean isValidDate(String date) {
+	    try {
+	        java.time.LocalDate.parse(date);
+	        return true;
+	    } catch (java.time.format.DateTimeParseException e) {
+	        return false;
+	    }
+	}
+
+	// Hàm refresh() để làm mới dữ liệu hoặc giao diện
+	private void refresh() {
+	    txtId.setText("");
+	    txtTenLop.setText("");
+	    txtGiangVien.setText("");
+	    txtDateBegin.setText("");
+	    txtDateEnd.setText("");
+	    txtDiaChi.setText("");
+	    // Cập nhật bảng dữ liệu nếu cần
+	    
+	}
+
+
+	// Hàm refresh() để làm mới dữ liệu hoặc giao diện (tùy bạn định nghĩa)
+	
+
 	
 	//Các trường trong window refresh
-	public void refresh() {
-		txtId.setText("");
-		txtGiangVien.setText("");
-		txtDateBegin.setText("");
-		txtDiaChi.setText("");
-		txtDateEnd.setText("");
-		txtSiSo.setText("");
-		txtTenLop.setText("");
-
-		
-	}
+	
 }

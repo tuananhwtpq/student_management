@@ -13,15 +13,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+
+import AccessDatabase.JDBCUtil;
+
 import java.awt.Label;
 
 public class EditClassroom extends JFrame {
@@ -48,6 +57,7 @@ public class EditClassroom extends JFrame {
 		});
 		setBounds(100, 100, 925, 400);
 		setResizable(false);
+	
 		
 		// Thiết lập kích thước của cửa sổ
         int width = getBounds().width; // Chiều rộng
@@ -241,7 +251,7 @@ public class EditClassroom extends JFrame {
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Gọi hàm xử lí đăng nhập
-				handleEdit();
+				handlleEdit();
 			}
 		});
 		
@@ -260,10 +270,76 @@ public class EditClassroom extends JFrame {
 		});
 		
 	}
-	
-	public void handleEdit() {
-		
+	public void handlleEdit() {
+	    String maLHP = txtId.getText().trim();
+	    String tenLHP = txtTenLop.getText().trim();
+	    String maGV = txtGiangVien.getText().trim();
+	    String siSoToiDa = txtSiSo.getText().trim();
+	    String thoiGianBatDau = txtDateBegin.getText().trim();
+	    String thoiGianKetThuc = txtDateEnd.getText().trim();
+
+	    // Kiểm tra các trường không được để trống
+	    if (maLHP.isEmpty() || tenLHP.isEmpty() || maGV.isEmpty() || siSoToiDa.isEmpty() || thoiGianBatDau.isEmpty() ||
+	        thoiGianKetThuc.isEmpty()) {
+	        JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin!");
+	        return;
+	    }
+
+	    // Kiểm tra định dạng Sĩ số tối đa (chỉ là số)
+	    try {
+	        Integer.parseInt(siSoToiDa);
+	    } catch (NumberFormatException e) {
+	        JOptionPane.showMessageDialog(this, "Sĩ số tối đa phải là một số nguyên!");
+	        return;
+	    }
+
+	    // Kiểm tra định dạng ngày tháng hợp lệ
+	    if (!isValidDate(thoiGianBatDau) || !isValidDate(thoiGianKetThuc)) {
+	        JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng ngày tháng (yyyy-MM-dd)!");
+	        return;
+	    }
+
+	    // Cập nhật thông tin vào cơ sở dữ liệu
+	    String sql = "UPDATE LopHocPhan SET TenLHP = ?, SiSoToiDa = ?, ThoiGianBatDau = ?, ThoiGianKetThuc = ? WHERE MaLHP = ?";
+
+	    try (Connection conn = JDBCUtil.getConnection();
+	         PreparedStatement statement = conn.prepareStatement(sql)) {
+
+	        // Thiết lập giá trị cho các tham số
+	        statement.setString(1, tenLHP);
+	        statement.setString(2, siSoToiDa);
+	        statement.setString(3, thoiGianBatDau);
+	        statement.setString(4, thoiGianKetThuc);
+	        statement.setString(5, maLHP);
+
+	        // Thực thi câu lệnh cập nhật
+	        int rowsUpdated = statement.executeUpdate();
+
+	        if (rowsUpdated > 0) {
+	            JOptionPane.showMessageDialog(this, "Cập nhật thông tin lớp học phần thành công!");
+	            this.dispose();  // Đóng cửa sổ sau khi cập nhật thành công
+	        } else {
+	            JOptionPane.showMessageDialog(this, "Không tìm thấy lớp học phần với mã này!");
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        JOptionPane.showMessageDialog(this, "Lỗi khi cập nhật dữ liệu vào cơ sở dữ liệu!");
+	    }
 	}
+
+	// Phương thức kiểm tra định dạng ngày tháng
+	private boolean isValidDate(String dateStr) {
+	    try {
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	        sdf.setLenient(false);
+	        sdf.parse(dateStr);
+	        return true;
+	    } catch (ParseException e) {
+	        return false;
+	    }
+	}
+
 	
 	public void refresh() {
 		txtGiangVien.setText("");

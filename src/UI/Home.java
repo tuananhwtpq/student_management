@@ -233,17 +233,17 @@ public class Home extends JFrame {
         top.add(btnFourthButton);
         
         //Fifth line
+//        
+//        JButton btnFifButton  = new JButton("Thống kê");
+//        btnFifButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+//        //btnFifthButton.setIcon(new ImageIcon(Home.class.getResource()));
+//        btnFifButton.setForeground(new Color(241, 248, 232));
+//        //add action listener
         
-        JButton btnFifButton  = new JButton("Thống kê");
-        btnFifButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        //btnFifthButton.setIcon(new ImageIcon(Home.class.getResource()));
-        btnFifButton.setForeground(new Color(241, 248, 232));
-        //add action listener
-        
-        btnFifButton.setFont(new Font("Segoe UI", Font.BOLD, 26));
-        btnFifButton.setBackground(new Color(85, 173, 155));
-        btnFifButton.setBounds(10, 231, 278, 45);
-        top.add(btnFifButton);
+//        btnFifButton.setFont(new Font("Segoe UI", Font.BOLD, 26));
+//        btnFifButton.setBackground(new Color(85, 173, 155));
+//        btnFifButton.setBounds(10, 231, 278, 45);
+//        top.add(btnFifButton);
              
         
         //Bottom

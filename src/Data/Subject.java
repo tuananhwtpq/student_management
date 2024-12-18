@@ -15,13 +15,19 @@ public class Subject {
     private String stc;
     private String MoTa;
     private String HocKy;
-    private String HocPhi;
+    private double HocPhi;
     private String NgayBanHanh;
 
-    public Subject() {
+    public Subject(String ma, String ten, String stc2, String hk, double hp, String ngaybd) {
     }
+    public Subject(String MaMon, String TenMon, double HocPhi) {
+        this.MaMon = MaMon;
+        this.TenMon = TenMon;
+        this.HocPhi = HocPhi;
+    }
+    
 
-    public Subject(String MaMon, String TenMon, String stc, String MoTa, String HocKy, String HocPhi, String NgayBanHanh) {
+    public Subject(String MaMon, String TenMon, String stc, String MoTa, String HocKy, double HocPhi, String NgayBanHanh) {
         this.MaMon = MaMon;
         this.TenMon = TenMon;
         this.stc = stc;
@@ -71,11 +77,11 @@ public class Subject {
         this.HocKy = HocKy;
     }
 
-    public String getHocPhi() {
+    public double getHocPhi() {
         return HocPhi;
     }
 
-    public void setHocPhi(String HocPhi) {
+    public void setHocPhi(double HocPhi) {
         this.HocPhi = HocPhi;
     }
 

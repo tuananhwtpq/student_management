@@ -4,12 +4,14 @@
  */
 package dataManaging;
 
-import AccessDatabase.JDBCUtil;
+
 import Data.TaiKhoan;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import AccessDatabase.JDBCUtil;
 
 /**
  *
@@ -24,7 +26,7 @@ public class TaiKhoanManaging {
             String sql = "SELECT * From TaiKhoan";
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
-                String tk = rs.getString("Username").replace(" ", "");
+                String tk = rs.getString("Username").replace(" ", " ");
                 String mk = rs.getString("Passw");
                 int role = rs.getInt("Role");
                 TaiKhoan t = new TaiKhoan(tk, mk, role);
@@ -41,7 +43,7 @@ public class TaiKhoanManaging {
         try{
             Connection con = JDBCUtil.getConnection();
             Statement st = con.createStatement();
-            String sql = "SELECT * From TaiKhoan WHERE Role = "+role;
+            String sql = "SELECT * FROM TaiKhoan WHERE Role = "+role;
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
                 String tk = rs.getString("Username");
@@ -55,4 +57,25 @@ public class TaiKhoanManaging {
         }
         return ds;
     }
+    public TaiKhoan login(String username, String password) {
+        TaiKhoan account = null;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            Statement st = con.createStatement();
+            String sql = "SELECT * FROM TaiKhoan WHERE Username = '" + username + "' AND Passw = '" + password + "'";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                // If a matching record is found, create a TaiKhoan object with the result
+                String tk = rs.getString("Username");
+                String mk = rs.getString("Passw");
+                int role = rs.getInt("Role");
+                account = new TaiKhoan(tk, mk, role);
+            }
+            JDBCUtil.closeConnection(con);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return account;  // Returns the account object if login is successful, else returns null
+    }
+
 }

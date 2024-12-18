@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import AccessDatabase.JDBCUtil;
 import UI.Login;
 import UserUI.UserHome;
 import dataManaging.TaiKhoanManaging;
@@ -34,6 +35,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -228,39 +232,56 @@ public class Login extends JFrame {
         TaiKhoanManaging tkm = new TaiKhoanManaging();
         ArrayList<TaiKhoan> ds = new ArrayList();
 	//Xử lí đăng nhập
-	private void handleLogin() {
-            this.ds = tkm.selectAll();
-            String tk = txtUserName.getText();
-            String mk = txtPassWord.getText();
-            boolean loginSuccessful = false;
-            for(TaiKhoan x:ds){
-                if(x.getTk().equalsIgnoreCase(tk) && x.getMk().equals(mk)){
-                    if(x.getRole() == 3){
-                        userDangNhap = x;
-                        JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-                        new Home().setVisible(true);
-                        dispose();
-                        loginSuccessful = true;
-                        
-                        break;
-                    }else if(x.getRole() == 4){
-                        userDangNhap = x;
-                        MaSV = x.getTk();
-                        JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-                        new UserHome().setVisible(true);
-                        dispose();
-                        loginSuccessful = true;
-                        break;
+        private void handleLogin() {
+            String username = txtUserName.getText().trim();
+            String password = new String(((JPasswordField) txtPassWord).getPassword()).trim();
+
+            if (username.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ tài khoản và mật khẩu.");
+                return;
+            }
+
+            // Kiểm tra trong cơ sở dữ liệu
+            try (Connection connection = JDBCUtil.getConnection()) {
+                String query = "SELECT * FROM TaiKhoan WHERE Username = ? AND PassW = ?";
+                PreparedStatement pst = connection.prepareStatement(query);
+                pst.setString(1, username);
+                pst.setString(2, password);
+
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()) {
+                    int role = rs.getInt("Role"); // Lấy giá trị role từ cơ sở dữ liệu
+                    MaSV = username; // Lưu MaSV
+
+                    // Hiển thị thông báo chào tùy theo vai trò
+                    if (role == 2) { // Nếu là user
+                        JOptionPane.showMessageDialog(this, "Chào mừng bạn, sinh viên " + username);
+                        UserHome userHome = new UserHome();
+                        userHome.setVisible(true);
+                    } else if (role == 3) { // Nếu là admin
+                    	
+                        JOptionPane.showMessageDialog(this, "Chào mừng bạn, ADMIN " + (username));
+                        // Home cho giảng viên
+                        Home home = new Home();
+                        home.setVisible(true);
                     }
+
+                    this.dispose(); // Đóng cửa sổ đăng nhập
+                } else {
+                    JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không đúng.");
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Lỗi kết nối đến cơ sở dữ liệu.");
             }
-            if(!loginSuccessful){
-                JOptionPane.showMessageDialog(this,"Dang nhap that bai");
-            }
-	}
-        //hàm lấy ID của đối tượng SV đang đăng nhập.
-        public String getID(){
+        }
+
+        // Hàm lấy ID của đối tượng đang đăng nhập
+        public String getID() {
             return MaSV;
         }
+        
+    
+
     }
 

@@ -8,7 +8,10 @@ import AccessDatabase.JDBCUtil;
 import Data.Student;
 import UI.ManageAllStudent;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -18,10 +21,31 @@ import java.util.ArrayList;
  */
 public class StudentManaging implements Interface<Student>{
 
-    @Override
-    public int insert(Student s) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   
+    
+    	@Override
+    	public int insert(Student s) {
+    	    String sql = "INSERT INTO SinhVien (MaSV, HoTen, NgaySinh, MaLop, MaNganh, DiaChi, Email, SoDienThoai) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    	    try (Connection conn = JDBCUtil.getConnection();
+    	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+    	        pstmt.setString(1, s.getMaSV());
+    	        pstmt.setString(2, s.getHoTen());
+    	        pstmt.setDate(3, Date.valueOf(s.getNgaySinh())); // Ngày sinh phải là kiểu LocalDate
+    	        pstmt.setString(4, s.getLop());
+    	        pstmt.setString(5, s.getNganh());
+    	        pstmt.setString(6, s.getDiaChi());
+    	        pstmt.setString(7, s.getEmail());
+    	        pstmt.setString(8, s.getPhone());
+
+    	        return pstmt.executeUpdate(); // Trả về số dòng bị ảnh hưởng (1 nếu thành công)
+    	    } catch (SQLException ex) {
+    	        ex.printStackTrace();
+    	        return 0; // Trả về 0 nếu có lỗi
+    	    }
+    	}
+
+    
 
     @Override
     public int update(String t) {
@@ -65,7 +89,7 @@ public class StudentManaging implements Interface<Student>{
                 String address = rs.getString("DiaChi");
                 String email = rs.getString("Email");
                 String phone = rs.getString("SoDienThoai");
-                Student s = new Student(msv, hoten, bday, lop, nganh, address, email, phone);
+                Student s = new Student(msv, hoten, bday, lop, nganh, address, email, phone, phone);
                 ds.add(s);
             }
             JDBCUtil.closeConnection(con);
@@ -111,7 +135,7 @@ public class StudentManaging implements Interface<Student>{
                     String address = rs.getString("DiaChi");
                     String email = rs.getString("Email");
                     String phone = rs.getString("SoDienThoai");
-                    Student s = new Student(msv, hoten, bday, lop, nganh, address, email, phone);
+                    Student s = new Student(msv, hoten, bday, lop, nganh, address, email, phone, phone);
                     ds.add(s);
                 }else if("Họ tên".equals(condition) && namer.contains(txtsearch)){
                     String msv = rs.getString("MaSV");
@@ -122,7 +146,7 @@ public class StudentManaging implements Interface<Student>{
                     String address = rs.getString("DiaChi");
                     String email = rs.getString("Email");
                     String phone = rs.getString("SoDienThoai");
-                    Student s = new Student(msv, hoten, bday, lop, nganh, address, email, phone);
+                    Student s = new Student(msv, hoten, bday, lop, nganh, address, email, phone, phone);
                     ds.add(s);
                 }else if("Lớp".equals(condition) && classr.contains(txtsearch)){
                     String msv = rs.getString("MaSV");
@@ -133,7 +157,7 @@ public class StudentManaging implements Interface<Student>{
                     String address = rs.getString("DiaChi");
                     String email = rs.getString("Email");
                     String phone = rs.getString("SoDienThoai");
-                    Student s = new Student(msv, hoten, bday, lop, nganh, address, email, phone);
+                    Student s = new Student(msv, hoten, bday, lop, nganh, address, email, phone, phone);
                     ds.add(s);
                 }else if("Ngành".equals(condition) && major.contains(txtsearch)){
                     String msv = rs.getString("MaSV");
@@ -144,7 +168,7 @@ public class StudentManaging implements Interface<Student>{
                     String address = rs.getString("DiaChi");
                     String email = rs.getString("Email");
                     String phone = rs.getString("SoDienThoai");
-                    Student s = new Student(msv, hoten, bday, lop, nganh, address, email, phone);
+                    Student s = new Student(msv, hoten, bday, lop, nganh, address, email, phone, phone);
                     ds.add(s);
                 }
             }

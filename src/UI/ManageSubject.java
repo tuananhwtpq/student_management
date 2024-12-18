@@ -13,6 +13,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -29,6 +33,12 @@ import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+
+import AccessDatabase.JDBCUtil;
+import Data.Student;
+import Data.Subject;
+import dataManaging.StudentManaging;
+import dataManaging.SubjectManaging;
 
 public class ManageSubject extends JPanel {
 	
@@ -250,21 +260,58 @@ public class ManageSubject extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				// TODO Auto-generated method stub
 				
-				int selectedRow = table.getSelectedRow();
-		        if (selectedRow >= 0) {
-		            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-		            if (confirm == JOptionPane.YES_OPTION) {
+				int selectedRow = table.getSelectedRow(); // Lấy dòng đang chọn trên bảng
+				if (selectedRow == -1) { // Nếu không có dòng nào được chọn
+				    JOptionPane.showMessageDialog(null, "Vui lòng chọn một môn học để xóa!");
+				    return;
+				}
 
-		            	//Thêm chức năng xóa
+				// Lấy mã môn học từ dòng đang chọn
+				String subjectId = table.getValueAt(selectedRow, 0).toString();
 
-		                handleDelete();
-		                JOptionPane.showMessageDialog(null, "Xóa thành công!");
-		            }
-		        } else {
-		            JOptionPane.showMessageDialog(null, "Vui lòng chọn một dòng để xóa!");
-		        }
+				// Xác nhận xóa
+				int confirm = JOptionPane.showConfirmDialog(null, 
+				    "Bạn có chắc chắn muốn xóa môn học có mã: " + subjectId + " không?",
+				    "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+
+				if (confirm == JOptionPane.YES_OPTION) {
+				    // Kết nối cơ sở dữ liệu và thực hiện xóa
+				    Connection connection = null;
+				    Statement statement = null;
+				    try {
+				        connection = JDBCUtil.getConnection(); // Lấy kết nối từ JDBCUtil
+				        statement = connection.createStatement();
+
+				        // Thực hiện câu lệnh xóa
+				        String sql = "DELETE FROM Mon WHERE MaMon = '" + subjectId + "'";
+				        int rowsAffected = statement.executeUpdate(sql);
+
+				        if (rowsAffected > 0) {
+				            JOptionPane.showMessageDialog(null, "Xóa thành công!");
+
+				            // Cập nhật lại bảng sau khi xóa
+				            dsS = sm.selectAll(); // Lấy lại danh sách môn học sau khi xóa
+				            ViewTable(); // Hiển thị lại bảng
+				        } else {
+				            JOptionPane.showMessageDialog(null, "Không tìm thấy môn học cần xóa!");
+				        }
+				    } catch (SQLException e1) {
+				        e1.printStackTrace();
+				        JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi khi xóa môn học!");
+				    } finally {
+				        // Đóng kết nối
+				        try {
+				            if (statement != null) statement.close();
+				            if (connection != null) connection.close();
+				        } catch (SQLException e1) {
+				            e1.printStackTrace();
+				        }
+				    }
+				}
+				
 			}
 		});
         
@@ -310,7 +357,7 @@ public class ManageSubject extends JPanel {
         
         table.setRowHeight(30);
         table.setSelectionBackground(new Color(149, 240, 179));
-        table.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        table.setFont(new Font("Arial", Font.PLAIN, 16));
         table.setModel(new DefaultTableModel(
             new Object[][] {},
             new String[] {"ID", "Tên môn học", "Số tín chỉ", "Mô tả"}
@@ -321,25 +368,73 @@ public class ManageSubject extends JPanel {
             }
         });
         
-        //Thử nghiệm
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.addRow(new Object[]{"SV001", "Cấu trúc dữ liệu", "3", "tốt"});
-        model.addRow(new Object[]{"SV002", "Cấu trúc dữ liệu 1", "3", "tốt"});
-        model.addRow(new Object[]{"SV003", "Cấu trúc dữ liệu 2", "3", "tốt"});
-        model.addRow(new Object[]{"SV004", "Cấu trúc dữ liệu 3", "3", "tốt"});
-        model.addRow(new Object[]{"SV005", "Cấu trúc dữ liệu 4", "3", "tốt"});
+
         
         
         main.setViewportView(table);
+        dsS = sm.selectAll(); // Lấy dữ liệu môn học từ database
+        ViewTable();   
         
 	}
+	ArrayList<Subject> dsS = new ArrayList();
+    SubjectManaging sm = new SubjectManaging();
 	
-	private void handleSearch() {
-		
-	}
+    private void handleSearch() {
+        // Lấy điều kiện tìm kiếm từ ComboBox
+        String selectedOption = searchOptions.getSelectedItem().toString();
+
+        // Tạo danh sách mới để chứa kết quả lọc
+        ArrayList<Subject> filteredList = new ArrayList<>();
+
+        // Duyệt qua danh sách môn học để lọc theo điều kiện
+        for (Subject subject : dsS) {
+            if (selectedOption.equals("Mã môn học")) {
+                if (subject.getMaMon().toLowerCase().contains(txtSearch.getText().toLowerCase())) {
+                    filteredList.add(subject);
+                }
+            } else if (selectedOption.equals("Tên môn học")) {
+                if (subject.getTenMon().toLowerCase().contains(txtSearch.getText().toLowerCase())) {
+                    filteredList.add(subject);
+                }
+            }
+        }
+
+        // Cập nhật bảng với danh sách đã lọc
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0); // Xóa dữ liệu cũ
+
+        for (Subject subject : filteredList) {
+            Object[] rowData = {
+                subject.getMaMon(), 
+                subject.getTenMon(), 
+                subject.getStc(), 
+                subject.getMoTa()
+            };
+            model.addRow(rowData);
+        }
+
+        // Nếu không có kết quả, hiển thị thông báo
+        if (filteredList.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy kết quả phù hợp!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
 	
-	private void handleDelete() {
-		
+	
+	public void ViewTable() {
+		   DefaultTableModel model = (DefaultTableModel) table.getModel();
+		    model.setRowCount(0);
+		    
+		    // Thêm dữ liệu từ dsS (ArrayList<Subject>) vào bảng
+		    for (Subject subject : dsS) {
+		        Object[] rowData = {
+		            subject.getMaMon(), // Lấy mã môn học
+		            subject.getTenMon(), // Lấy tên môn học
+		            subject.getStc(), // Lấy số tín chỉ
+		            subject.getMoTa() // Lấy mô tả
+		        };
+		        model.addRow(rowData);
+		    }
 	}
 
 }

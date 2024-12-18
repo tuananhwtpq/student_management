@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -26,8 +27,13 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
+import AccessDatabase.JDBCUtil;
+
 public class AddStudent extends JFrame {
-	
+	 private ManageAllStudent manageAllStudent; // Tham chiếu đến ManageAllStudent
+	    
+	    // Constructor của AddStudent, truyền vào đối tượng ManageAllStudent
+	  
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtId;
@@ -42,7 +48,8 @@ public class AddStudent extends JFrame {
 	private JTextField txtSoDienThoai;
 	
 	
-	public AddStudent() {
+	public AddStudent(ManageAllStudent manageAllStudent) {
+		this.manageAllStudent = manageAllStudent;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 		    @Override
@@ -114,7 +121,7 @@ public class AddStudent extends JFrame {
 		gbc_txtId.gridy = 1;
 		content.add(txtId, gbc_txtId);
 		
-		JLabel lblNganh = new JLabel("Ngành");
+		JLabel lblNganh = new JLabel("Mã ngành");
 		lblNganh.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		GridBagConstraints gbc_lblNganh = new GridBagConstraints();
 		gbc_lblNganh.anchor = GridBagConstraints.WEST;
@@ -211,7 +218,7 @@ public class AddStudent extends JFrame {
 		content.add(txtEmail, gbc_txtEmail);
 		txtEmail.setColumns(10);
 		
-		JLabel lblLop = new JLabel("Lớp");
+		JLabel lblLop = new JLabel("Mã lớp");
 		lblLop.setFont(new Font("Segoe UI", Font.BOLD, 18));
 		GridBagConstraints gbc_lblLop = new GridBagConstraints();
 		gbc_lblLop.anchor = GridBagConstraints.WEST;
@@ -290,8 +297,57 @@ public class AddStudent extends JFrame {
 	
 	//Xử lý add vào Database
 	public void handleAdd() {
-		
+	    // Lấy dữ liệu từ các trường nhập liệu
+	    String id = txtId.getText().trim();
+	    String hoTen = txtHoTen.getText().trim();
+	    String diaChi = txtDiaChi.getText().trim();
+	    String nganh = txtNganh.getText().trim();
+	    String ngaySinh = txtNgaySinh.getText().trim();
+	    String email = txtEmail.getText().trim();
+	    String lop = txtLop.getText().trim();
+	    String soDienThoai = txtSoDienThoai.getText().trim();
+
+	    // Kiểm tra dữ liệu đầu vào
+	    if (id.isEmpty() || hoTen.isEmpty() || diaChi.isEmpty() || nganh.isEmpty() ||
+	        ngaySinh.isEmpty() || email.isEmpty() || lop.isEmpty() || soDienThoai.isEmpty()) {
+	        // Thông báo lỗi nếu có trường nào bị trống
+	        javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+
+	    // Nếu bạn đã kết nối với cơ sở dữ liệu ở nơi khác, bạn chỉ cần sử dụng kết nối đó
+	    try {
+	        // Câu lệnh SQL để thêm sinh viên
+	        String sql = "INSERT INTO SinhVien (MaSV, HoTen, DiaChi, MaNganh, NgaySinh, Email, MaLop, SoDienThoai) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+	        // Thực hiện câu lệnh SQL
+	        try (
+	        		Connection conn = JDBCUtil.getConnection();
+	        		java.sql.PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+	            // Gán giá trị cho câu lệnh SQL
+	            preparedStatement.setString(1, id);
+	            preparedStatement.setString(2, hoTen);
+	            preparedStatement.setString(3, diaChi);
+	            preparedStatement.setString(4, nganh);
+	            preparedStatement.setString(5, ngaySinh);
+	            preparedStatement.setString(6, email);
+	            preparedStatement.setString(7, lop);
+	            preparedStatement.setString(8, soDienThoai);
+
+	            // Thực thi câu lệnh SQL
+	            int rowsInserted = preparedStatement.executeUpdate();
+
+	            if (rowsInserted > 0) {
+	                javax.swing.JOptionPane.showMessageDialog(this, "Thêm sinh viên thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+	                refresh(); // Xóa dữ liệu sau khi thêm
+	            }
+	        }
+	    } catch (java.sql.SQLException ex) {
+	        ex.printStackTrace();
+	        javax.swing.JOptionPane.showMessageDialog(this, "Lỗi khi thêm sinh viên: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+	    }
 	}
+
 	
 	//Các trường trong window refresh
 	public void refresh() {

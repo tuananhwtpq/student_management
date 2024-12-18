@@ -18,6 +18,10 @@ import java.util.ArrayList;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.TreeMap;
 
 
@@ -36,6 +40,8 @@ import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+
+import AccessDatabase.JDBCUtil;
 
 public class ManageAllStudent extends JPanel {
 	
@@ -115,6 +121,7 @@ public class ManageAllStudent extends JPanel {
         header_left.add(txtSearch, gbc_txtSearch);
         txtSearch.setColumns(10);
         
+        
         txtSearch.getDocument().addDocumentListener(new DocumentListener() {
 			
 			@Override
@@ -142,8 +149,9 @@ public class ManageAllStudent extends JPanel {
         searchOptions = new JComboBox();
         searchOptions.setForeground(new Color(0, 0, 0));
         searchOptions.setFont(new Font("Tahoma", Font.BOLD, 18));
-        searchOptions.setModel(new DefaultComboBoxModel(new String[] {"ID", "Họ tên", "Lớp", "Ngành"}));
+        searchOptions.setModel(new DefaultComboBoxModel(new String[] {"ID", "Họ tên", "Ngày sinh ", "Lớp" , "Ngành" , "Địa chỉ" , "Số điện thoại"}));
         searchOptions.setBackground(new Color(85, 173, 155));
+
         GridBagConstraints gbc_searchOptions = new GridBagConstraints();
         gbc_searchOptions.fill = GridBagConstraints.BOTH;
         gbc_searchOptions.insets = new Insets(10, 10, 10, 10);
@@ -154,10 +162,10 @@ public class ManageAllStudent extends JPanel {
         JButton btnSearch = new JButton("Tìm kiếm");
         btnSearch.setForeground(new Color(0, 0, 0));
         btnSearch.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-                    System.out.println("Nút tìm kiếm đã được nhấn");
-                    handleSearch();
-        	}
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleSearch(); 
+            }
         });
         btnSearch.setFont(new Font("Segoe UI", Font.BOLD, 18));
         btnSearch.setBackground(new Color(85, 173, 155));
@@ -195,7 +203,7 @@ public class ManageAllStudent extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				AddStudent addStudent = new AddStudent();
+				AddStudent addStudent = new AddStudent(null);
 				addStudent.setVisible(true);
 			}
 		});
@@ -263,19 +271,54 @@ public class ManageAllStudent extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int selectedRow = table.getSelectedRow();
-		        if (selectedRow >= 0) {
-		            int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-		            if (confirm == JOptionPane.YES_OPTION) {
+				 int selectedRow = table.getSelectedRow(); // Lấy dòng đang chọn trên bảng
+				    if (selectedRow == -1) { // Nếu không có dòng nào được chọn
+				        JOptionPane.showMessageDialog(null, "Vui lòng chọn một sinh viên để xóa!");
+				        return;
+				    }
 
-		            	//Thêm chức năng xóa
+				    // Lấy mã sinh viên từ dòng đang chọn
+				    String studentId = table.getValueAt(selectedRow, 0).toString();
 
-		                handleDelete();
-		                JOptionPane.showMessageDialog(null, "Xóa thành công!");
-		            }
-		        } else {
-		            JOptionPane.showMessageDialog(null, "Vui lòng chọn một dòng để xóa!");
-		        }
+				    // Xác nhận xóa
+				    int confirm = JOptionPane.showConfirmDialog(null, 
+				        "Bạn có chắc chắn muốn xóa sinh viên có mã: " + studentId + " không?",
+				        "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+
+				    if (confirm == JOptionPane.YES_OPTION) {
+				        // Kết nối cơ sở dữ liệu và thực hiện xóa
+				        Connection connection = null;
+				        Statement statement = null;
+				        try {
+				            connection = JDBCUtil.getConnection(); // Lấy kết nối từ JDBCUtil
+				            statement = connection.createStatement();
+
+				            // Thực hiện câu lệnh xóa
+				            String sql = "DELETE FROM SinhVien WHERE maSV = '" + studentId + "'";
+				            int rowsAffected = statement.executeUpdate(sql);
+
+				            if (rowsAffected > 0) {
+				                JOptionPane.showMessageDialog(null, "Xóa thành công!");
+
+				                // Cập nhật lại bảng sau khi xóa
+				                dsS = sm.selectAll(); // Lấy lại danh sách sinh viên sau khi xóa
+				                ViewTable(); // Hiển thị lại bảng
+				            } else {
+				                JOptionPane.showMessageDialog(null, "Không tìm thấy sinh viên cần xóa!");
+				            }
+				        } catch (SQLException e1) {
+				            e1.printStackTrace();
+				            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi khi xóa sinh viên!");
+				        } finally {
+				            // Đóng kết nối
+				            try {
+				                if (statement != null) statement.close();
+				                if (connection != null) connection.close();
+				            } catch (SQLException e1) {
+				                e1.printStackTrace();
+				            }
+				        }
+				    }
 				
 			}
 		});
@@ -326,7 +369,7 @@ public class ManageAllStudent extends JPanel {
         table.setModel(new DefaultTableModel(
         	    new Object[][] {},
         	    new String[] {
-        	        "ID", "Họ tên", "Ngày sinh", "Lớp", "Ngành", "Địa chỉ", "Email", "Số điện thoại"
+        	        "ID", "Họ tên", "Ngày sinh", "Tên lớp", "Tên ngành", "Địa chỉ", "Email", "Số điện thoại"
         	    }
         	) {
         	    @Override
@@ -335,33 +378,20 @@ public class ManageAllStudent extends JPanel {
         	    }
         	});
 
-         //Thử nghiệm
-         DefaultTableModel model = (DefaultTableModel) table.getModel();
-         model.addRow(new Object[]{"SV001", "Nguyễn Văn A", "2001-05-15", "KTPM01", "Công nghệ thông tin", "Hà Nội", "nguyenvana@gmail.com", "0123456789"});
-         model.addRow(new Object[]{"SV002", "Trần Thị B", "2002-03-10", "KTPM02", "Kế toán", "Đà Nẵng", "tranthib@gmail.com", "0987654321"});
-         model.addRow(new Object[]{"SV003", "Lê Văn C", "2000-07-22", "KTPM03", "Quản trị kinh doanh", "Hồ Chí Minh", "levanc@gmail.com", "0912345678"});
-         model.addRow(new Object[]{"SV004", "Phạm Thị D", "2001-09-05", "KTPM04", "Ngôn ngữ Anh", "Cần Thơ", "phamthid@gmail.com", "0945678123"});
-         model.addRow(new Object[]{"SV005", "Hoàng Văn E", "1999-12-15", "KTPM05", "Khoa học dữ liệu", "Hải Phòng", "hoangvane@gmail.com", "0965432178"});
-        
+      
+       
         main.setViewportView(table);
 
         
         main.setViewportView(table);
-        //ViewTable();
+        ViewTable();
 	}
         public String gettxtsearch(){
             return this.txtSearch.getText().trim();
         };
         ArrayList<Student> dsS = new ArrayList();
         StudentManaging sm = new StudentManaging();
-//	public void ViewTable(){
-//            this.dsS = sm.selectAll();
-//            DefaultTableModel model = (DefaultTableModel) this.table.getModel();
-//            model.setNumRows(0);
-//            for(Student s:dsS){
-//                model.addRow(new Object[] {s.getMaSV(),s.getHoTen(),s.getNgaySinh(),s.getLop(),s.getNganh(),s.getDiaChi(),s.getEmail(),s.getPhone()});
-//            }
-//        }
+
         public void ViewTablecon(ArrayList<Student> dss){
             DefaultTableModel model = (DefaultTableModel) this.table.getModel();
             model.setNumRows(0);
@@ -370,26 +400,55 @@ public class ManageAllStudent extends JPanel {
             }
         }
 	private void handleSearch() {
-            ArrayList<Student> dss = new ArrayList();
-            if(searchOptions.getSelectedItem().equals("ID")){
-                 dss = sm.selectByCondition("ID", this.gettxtsearch());
-                 System.out.println("Số lượng kết quả tìm được cho ID: " + dss.size());
-            }else if(searchOptions.getSelectedItem().equals("Họ tên")){
-                dss = sm.selectByCondition("Họ tên", this.gettxtsearch());
-                System.out.println("Số lượng kết quả tìm được theo họ tên: " + dss.size());
-            }else if(searchOptions.getSelectedItem().equals("Lớp")){
-                dss = sm.selectByCondition("Lớp", this.gettxtsearch());
-                System.out.println("Số lượng kết quả tìm được theo lớp: " + dss.size());
-            }else if(searchOptions.getSelectedItem().equals("Ngành")){
-                dss = sm.selectByCondition("Ngành", this.gettxtsearch());
-                System.out.println("Số lượng kết quả tìm được theo ngành: " + dss.size());
-            }
-            ViewTablecon(dss);
+		 String searchText = gettxtsearch().toLowerCase(); // Chuyển toàn bộ ký tự nhập vào thành chữ thường
+
+		    // Kiểm tra xem ô tìm kiếm có trống không
+		    if (searchText.trim().isEmpty()) {
+		        JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin cần tìm kiếm!");
+		        return;
+		    }
+
+	    // Khai báo danh sách sinh viên tìm kiếm
+		    ArrayList<Student> searchResults = new ArrayList<>();
+
+	    // Tìm kiếm sinh viên dựa trên thông tin nhập vào (sử dụng điều kiện so sánh không phân biệt hoa/thường)
+		    // Ví dụ: Tìm kiếm theo ID, bạn có thể thay đổi điều kiện tìm kiếm
+		    for (Student student : sm.selectAll()) { // Giả sử bạn lấy tất cả dữ liệu sinh viên
+		        // Chuyển dữ liệu trong cơ sở dữ liệu thành chữ thường và so sánh
+		        if (student.getHoTen().toLowerCase().contains(searchText)) {
+		            searchResults.add(student); // Nếu có kết quả, thêm vào danh sách kết quả tìm kiếm
+		        }
+	    }
+
+	    // Kiểm tra nếu có kết quả tìm kiếm
+	    if (searchResults.isEmpty()) {
+	        JOptionPane.showMessageDialog(null, "Không tìm thấy kết quả!");
+	    } else {
+	        // Hiển thị kết quả lên bảng hoặc UI tương ứng
+	        ViewTablecon(searchResults);
+	    }
 	}
-	
-	public void handleDelete() {
-		
+	public void ViewTable() {
+	    // Lấy danh sách sinh viên từ lớp StudentManaging
+	    this.dsS = sm.selectAll(); 
+	    DefaultTableModel model = (DefaultTableModel) this.table.getModel();
+	    
+	    // Xóa các hàng cũ trong bảng
+	    model.setNumRows(0); 
+	    
+	    // Thêm các sinh viên vào bảng
+	    for (Student s : dsS) {
+	        model.addRow(new Object[] { 
+	            s.getMaSV(), 
+	            s.getHoTen(), 
+	            s.getNgaySinh(), 
+	            s.getLop(), 
+	            s.getNganh(), 
+	            s.getDiaChi(), 
+	            s.getEmail(), 
+	            s.getPhone() 
+	        });
+	    }
 	}
-	
 	
 }

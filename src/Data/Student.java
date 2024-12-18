@@ -17,22 +17,29 @@ public class Student {
     private String DiaChi;
     private String Email;
     private String Phone;
-
+    private String GioiTinh;
     public Student() {
     }
 
-    public Student(String MaSV, String HoTen, String NgaySinh, String Lop, String Nganh, String DiaChi, String Email, String Phone) {
-        this.MaSV = MaSV;
-        this.HoTen = HoTen;
-        this.NgaySinh = NgaySinh;
-        this.Lop = Lop;
-        this.Nganh = Nganh;
-        this.DiaChi = DiaChi;
-        this.Email = Email;
-        this.Phone = Phone;
-    }
+   
 
-    public String getMaSV() {
+    public Student(String maSV, String hoTen, String ngaySinh, String lop, String nganh, String diaChi, String email,
+			String phone, String gioiTinh) {
+		super();
+		MaSV = maSV;
+		HoTen = hoTen;
+		NgaySinh = ngaySinh;
+		Lop = lop;
+		Nganh = nganh;
+		DiaChi = diaChi;
+		Email = email;
+		Phone = phone;
+		GioiTinh = gioiTinh;
+	}
+
+
+
+	public String getMaSV() {
         return MaSV;
     }
 
@@ -100,4 +107,12 @@ public class Student {
     public String toString() {
         return "Student{" + "MaSV=" + MaSV + ", HoTen=" + HoTen + ", NgaySinh=" + NgaySinh + ", Lop=" + Lop + ", Nganh=" + Nganh + ", DiaChi=" + DiaChi + ", Email=" + Email + ", Phone=" + Phone + '}';
     }
+
+	public String getGioiTinh() {
+		return GioiTinh;
+	}
+
+	public void setGioiTinh(String gioiTinh) {
+		GioiTinh = gioiTinh;
+	}
 }
