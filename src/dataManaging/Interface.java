@@ -19,7 +19,7 @@ public interface Interface<T> {
     
     public ArrayList<T> selectAll();
     
-    public T selectBId();
+    public T selectBId(String id);
     
     public ArrayList<T> selectByCondition(String condition, String condition2);
 }

@@ -1,5 +1,6 @@
 package UserUI;
 
+import Data.Student;
 import UI.Login;
 import dataManaging.StudentManaging;
 import java.awt.*;
@@ -24,9 +25,10 @@ public class ChangeInformation extends JPanel {
     private JTextField textField;
     private JTextField textField_1;
     private JTextField textField_2;
-
+    StudentManaging sm = new StudentManaging();
+    Login lg = new Login();
+    Student s = sm.selectBId(lg.getID());
     public ChangeInformation() {
-
         setBackground(new Color(255, 255, 255));
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout());
@@ -43,7 +45,7 @@ public class ChangeInformation extends JPanel {
         content.setLayout(gbl_content);
 
         // Tạo các Label và TextField như ban đầu
-        JLabel lblHoTen = new JLabel("Họ tên:");
+        JLabel lblHoTen = new JLabel("Mã sinh viên:");
         lblHoTen.setFont(new Font("Segoe UI", Font.BOLD, 18));
         GridBagConstraints gbc_lblHoTen = new GridBagConstraints();
         gbc_lblHoTen.anchor = GridBagConstraints.EAST;
@@ -58,7 +60,7 @@ public class ChangeInformation extends JPanel {
         txtHoten.setEditable(false);
         txtHoten.setBackground(new Color(241, 248, 232));
         txtHoten.setBorder(null);
-        txtHoten.setText("Xin chào");
+        txtHoten.setText(lg.getID());
         txtHoten.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         GridBagConstraints gbc_txtHoten = new GridBagConstraints();
         gbc_txtHoten.anchor = GridBagConstraints.WEST;
@@ -77,7 +79,7 @@ public class ChangeInformation extends JPanel {
         gbc_lblEmail.gridy = 1;
         content.add(lblEmail, gbc_lblEmail);
         
-        textField = new JTextField();
+        textField = new JTextField(s.getEmail());
         textField.setPreferredSize(new Dimension(7, 35));
         textField.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         textField.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -98,7 +100,7 @@ public class ChangeInformation extends JPanel {
         gbc_lblPhone.gridy = 2;
         content.add(lblPhone, gbc_lblPhone);
         
-        textField_1 = new JTextField();
+        textField_1 = new JTextField(s.getPhone());
         textField_1.setPreferredSize(new Dimension(7, 35));
         GridBagConstraints gbc_textField_1 = new GridBagConstraints();
         gbc_textField_1.insets = new Insets(0, 0, 5, 5);
@@ -118,7 +120,7 @@ public class ChangeInformation extends JPanel {
         gbc_lblDiaChi.gridy = 3;
         content.add(lblDiaChi, gbc_lblDiaChi);
         
-        textField_2 = new JTextField();
+        textField_2 = new JTextField(s.getDiaChi());
         textField_2.setPreferredSize(new Dimension(7, 35));
         GridBagConstraints gbc_textField_2 = new GridBagConstraints();
         gbc_textField_2.insets = new Insets(0, 0, 5, 5);
@@ -144,14 +146,27 @@ public class ChangeInformation extends JPanel {
 			}
 		});
     }
-    StudentManaging sm = new StudentManaging();
-    Login lg = new Login();
+    
     private void handleUpdate() {
         String a = this.textField.getText();
         String b = this.textField_1.getText();
         String c = this.textField_2.getText();
         String id = lg.getID();
-        sm.update(id, a, b, c);
-        JOptionPane.showMessageDialog(this, "Gửi yêu cầu cập nhật thông tin thành công");
+        if (a.equals(s.getEmail()) && b.equals(s.getPhone()) && c.equals(s.getDiaChi())) {
+            JOptionPane.showMessageDialog(this, "Không có thay đổi nào.");
+            return;  // Không thực thi cập nhật nếu không có thay đổi
+        }
+        int x = sm.update(id, a, b, c);
+        if(x == 0){
+            JOptionPane.showMessageDialog(this, "Cập nhật thông tin that bai!");
+        }else if(x == 1){
+            JOptionPane.showMessageDialog(this, "Cập nhật thông tin thành công!");
+        }else if(x == 2){
+            JOptionPane.showMessageDialog(this, "Địa chỉ email không hợp lệ!");
+        }else if(x == 3){
+            JOptionPane.showMessageDialog(this, "Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số!");
+        }else if(x == 4){
+            JOptionPane.showMessageDialog(this, "Địa chỉ không được để trống!");
+        }
     }
 }
